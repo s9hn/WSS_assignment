@@ -1,4 +1,4 @@
-package com.example.wsselixir.presentation.home
+package com.example.wsselixir.presentation.model
 
 data class Follower(
     val id: Int,

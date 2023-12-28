@@ -1,6 +1,8 @@
 package com.example.wsselixir.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,6 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.databinding.DialogHomeBinding
 import com.example.wsselixir.presentation.home.adapter.FollowerAdapter
+import com.example.wsselixir.presentation.model.Follower
+import com.example.wsselixir.presentation.model.User
+import com.example.wsselixir.presentation.myInfo.MyInfoActivity
 
 class HomeActivity : AppCompatActivity() {
     private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
@@ -16,7 +21,31 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        initPostButton()
         initRecyclerView()
+    }
+
+    private fun initPostButton() {
+        binding.btnHomePost.setOnClickListener {
+            if (checkUserName()) {
+                navigateToMyInfoActivity()
+            }
+        }
+    }
+
+    private fun checkUserName() = if (binding.etHomeName.text.isNullOrBlank()) {
+        makeToast("이름을 입력해주세요")
+        false
+    } else {
+        true
+    }
+
+    private fun navigateToMyInfoActivity() {
+        val userName = binding.etHomeName.text.toString()
+        val intent = Intent(this, MyInfoActivity::class.java).apply {
+            putExtra("userInfo", User(userName))
+        }
+        startActivity(intent)
     }
 
     private fun initRecyclerView() {
@@ -48,6 +77,10 @@ class HomeActivity : AppCompatActivity() {
             .load(follower.profileImage)
             .into(binding.itemFollower.ivFollowerProfile)
         binding.itemFollower.tvFollowerName.text = follower.name
+    }
+
+    private fun makeToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
