@@ -1,7 +1,8 @@
-package com.example.wsselixir
+package com.example.wsselixir.presentation.myInfo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.wsselixir.R
 
 class MyInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
