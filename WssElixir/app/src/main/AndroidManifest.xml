@@ -15,7 +15,7 @@
         android:theme="@style/Theme.WssElixir"
         tools:targetApi="31">
         <activity
-            android:name=".HomeActivity"
+            android:name=".presentation.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MyInformationActivity"
+            android:name=".presentation.myinformation.MyInformationActivity"
             android:exported="false" />
     </application>
 </manifest>
