@@ -5,5 +5,6 @@
     <string name="tvMainName">이름 : </string>
     <string name="btnMainName">등록하기</string>
     <string name="tvFollower">팔로워</string>
+    <string name="empty_name_message">이름을 입력해주세요</string>
 
 </resources>
