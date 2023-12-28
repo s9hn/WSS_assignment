@@ -8,7 +8,7 @@
     tools:context=".presentation.home.HomeActivity">
 
     <TextView
-        android:id="@+id/tvHomeName"
+        android:id="@+id/tvHomeNameTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -21,20 +21,28 @@
         android:id="@+id/etHomeName"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="@id/tvHomeName"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@id/tvHomeNameTag"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvHomeName"
-        app:layout_constraintTop_toTopOf="@id/tvHomeName" />
+        app:layout_constraintStart_toEndOf="@id/tvHomeNameTag"
+        app:layout_constraintTop_toTopOf="@id/tvHomeNameTag" />
 
     <TextView
-        android:id="@+id/tvHomeMBTI"
+        android:id="@+id/tvHomeMBTITag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="MBTI : "
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvHomeName" />
+        app:layout_constraintTop_toBottomOf="@id/tvHomeNameTag" />
+
+    <Spinner
+        android:id="@+id/spinnerHomeMBTI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvHomeMBTITag"
+        app:layout_constraintTop_toTopOf="@id/tvHomeMBTITag" />
 
     <Button
         android:id="@+id/btnHomePost"
@@ -44,7 +52,7 @@
         android:text="등록하기"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvHomeMBTI" />
+        app:layout_constraintTop_toBottomOf="@id/tvHomeMBTITag" />
 
 
     <TextView
