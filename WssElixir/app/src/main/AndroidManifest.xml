@@ -15,7 +15,10 @@
         android:theme="@style/Theme.WssElixir"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".MyInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
