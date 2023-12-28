@@ -10,58 +10,44 @@ import com.example.wsselixir.databinding.DialogHomeBinding
 import com.example.wsselixir.presentation.home.adapter.FollowerAdapter
 
 class HomeActivity : AppCompatActivity() {
-    private val homeBinding: ActivityHomeBinding by lazy {
-        ActivityHomeBinding.inflate(layoutInflater)
-    }
-
-    private lateinit var userName: String
-    private lateinit var userMBTI: String
+    private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(homeBinding.root)
+        setContentView(binding.root)
 
-        setRecyclerView()
+        initRecyclerView()
     }
 
-    private fun setPostButtonEvent() {
-        homeBinding.btnHomePost.setOnClickListener {
-
+    private fun initRecyclerView() {
+        val followerAdapter = FollowerAdapter(::showFollowerDialog).apply {
+            submitList(dummyFollowers)
         }
-    }
-
-    private fun setRecyclerView() {
-        val followerAdapter = FollowerAdapter { follower ->
-            showFollowerDialog(follower)
-        }
-        followerAdapter.submitList(dummyFollowers)
-
-        homeBinding.rvHomeFollower.apply {
+        with(binding.rvHomeFollower) {
             adapter = followerAdapter
-            layoutManager =
-                LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
     private fun showFollowerDialog(follower: Follower) {
-        val dialogHomeBinding = DialogHomeBinding.inflate(layoutInflater)
-        val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.apply {
-            setView(dialogHomeBinding.root)
+        DialogHomeBinding.inflate(layoutInflater).apply {
+            setupFollowerDialog(this, follower)
+        }
+    }
+
+    private fun setupFollowerDialog(binding: DialogHomeBinding, follower: Follower) {
+        AlertDialog.Builder(this).apply {
+            setView(binding.root)
             setCancelable(false)
+            create().apply {
+                binding.btnHomeDialogCancel.setOnClickListener { dismiss() }
+                show()
+            }
         }
-
-        dialogHomeBinding.itemFollower.tvFollowerName.text = follower.name
-        Glide.with(this)
+        Glide.with(applicationContext)
             .load(follower.profileImage)
-            .into(dialogHomeBinding.itemFollower.ivFollowerProfile)
-
-        val dialog = dialogBuilder.create()
-        dialogHomeBinding.btnHomeDialogCancel.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
+            .into(binding.itemFollower.ivFollowerProfile)
+        binding.itemFollower.tvFollowerName.text = follower.name
     }
 
     companion object {
