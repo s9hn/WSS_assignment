@@ -1,4 +1,4 @@
-package com.dosopt.naverpay.util.context
+package com.example.wsselixir.util.context
 
 import android.app.Activity
 import android.content.Context

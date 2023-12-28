@@ -1,4 +1,4 @@
-package com.dosopt.naverpay.util.network
+package com.example.wsselixir.util.network
 
 import android.util.Log
 import retrofit2.Call
