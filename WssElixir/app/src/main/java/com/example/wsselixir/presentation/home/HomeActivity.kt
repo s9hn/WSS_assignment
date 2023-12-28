@@ -2,7 +2,6 @@ package com.example.wsselixir.presentation.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
