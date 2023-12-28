@@ -1,4 +1,4 @@
-package com.dosopt.naverpay.util.view
+package com.example.wsselixir.util.view
 
 import androidx.recyclerview.widget.DiffUtil
 

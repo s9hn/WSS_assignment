@@ -1,4 +1,4 @@
-package com.dosopt.naverpay.util.fragment
+package com.example.wsselixir.util.fragment
 
 import android.view.View
 import android.widget.Toast

@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@id/btnMainName" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFollowers"
+        android:id="@+id/rvFollower"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
