@@ -28,13 +28,13 @@
         android:layout_marginEnd="34dp"
         android:background="@color/gray"
         android:importantForAutofill="no"
+        android:inputType="text"
         android:paddingVertical="12dp"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/tvHomeName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvHomeName"
-        app:layout_constraintTop_toTopOf="@id/tvHomeName"
-        android:inputType="text" />
+        app:layout_constraintTop_toTopOf="@id/tvHomeName" />
 
     <TextView
         android:id="@+id/tvHomeMBTI"
@@ -91,7 +91,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvHomeFollower"
-        app:layout_constraintTop_toBottomOf="@id/tvHomeFollower" />
+        app:layout_constraintTop_toBottomOf="@id/tvHomeFollower"
+        tools:listitem="@layout/item_follower" />
 </androidx.constraintlayout.widget.ConstraintLayout>
