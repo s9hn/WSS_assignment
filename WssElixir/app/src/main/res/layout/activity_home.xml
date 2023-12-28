@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
-    tools:context=".HomeActivity">
+    tools:context=".presentation.home.HomeActivity">
 
     <TextView
         android:id="@+id/tvHomeName"
@@ -20,7 +20,7 @@
     <EditText
         android:id="@+id/etHomeName"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="@id/tvHomeName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvHomeName"
@@ -61,7 +61,6 @@
         android:id="@+id/rvHomeFollower"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvHomeFollower" />
