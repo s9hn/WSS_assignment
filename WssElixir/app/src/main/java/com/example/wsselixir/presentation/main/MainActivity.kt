@@ -1,5 +1,7 @@
 package com.example.wsselixir.presentation.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -7,25 +9,33 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.data.followers
 import com.example.wsselixir.databinding.ActivityMainBinding
+import com.example.wsselixir.presentation.userinfo.UserActivity
 import com.example.wsselixir.util.context.toast
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var followerAdapter: FollowerAdapter
+
+    private val sharedPreferences by lazy {
+        getSharedPreferences(
+            "USER_NAME",
+            Context.MODE_PRIVATE
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupFollowers()
+        printFollowers()
         setupClickListeners()
     }
 
-    private fun isInfoValid(): Boolean {
-        val inputName = binding.etMainInputName.text.toString()
+    private fun isInfoValid(inputName: String): Boolean {
         return if (inputName.isEmpty()) {
-            toast(getString(R.string.empty_name_message))
+            toast(getString(R.string.emptyNameMessage))
             false
         } else {
             true
@@ -33,29 +43,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        val inputName = binding.etMainInputName.text.toString()
-        binding.btnMainName.setOnClickListener {
-            if (isInfoValid()) {
-                enrollUserInfo(inputName)
-            }
-        }
+        binding.btnMainName.setOnClickListener { inputProcess() }
         binding.etMainInputName.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (isInfoValid()) {
-                    enrollUserInfo(inputName)
-                }
-                true
-            } else {
-                false
+                inputProcess()
+                return@setOnEditorActionListener true
             }
+            false
+        }
+    }
+
+    private fun inputProcess() {
+        val inputName = binding.etMainInputName.text.toString()
+        if (isInfoValid(inputName)) {
+            enrollUserInfo(inputName)
         }
     }
 
     private fun enrollUserInfo(inputName: String) {
-        toast("이름이 등록되었습니다")
+        sharedPreferences.edit().putString(inputName, inputName).apply()
+        toast("유저 정보가 저장되었습니다: $inputName")
+        navigateToUserActivity(inputName)
     }
 
-    private fun setupFollowers() {
+    private fun navigateToUserActivity(inputName: String) {
+        val intent = Intent(this, UserActivity::class.java).apply {
+            putExtra("user_name", inputName)
+        }
+        startActivity(intent)
+    }
+
+    private fun printFollowers() {
         followerAdapter = FollowerAdapter()
         binding.rvFollower.adapter = followerAdapter
         binding.rvFollower.layoutManager =
