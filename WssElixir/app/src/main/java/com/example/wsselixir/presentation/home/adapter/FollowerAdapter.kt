@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wsselixir.databinding.ItemFollowerBinding
-import com.example.wsselixir.presentation.home.Follower
+import com.example.wsselixir.presentation.model.Follower
 
 class FollowerAdapter(private val onItemClick: (Follower) -> Unit) :
     ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>(FollowerDiffUtil()) {
