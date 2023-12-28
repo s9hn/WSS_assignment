@@ -19,7 +19,6 @@ class HomeActivity : AppCompatActivity() {
         myMBTISpinner()
         infoRegistration()
     }
-
     private fun infoRegistration() {
         val btnRegistration = binding.btnHomeRegistration
 
@@ -38,7 +37,6 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun myMBTISpinner() {
         mbtiSpinner = binding.spinnerHomeMBTI
 
@@ -51,5 +49,4 @@ class HomeActivity : AppCompatActivity() {
         mbtiSpinner.adapter = mbtiAdapter
 
     }
-
 }
