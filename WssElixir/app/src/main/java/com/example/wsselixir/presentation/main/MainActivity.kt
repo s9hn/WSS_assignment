@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun enrollUserInfo(inputName: String) {
         sharedPreferences.edit().putString(inputName, inputName).apply()
-        toast("유저 정보가 저장되었습니다: $inputName")
+        toast(getString(R.string.enrollUserInfo, inputName))
         navigateToUserActivity(inputName)
     }
 
@@ -74,7 +74,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun printFollowers() {
-        followerAdapter = FollowerAdapter()
+        val dialog = FollowerProfileDialog(this)
+
+        followerAdapter = FollowerAdapter { follower ->
+            dialog.showDialog(follower)
+        }
+
         binding.rvFollower.adapter = followerAdapter
         binding.rvFollower.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
