@@ -51,7 +51,6 @@
         android:id="@+id/spinnerHomeMBTI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:entries="@array/MBTI"
         app:layout_constraintBottom_toBottomOf="@id/tvHomeMBTI"
         app:layout_constraintStart_toStartOf="@id/etHomeName"
         app:layout_constraintTop_toTopOf="@id/tvHomeMBTI" />

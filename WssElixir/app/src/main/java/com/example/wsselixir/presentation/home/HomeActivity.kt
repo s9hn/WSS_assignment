@@ -44,21 +44,34 @@ class HomeActivity : AppCompatActivity() {
         binding.btnHomeRegister.setOnClickListener {
             userName = binding.etHomeName.text.toString()
             userMBTI = binding.spinnerHomeMBTI.selectedItem.toString()
-            if (validateMyInformation()) {
-                val intent = Intent(this, MyInformationActivity::class.java)
-                intent.apply {
-                    putExtra("name", userName)
-                    putExtra("mbti", userMBTI)
-                }
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, ERROR_TOAST_MESSAGE, Toast.LENGTH_SHORT).show()
+            when {
+                validateUserName() && validateUserMBTI() -> navigateMyInformation()
+                validateUserName() -> Toast.makeText(this, "MBTI를 선택하세요", Toast.LENGTH_SHORT).show()
+                validateUserMBTI() -> Toast.makeText(this, "이름을 입력하세요", Toast.LENGTH_SHORT).show()
+                else -> Toast.makeText(
+                    this,
+                    "이름 입력 및 MBTI를 선택하세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
-    private fun validateMyInformation(): Boolean {
-        return userName.isNotBlank() && ::userMBTI.isInitialized
+    private fun validateUserName(): Boolean {
+        return userName.isNotBlank()
+    }
+
+    private fun validateUserMBTI(): Boolean {
+        return userMBTI != "선택안함"
+    }
+
+    private fun navigateMyInformation() {
+        val intent = Intent(this, MyInformationActivity::class.java)
+        intent.apply {
+            putExtra("name", userName)
+            putExtra("mbti", userMBTI)
+        }
+        startActivity(intent)
     }
 
     private fun clickFollowerImg() {
@@ -76,9 +89,5 @@ class HomeActivity : AppCompatActivity() {
         val dialog = FollowerDialog()
         dialog.arguments = bundle
         dialog.show(supportFragmentManager, "팔로워 dialog")
-    }
-
-    companion object {
-        const val ERROR_TOAST_MESSAGE = "이름 및 MBTI를 입력하고 다시 시도하세요"
     }
 }

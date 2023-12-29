@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="MBTI">
-        <item>ENFJ</item>
+        <item>선택안함</item>
         <item>INFP</item>
+        <item>ENFP</item>
+        <item>ESFJ</item>
+        <item>ISFJ</item>
+        <item>ISFP</item>
         <item>ESFP</item>
+        <item>INTP</item>
+        <item>INFJ</item>
+        <item>ENFJ</item>
+        <item>ENTP</item>
+        <item>ESTJ</item>
+        <item>ISTJ</item>
+        <item>INTJ</item>
+        <item>ISTP</item>
+        <item>ESTP</item>
+        <item>ENTJ</item>
     </string-array>
 </resources>
