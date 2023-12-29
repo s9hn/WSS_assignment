@@ -1,4 +1,4 @@
-package com.example.wsselixir.presentation.userinfo
+package com.example.wsselixir.ui.userinfo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

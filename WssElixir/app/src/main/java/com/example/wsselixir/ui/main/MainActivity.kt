@@ -1,4 +1,4 @@
-package com.example.wsselixir.presentation.main
+package com.example.wsselixir.ui.main
 
 import android.content.Context
 import android.content.Intent
@@ -12,7 +12,7 @@ import com.example.wsselixir.R
 import com.example.wsselixir.data.User
 import com.example.wsselixir.data.followers
 import com.example.wsselixir.databinding.ActivityMainBinding
-import com.example.wsselixir.presentation.userinfo.UserActivity
+import com.example.wsselixir.ui.userinfo.UserActivity
 import com.example.wsselixir.util.context.toast
 
 
