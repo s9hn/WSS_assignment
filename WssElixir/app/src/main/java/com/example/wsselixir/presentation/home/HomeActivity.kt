@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wsselixir.R
+import com.example.wsselixir.data.mock.followerMockList
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.presentation.myinformation.MyInformationActivity
 
@@ -21,6 +22,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initSpinner()
+        initRecyclerView()
         clickRegisterBtn()
     }
 
@@ -28,6 +30,12 @@ class HomeActivity : AppCompatActivity() {
         val mbtiItems = resources.getStringArray(R.array.MBTI)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, mbtiItems)
         binding.spinnerHomeMBTI.adapter = adapter
+    }
+
+    private fun initRecyclerView() {
+        val rvFollower = binding.rvHomeFollower
+        val rvFollowerAdapter = FollowerAdapter(followerMockList)
+        rvFollower.adapter = rvFollowerAdapter
     }
 
     private fun clickRegisterBtn() {

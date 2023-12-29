@@ -5,6 +5,7 @@
     android:layout_height="130dp">
 
     <ImageView
+        android:id="@+id/ivFollowerImg"
         android:layout_width="114dp"
         android:layout_height="match_parent"
         android:src="@drawable/smj"
