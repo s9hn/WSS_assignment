@@ -16,6 +16,7 @@ import com.example.wsselixir.databinding.DialogFollowerInfoBinding
 class HomeActivity : AppCompatActivity() {
     private lateinit var mbtiSpinner: Spinner
     private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -64,36 +65,41 @@ class HomeActivity : AppCompatActivity() {
     private fun myMBTISpinner() {
         mbtiSpinner = binding.spinnerHomeMBTI
 
-        val mbtiAdapter = ArrayAdapter.createFromResource(
-            this, R.array.typeMBTI, android.R.layout.simple_spinner_item
-        )
+        val mbtiAdapter =
+            ArrayAdapter.createFromResource(
+                this,
+                R.array.typeMBTI,
+                android.R.layout.simple_spinner_item,
+            )
         mbtiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         mbtiSpinner.adapter = mbtiAdapter
     }
 
     private fun initFollowerRecyclerView() {
-        val mockFriendList = listOf<FollowerInformation>(
-            FollowerInformation.Followers(R.drawable.sehun, "세훈"),
-            FollowerInformation.Followers(R.drawable.jawon, "재원"),
-            FollowerInformation.Followers(R.drawable.junseo, "준서"),
-            FollowerInformation.Followers(R.drawable.yeonjeen, "연진"),
-            FollowerInformation.Followers(R.drawable.meongji, "명지"),
-            FollowerInformation.Followers(R.drawable.songhyeon, "송현"),
-            FollowerInformation.Followers(R.drawable.meongjin, "명진"),
-        )
+        val mockFriendList =
+            listOf<FollowerInformation>(
+                FollowerInformation.Followers(R.drawable.sehun, "세훈"),
+                FollowerInformation.Followers(R.drawable.jawon, "재원"),
+                FollowerInformation.Followers(R.drawable.junseo, "준서"),
+                FollowerInformation.Followers(R.drawable.yeonjeen, "연진"),
+                FollowerInformation.Followers(R.drawable.meongji, "명지"),
+                FollowerInformation.Followers(R.drawable.songhyeon, "송현"),
+                FollowerInformation.Followers(R.drawable.meongjin, "명진"),
+            )
+
         val FollowerViewTypeAdapter = FollowersAdapter(mockFriendList)
         binding.layoutFollower.adapter = FollowerViewTypeAdapter
         FollowerViewTypeAdapter.setFollowerList(mockFriendList)
 
-        FollowerViewTypeAdapter.setOnItemClickListener(object :
-            FollowersAdapter.OnItemClickListener {
-            override fun onItemClick(follower: FollowerInformation.Followers) {
-
-                showFriendInfoDialog(follower)
-            }
-        })
+        FollowerViewTypeAdapter.setOnItemClickListener(
+            object :
+                FollowersAdapter.OnItemClickListener {
+                override fun onItemClick(follower: FollowerInformation.Followers) {
+                    showFriendInfoDialog(follower)
+                }
+            },
+        )
     }
-
     private fun showFriendInfoDialog(follower: FollowerInformation.Followers) {
         val dialog = Dialog(this)
         val dialogBinding = DialogFollowerInfoBinding.inflate(layoutInflater)

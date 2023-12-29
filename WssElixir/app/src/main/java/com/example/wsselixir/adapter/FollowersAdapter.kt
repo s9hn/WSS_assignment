@@ -1,13 +1,12 @@
 package com.example.wsselixir.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.wsselixir.R
 import com.example.wsselixir.data.FollowerInformation
+import com.example.wsselixir.databinding.ItemFollowerBinding
 
 class FollowersAdapter(private var followers: List<FollowerInformation>) :
     RecyclerView.Adapter<FollowersAdapter.FollowerViewHolder>() {
@@ -28,9 +27,9 @@ class FollowersAdapter(private var followers: List<FollowerInformation>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_follower, parent, false)
-        return FollowerViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemFollowerBinding.inflate(inflater, parent, false)
+        return FollowerViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
@@ -42,8 +41,9 @@ class FollowersAdapter(private var followers: List<FollowerInformation>) :
         return followers.size
     }
 
-    inner class FollowerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val followerImage: ImageView = itemView.findViewById(R.id.imgFollower)
+    inner class FollowerViewHolder(private val binding: ItemFollowerBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        private val followerImage: ImageView = binding.imgFollower
 
         fun bind(follower: FollowerInformation.Followers) {
             Glide.with(itemView)
