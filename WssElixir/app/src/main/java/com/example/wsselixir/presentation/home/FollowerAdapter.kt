@@ -1,13 +1,13 @@
 package com.example.wsselixir.presentation.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wsselixir.data.dataclass.Follower
 import com.example.wsselixir.data.mock.followerMockList
 import com.example.wsselixir.databinding.ItemFollowerBinding
 
-class FollowerAdapter(private val follower: List<Follower>) :
+class FollowerAdapter :
     RecyclerView.Adapter<FollowerViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
         val binding =
@@ -19,5 +19,18 @@ class FollowerAdapter(private val follower: List<Follower>) :
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
         holder.onBind(followerMockList[position])
+        holder.itemView.setOnClickListener {
+            itemClickListener.onClick(it, position)
+        }
     }
+
+    interface OnItemClickListener {
+        fun onClick(v: View, position: Int)
+    }
+
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.itemClickListener = onItemClickListener
+    }
+
+    private lateinit var itemClickListener: OnItemClickListener
 }
