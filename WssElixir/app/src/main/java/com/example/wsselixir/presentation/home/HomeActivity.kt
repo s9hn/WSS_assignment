@@ -2,8 +2,6 @@ package com.example.wsselixir.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +21,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initSpinner()
-        selectSpinnerItemHandler()
         clickRegisterBtn()
     }
 
@@ -33,24 +30,10 @@ class HomeActivity : AppCompatActivity() {
         binding.spinnerHomeMBTI.adapter = adapter
     }
 
-    private fun selectSpinnerItemHandler() {
-        binding.spinnerHomeMBTI.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
-                ) {
-                    userMBTI = binding.spinnerHomeMBTI.getItemAtPosition(position).toString()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
-                }
-            }
-    }
-
     private fun clickRegisterBtn() {
         binding.btnHomeRegister.setOnClickListener {
             userName = binding.etHomeName.text.toString()
+            userMBTI = binding.spinnerHomeMBTI.selectedItem.toString()
             if (validateMyInformation()) {
                 val intent = Intent(this, MyInformationActivity::class.java)
                 intent.apply {
