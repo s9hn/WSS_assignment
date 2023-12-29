@@ -3,9 +3,7 @@ package com.example.wsselixir.presentation.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
@@ -20,8 +18,6 @@ import com.example.wsselixir.util.context.toast
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var followerAdapter: FollowerAdapter
-
-    private var isMbtiValid: Boolean = false
 
     private val sharedPreferences by lazy {
         getSharedPreferences(
@@ -50,20 +46,20 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
         }
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                isMbtiValid = true
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                isMbtiValid = false
-            }
-        }
     }
 
     private fun isNameValid(inputName: String): Boolean {
         return if (inputName.isEmpty()) {
             toast(getString(R.string.emptyNameMessage))
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun isMbtiValid(selectedMbti: String): Boolean {
+        return if (selectedMbti.isEmpty()) {
+            toast(getString(R.string.emptyMbtiMessage))
             false
         } else {
             true
@@ -84,10 +80,11 @@ class MainActivity : AppCompatActivity() {
     private fun inputProcess() {
         val inputName = binding.etMainInputName.text.toString()
         val selectedMbti = getSelectedMbti()
-        if (isNameValid(inputName) && isMbtiValid) {
+        if (isNameValid(inputName) && isMbtiValid(selectedMbti)) {
             enrollUserInfo(inputName, selectedMbti)
         }
     }
+
     private fun getSelectedMbti(): String {
         val spinner: Spinner = findViewById(R.id.spMainMbti)
         return spinner.selectedItem.toString()
