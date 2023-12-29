@@ -46,11 +46,19 @@ class HomeActivity : AppCompatActivity() {
             userMBTI = binding.spinnerHomeMBTI.selectedItem.toString()
             when {
                 validateUserName() && validateUserMBTI() -> navigateMyInformation()
-                validateUserName() -> Toast.makeText(this, "MBTI를 선택하세요", Toast.LENGTH_SHORT).show()
-                validateUserMBTI() -> Toast.makeText(this, "이름을 입력하세요", Toast.LENGTH_SHORT).show()
+                validateUserName() -> Toast.makeText(
+                    this,
+                    getString(R.string.toast_mbti), Toast.LENGTH_SHORT
+                ).show()
+
+                validateUserMBTI() -> Toast.makeText(
+                    this,
+                    getString(R.string.toast_name), Toast.LENGTH_SHORT
+                ).show()
+
                 else -> Toast.makeText(
                     this,
-                    "이름 입력 및 MBTI를 선택하세요.",
+                    getString(R.string.toast_all),
                     Toast.LENGTH_SHORT
                 ).show()
             }
