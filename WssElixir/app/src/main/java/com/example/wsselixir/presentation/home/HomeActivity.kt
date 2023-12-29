@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.presentation.myinformation.MyInformationActivity
@@ -16,8 +17,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var userName: String
     private lateinit var userMBTI: String
 
-    private val rvFollowerAdapter = FollowerAdapter()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -26,7 +25,6 @@ class HomeActivity : AppCompatActivity() {
         initSpinner()
         initRecyclerView()
         clickRegisterBtn()
-        clickFollowerImg()
     }
 
     private fun initSpinner() {
@@ -37,7 +35,24 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         val rvFollower = binding.rvHomeFollower
+        val rvFollowerAdapter = FollowerAdapter()
+        rvFollower.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvFollower.adapter = rvFollowerAdapter
+
+        rvFollowerAdapter.setItemClickListener(object : FollowerAdapter.OnItemClickListener {
+            override fun onClick(v: View, position: Int) {
+                showFollowerDialog(position)
+            }
+        })
+    }
+
+    private fun showFollowerDialog(position: Int) {
+        val bundle = Bundle().apply {
+            putInt("position", position)
+        }
+        val dialog = FollowerDialog()
+        dialog.arguments = bundle
+        dialog.show(supportFragmentManager, "팔로워 dialog")
     }
 
     private fun clickRegisterBtn() {
@@ -80,22 +95,5 @@ class HomeActivity : AppCompatActivity() {
             putExtra("mbti", userMBTI)
         }
         startActivity(intent)
-    }
-
-    private fun clickFollowerImg() {
-        rvFollowerAdapter.setItemClickListener(object : FollowerAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                showFollowerDialog(position)
-            }
-        })
-    }
-
-    private fun showFollowerDialog(position: Int) {
-        val bundle = Bundle().apply {
-            putInt("position", position)
-        }
-        val dialog = FollowerDialog()
-        dialog.arguments = bundle
-        dialog.show(supportFragmentManager, "팔로워 dialog")
     }
 }
