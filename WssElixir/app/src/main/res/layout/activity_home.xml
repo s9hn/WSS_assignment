@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvHomeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/allTitleName"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etHomeName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/bg_white_stroke_gray_3dp"
+        android:inputType="text"
+        android:singleLine="true"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvHomeName"
+        app:layout_constraintTop_toTopOf="@id/tvHomeName" />
+
+    <TextView
+        android:id="@+id/tvHomeMBTI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/allTitleMbti"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHomeName" />
+
+    <Spinner
+        android:id="@+id/spinnerHomeMBTI"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        app:layout_constraintStart_toStartOf="@id/etHomeName"
+        app:layout_constraintTop_toTopOf="@id/tvHomeMBTI"
+         />
+
+    <Button
+        android:id="@+id/btnHomeRegistration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_gray_corners_10dp"
+        android:text="@string/homeBtnRegistration"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHomeMBTI" />
+
+    <TextView
+        android:id="@+id/tvHomeFollower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="@string/homeTitleFollower"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnHomeRegistration"
+        app:layout_constraintTop_toBottomOf="@id/btnHomeRegistration" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/layoutFollower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_follower"
+        app:layout_constraintTop_toBottomOf="@id/tvHomeFollower"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+</android.support.constraint.ConstraintLayout>
