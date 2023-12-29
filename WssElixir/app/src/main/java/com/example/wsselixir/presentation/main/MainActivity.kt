@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
@@ -30,7 +32,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         printFollowers()
+        setupMbtiSpinner()
         setupClickListeners()
+    }
+
+    private fun setupMbtiSpinner() {
+        val spinner: Spinner = findViewById(R.id.spMainMbti)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.mbti_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
     }
 
     private fun isInfoValid(inputName: String): Boolean {
@@ -62,6 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun enrollUserInfo(inputName: String) {
         sharedPreferences.edit().putString(inputName, inputName).apply()
+        sharedPreferences
         toast(getString(R.string.enrollUserInfo, inputName))
         navigateToUserActivity(inputName)
     }
