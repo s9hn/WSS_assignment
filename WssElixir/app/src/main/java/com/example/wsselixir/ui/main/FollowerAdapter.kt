@@ -1,4 +1,4 @@
-package com.example.wsselixir.presentation.main
+package com.example.wsselixir.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
