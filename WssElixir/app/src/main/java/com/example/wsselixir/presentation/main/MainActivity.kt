@@ -9,6 +9,7 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
+import com.example.wsselixir.data.User
 import com.example.wsselixir.data.followers
 import com.example.wsselixir.databinding.ActivityMainBinding
 import com.example.wsselixir.presentation.userinfo.UserActivity
@@ -93,20 +94,20 @@ class MainActivity : AppCompatActivity() {
     private fun enrollUserInfo(inputName: String, selectedMbti: String) {
         val userId = sharedPreferences.getInt("USER_ID", 0) + 1
 
-        sharedPreferences.edit().apply {
+        with(sharedPreferences.edit()) {
             putInt("USER_ID", userId)
-            putString("USER_NAME_${userId}", inputName)
-            putString("USER_MBTI_${userId}", selectedMbti)
             apply()
         }
 
-        toast(getString(R.string.enrollUserInfo, userId.toString()))
-        navigateToUserActivity(userId)
+        val user = User(userId, inputName, selectedMbti)
+
+        toast(getString(R.string.enrollUserInfo, user.id.toString()))
+        navigateToUserActivity(user)
     }
 
-    private fun navigateToUserActivity(userId: Int) {
+    private fun navigateToUserActivity(user: User) {
         val intent = Intent(this, UserActivity::class.java).apply {
-            putExtra("USER_ID", userId)
+            putExtra("USER", user)
         }
         startActivity(intent)
     }
