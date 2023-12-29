@@ -38,15 +38,15 @@ class HomeActivity : AppCompatActivity() {
 
             when {
                 isNameBlank && isMbtiNull -> {
-                    Toast.makeText(this, "정보를 모두 입력해주세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.allFailRegistration, Toast.LENGTH_SHORT).show()
                 }
 
                 isNameBlank -> {
-                    Toast.makeText(this, "이름을 입력해주세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.nameFailRegistration, Toast.LENGTH_SHORT).show()
                 }
 
                 isMbtiNull -> {
-                    Toast.makeText(this, "MBTI를 선택해주세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.mbtiFailRegistration, Toast.LENGTH_SHORT).show()
                 }
 
                 else -> {

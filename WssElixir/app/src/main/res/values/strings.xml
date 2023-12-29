@@ -4,5 +4,7 @@
     <string name="allTitleMbti">MBTI :</string>
     <string name="homeBtnRegistration">등록</string>
     <string name="homeTitleFollower">팔로워</string>
-    <string name="homeFailRegistration">모든 정보를 입력하십시오.</string>
+    <string name="allFailRegistration">모든 정보를 입력하십시오.</string>
+    <string name="nameFailRegistration">이름을 입력하십시오.</string>
+    <string name="mbtiFailRegistration">MBTI를 선택하십시오.</string>
 </resources>
