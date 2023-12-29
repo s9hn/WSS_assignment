@@ -51,10 +51,6 @@ class FollowerViewHolder(
             .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
             .into(binding.ivFollowerProfile)
 
-        setItemClickEvent()
-    }
-
-    private fun setItemClickEvent() {
         itemView.setOnClickListener {
             itemClick.invoke(this.follower)
         }
