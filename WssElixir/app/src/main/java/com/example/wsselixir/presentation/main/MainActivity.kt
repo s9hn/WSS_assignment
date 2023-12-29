@@ -37,6 +37,19 @@ class MainActivity : AppCompatActivity() {
         setupClickListeners()
     }
 
+    private fun printFollowers() {
+        val dialog = FollowerProfileDialog(this)
+
+        followerAdapter = FollowerAdapter { follower ->
+            dialog.showDialog(follower)
+        }
+
+        binding.rvFollower.adapter = followerAdapter
+        binding.rvFollower.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        followerAdapter.submitList(followers)
+    }
+
     private fun setupMbtiSpinner() {
         val spinner: Spinner = findViewById(R.id.spMainMbti)
         ArrayAdapter.createFromResource(
@@ -46,24 +59,6 @@ class MainActivity : AppCompatActivity() {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
-        }
-    }
-
-    private fun isNameValid(inputName: String): Boolean {
-        return if (inputName.isEmpty()) {
-            toast(getString(R.string.emptyNameMessage))
-            false
-        } else {
-            true
-        }
-    }
-
-    private fun isMbtiValid(selectedMbti: String): Boolean {
-        return if (selectedMbti.isEmpty()) {
-            toast(getString(R.string.emptyMbtiMessage))
-            false
-        } else {
-            true
         }
     }
 
@@ -91,6 +86,24 @@ class MainActivity : AppCompatActivity() {
         return spinner.selectedItem.toString()
     }
 
+    private fun isNameValid(inputName: String): Boolean {
+        return if (inputName.isEmpty()) {
+            toast(getString(R.string.emptyNameMessage))
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun isMbtiValid(selectedMbti: String): Boolean {
+        return if (selectedMbti.isEmpty()) {
+            toast(getString(R.string.emptyMbtiMessage))
+            false
+        } else {
+            true
+        }
+    }
+
     private fun enrollUserInfo(inputName: String, selectedMbti: String) {
         val userId = sharedPreferences.getInt("USER_ID", 0) + 1
 
@@ -110,18 +123,5 @@ class MainActivity : AppCompatActivity() {
             putExtra("USER", user)
         }
         startActivity(intent)
-    }
-
-    private fun printFollowers() {
-        val dialog = FollowerProfileDialog(this)
-
-        followerAdapter = FollowerAdapter { follower ->
-            dialog.showDialog(follower)
-        }
-
-        binding.rvFollower.adapter = followerAdapter
-        binding.rvFollower.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        followerAdapter.submitList(followers)
     }
 }
