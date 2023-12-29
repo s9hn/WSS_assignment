@@ -1,4 +1,4 @@
-package com.example.wsselixir
+package com.example.wsselixir.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
