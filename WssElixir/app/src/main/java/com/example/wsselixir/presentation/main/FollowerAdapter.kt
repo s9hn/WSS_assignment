@@ -5,13 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.wsselixir.R
 import com.example.wsselixir.data.Follower
 import com.example.wsselixir.databinding.ItemFollowerBinding
 import com.example.wsselixir.util.view.ItemDiffCallback
 
 
-class FollowerAdapter :
+class FollowerAdapter(private val itemClick: (Follower) -> Unit) :
     ListAdapter<Follower, FollowerViewHolder>(ItemDiffCallback<Follower>(
         onItemsTheSame = { old, new -> old.id == new.id },
         onContentsTheSame = { old, new -> old == new }
@@ -19,7 +21,7 @@ class FollowerAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemFollowerBinding.inflate(inflater, parent, false)
-        return FollowerViewHolder(binding)
+        return FollowerViewHolder(binding, itemClick)
     }
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
@@ -27,14 +29,34 @@ class FollowerAdapter :
     }
 }
 
-class FollowerViewHolder(private val binding: ItemFollowerBinding) :
+class FollowerViewHolder(
+    private val binding: ItemFollowerBinding,
+    private val itemClick: (Follower) -> Unit
+) :
     RecyclerView.ViewHolder(binding.root) {
+
+    private lateinit var follower: Follower
+
     fun onBind(follower: Follower) {
+        this.follower = follower
         binding.tvMainName.text = follower.name
 
         Glide.with(binding.root)
             .load(follower.profileImage)
-            .error((R.drawable.ic_default_profile))
+            .error(
+                Glide.with(binding.root)
+                    .load(R.drawable.ic_default_profile)
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
+            )
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
             .into(binding.ivFollowerProfile)
+
+        setItemClickEvent()
+    }
+
+    private fun setItemClickEvent() {
+        itemView.setOnClickListener {
+            itemClick.invoke(this.follower)
+        }
     }
 }
