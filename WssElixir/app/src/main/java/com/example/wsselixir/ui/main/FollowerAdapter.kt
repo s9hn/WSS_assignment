@@ -35,10 +35,7 @@ class FollowerViewHolder(
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
-    private lateinit var follower: Follower
-
     fun onBind(follower: Follower) {
-        this.follower = follower
         binding.tvMainName.text = follower.name
 
         Glide.with(binding.root)
@@ -52,7 +49,7 @@ class FollowerViewHolder(
             .into(binding.ivFollowerProfile)
 
         itemView.setOnClickListener {
-            itemClick.invoke(this.follower)
+            itemClick.invoke(follower)
         }
     }
 }
