@@ -19,8 +19,8 @@ class HomeActivity : AppCompatActivity() {
     private val rvFollowerAdapter = FollowerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityHomeBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initSpinner()
