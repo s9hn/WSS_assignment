@@ -26,7 +26,6 @@ class HomeActivity : AppCompatActivity() {
         initFollowerRecyclerView()
     }
 
-
     private fun infoRegistration() {
         val btnRegistration = binding.btnHomeRegistration
 
@@ -34,15 +33,30 @@ class HomeActivity : AppCompatActivity() {
             val name = binding.etHomeName.text.toString()
             val mbti = binding.spinnerHomeMBTI.selectedItem.toString()
 
-            if (name.isNotBlank()) {
-                val intent = Intent(this@HomeActivity, MyInformationActivity::class.java).apply {
-                    putExtra("name", name)
-                    putExtra("mbti", mbti)
+            val isNameBlank = name.isBlank()
+            val isMbtiNull = mbti.isEmpty()
+
+            when {
+                isNameBlank && isMbtiNull -> {
+                    Toast.makeText(this, "정보를 모두 입력해주세요", Toast.LENGTH_SHORT).show()
                 }
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, getString(R.string.homeFailRegistration), Toast.LENGTH_SHORT)
-                    .show()
+
+                isNameBlank -> {
+                    Toast.makeText(this, "이름을 입력해주세요", Toast.LENGTH_SHORT).show()
+                }
+
+                isMbtiNull -> {
+                    Toast.makeText(this, "MBTI를 선택해주세요", Toast.LENGTH_SHORT).show()
+                }
+
+                else -> {
+                    val intent =
+                        Intent(this@HomeActivity, MyInformationActivity::class.java).apply {
+                            putExtra("name", name)
+                            putExtra("mbti", mbti)
+                        }
+                    startActivity(intent)
+                }
             }
         }
     }
@@ -51,13 +65,10 @@ class HomeActivity : AppCompatActivity() {
         mbtiSpinner = binding.spinnerHomeMBTI
 
         val mbtiAdapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.typeMBTI,
-            android.R.layout.simple_spinner_item
+            this, R.array.typeMBTI, android.R.layout.simple_spinner_item
         )
         mbtiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         mbtiSpinner.adapter = mbtiAdapter
-
     }
 
     private fun initFollowerRecyclerView() {
@@ -77,10 +88,9 @@ class HomeActivity : AppCompatActivity() {
         FollowerViewTypeAdapter.setOnItemClickListener(object :
             FollowersAdapter.OnItemClickListener {
             override fun onItemClick(follower: FollowerInformation.Followers) {
-                // 다이얼로그를 생성하고 보여줌
+
                 showFriendInfoDialog(follower)
             }
-
         })
     }
 
@@ -93,11 +103,9 @@ class HomeActivity : AppCompatActivity() {
         dialogBinding.tvDialogName.text = follower.name
 
         dialogBinding.btnDialogClose.setOnClickListener {
-            dialog.dismiss() // 다이얼로그를 닫음
+            dialog.dismiss()
         }
 
         dialog.show()
     }
-
-
 }
