@@ -9,6 +9,8 @@ import com.example.wsselixir.databinding.ItemFollowerBinding
 
 class FollowerAdapter :
     RecyclerView.Adapter<FollowerViewHolder>() {
+    private lateinit var itemClickListener: OnItemClickListener
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
         val binding =
             ItemFollowerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,13 +26,11 @@ class FollowerAdapter :
         }
     }
 
-    interface OnItemClickListener {
-        fun onClick(v: View, position: Int)
-    }
-
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
 
-    private lateinit var itemClickListener: OnItemClickListener
+    interface OnItemClickListener {
+        fun onClick(v: View, position: Int)
+    }
 }
