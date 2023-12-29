@@ -1,4 +1,4 @@
-package com.example.wsselixir.presentation.home
+package com.example.wsselixir.ui.home
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

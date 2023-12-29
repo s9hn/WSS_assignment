@@ -1,4 +1,4 @@
-package com.example.wsselixir.presentation.home
+package com.example.wsselixir.ui.home
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

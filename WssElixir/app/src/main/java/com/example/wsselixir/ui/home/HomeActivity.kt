@@ -1,4 +1,4 @@
-package com.example.wsselixir.presentation.home
+package com.example.wsselixir.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
-import com.example.wsselixir.presentation.myinformation.MyInformationActivity
+import com.example.wsselixir.ui.myinformation.MyInformationActivity
 import com.example.wsselixir.utils.showToastShort
 
 class HomeActivity : AppCompatActivity() {
