@@ -15,6 +15,7 @@
 
     // activity_user.xml
     <string name="tvUserName">이름: %s</string>
+    <string name="tvUserMbti">Mbti: %s</string>
 
     // FollowerProfileDialog.kt
     <string name="tvDialogFollowerExit">닫기</string>
