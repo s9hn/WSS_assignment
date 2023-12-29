@@ -42,16 +42,26 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initPostButton() {
         homeBinding.btnHomePost.setOnClickListener {
-            if (checkUserName() && checkUserMBTI()) {
-                makeToast("이름과 MBTI를 입력해주세요")
-            } else if (checkUserName()) {
-                makeToast("이름을 입력해주세요")
-            } else if (checkUserMBTI()) {
-                makeToast("MBTI를 선택해주세요")
-            } else {
+            if (validateInputs()) {
                 navigateToMyInfoActivity()
             }
         }
+    }
+
+    private fun validateInputs(): Boolean {
+        if (checkUserName() && checkUserMBTI()) {
+            makeToast("이름과 MBTI를 입력해주세요")
+            return false
+        }
+        if (checkUserName()) {
+            makeToast("이름을 입력해주세요")
+            return false
+        }
+        if (checkUserMBTI()) {
+            makeToast("MBTI를 선택해주세요")
+            return false
+        }
+        return true
     }
 
     private fun checkUserName() = homeBinding.etHomeName.text.isNullOrBlank()
