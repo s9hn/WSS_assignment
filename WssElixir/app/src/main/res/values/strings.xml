@@ -11,6 +11,7 @@
 
     // MainActivity.kt
     <string name="emptyNameMessage">이름을 입력해주세요</string>
+    <string name="emptyMbtiMessage">MBTI를 선택해주세요</string>
     <string name="enrollUserInfo">"유저 정보가 저장되었습니다: %s"</string>
 
     // activity_user.xml
