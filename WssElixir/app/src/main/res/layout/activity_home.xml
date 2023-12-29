@@ -63,6 +63,8 @@
         android:layout_marginTop="60dp"
         android:background="@drawable/bg_border_10"
         android:backgroundTint="@color/gray"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center"
         android:paddingVertical="16dp"
         android:text="@string/home_btn"
