@@ -51,14 +51,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupMbtiSpinner() {
-        val spinner: Spinner = findViewById(R.id.spMainMbti)
         ArrayAdapter.createFromResource(
             this,
             R.array.mbti_array,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = adapter
+            binding.spMainMbti.adapter = adapter
         }
     }
 
