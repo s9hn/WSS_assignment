@@ -4,18 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.presentation.myinformation.MyInformationActivity
+import com.example.wsselixir.utils.showToastShort
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
-
-    private lateinit var userName: String
-    private lateinit var userMBTI: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,38 +54,30 @@ class HomeActivity : AppCompatActivity() {
 
     private fun clickRegisterBtn() {
         binding.btnHomeRegister.setOnClickListener {
-            userName = binding.etHomeName.text.toString()
-            userMBTI = binding.spinnerHomeMBTI.selectedItem.toString()
+            val userName = binding.etHomeName.text.toString()
+            val userMBTI = binding.spinnerHomeMBTI.selectedItem.toString()
+
             when {
-                validateUserName() && validateUserMBTI() -> navigateMyInformation()
-                validateUserName() -> Toast.makeText(
-                    this,
-                    getString(R.string.toast_mbti), Toast.LENGTH_SHORT
-                ).show()
+                validateUserName(userName) && validateUserMBTI(userMBTI) -> navigateMyInformation(
+                    userName, userMBTI
+                )
 
-                validateUserMBTI() -> Toast.makeText(
-                    this,
-                    getString(R.string.toast_name), Toast.LENGTH_SHORT
-                ).show()
-
-                else -> Toast.makeText(
-                    this,
-                    getString(R.string.toast_all),
-                    Toast.LENGTH_SHORT
-                ).show()
+                validateUserName(userName) -> showToastShort(getString(R.string.toast_mbti))
+                validateUserMBTI(userMBTI) -> showToastShort(getString(R.string.toast_name))
+                else -> showToastShort(getString(R.string.toast_all))
             }
         }
     }
 
-    private fun validateUserName(): Boolean {
+    private fun validateUserName(userName: String): Boolean {
         return userName.isNotBlank()
     }
 
-    private fun validateUserMBTI(): Boolean {
+    private fun validateUserMBTI(userMBTI: String): Boolean {
         return userMBTI != "선택안함"
     }
 
-    private fun navigateMyInformation() {
+    private fun navigateMyInformation(userName: String, userMBTI: String) {
         val intent = Intent(this, MyInformationActivity::class.java)
         intent.apply {
             putExtra("name", userName)
