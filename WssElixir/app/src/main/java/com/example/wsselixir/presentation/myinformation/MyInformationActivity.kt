@@ -15,7 +15,9 @@ class MyInformationActivity : AppCompatActivity() {
     }
 
     private fun initMyInformation() {
-        binding.tvMyInformationName.text = intent.getStringExtra("name")
-        binding.tvMyInformationMBTI.text = intent.getStringExtra("mbti")
+        val name = intent.getStringExtra("name") ?: 0
+        val mbti = intent.getStringExtra("mbti") ?: 0
+        binding.tvMyInformationName.text = name.toString()
+        binding.tvMyInformationMBTI.text = mbti.toString()
     }
 }
