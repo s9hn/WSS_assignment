@@ -11,7 +11,7 @@ class UserActivity : AppCompatActivity() {
 
     private val sharedPreferences by lazy {
         getSharedPreferences(
-            "USER_NAME",
+            "USER_ID",
             Context.MODE_PRIVATE
         )
     }
@@ -20,13 +20,16 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val userName = intent.getStringExtra("user_name")
+        val userId = intent.getIntExtra("USER_ID", 0)
 
-        printUserInfo(userName ?: "")
+        printUserInfo(userId)
     }
 
-    private fun printUserInfo(userName: String) {
-        val name = sharedPreferences.getString(userName, "")
+    private fun printUserInfo(userId: Int) {
+        val name = sharedPreferences.getString("USER_NAME_${userId}", "")
         binding.tvUserName.text = getString(R.string.tvUserName, name ?: "")
+
+        val mbti = sharedPreferences.getString("USER_MBTI_${userId}", "")
+        binding.tvUserMbti.text = getString(R.string.tvUserMbti, mbti ?: "")
     }
 }

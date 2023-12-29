@@ -3,7 +3,9 @@ package com.example.wsselixir.presentation.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +21,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var followerAdapter: FollowerAdapter
 
+    private var isMbtiValid: Boolean = false
+
     private val sharedPreferences by lazy {
         getSharedPreferences(
-            "USER_NAME",
+            "USER_ID",
             Context.MODE_PRIVATE
         )
     }
@@ -46,9 +50,18 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
         }
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                isMbtiValid = true
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                isMbtiValid = false
+            }
+        }
     }
 
-    private fun isInfoValid(inputName: String): Boolean {
+    private fun isNameValid(inputName: String): Boolean {
         return if (inputName.isEmpty()) {
             toast(getString(R.string.emptyNameMessage))
             false
@@ -70,21 +83,33 @@ class MainActivity : AppCompatActivity() {
 
     private fun inputProcess() {
         val inputName = binding.etMainInputName.text.toString()
-        if (isInfoValid(inputName)) {
-            enrollUserInfo(inputName)
+        val selectedMbti = getSelectedMbti()
+        if (isNameValid(inputName) && isMbtiValid) {
+            enrollUserInfo(inputName, selectedMbti)
         }
     }
-
-    private fun enrollUserInfo(inputName: String) {
-        sharedPreferences.edit().putString(inputName, inputName).apply()
-        sharedPreferences
-        toast(getString(R.string.enrollUserInfo, inputName))
-        navigateToUserActivity(inputName)
+    private fun getSelectedMbti(): String {
+        val spinner: Spinner = findViewById(R.id.spMainMbti)
+        return spinner.selectedItem.toString()
     }
 
-    private fun navigateToUserActivity(inputName: String) {
+    private fun enrollUserInfo(inputName: String, selectedMbti: String) {
+        val userId = sharedPreferences.getInt("USER_ID", 0) + 1
+
+        sharedPreferences.edit().apply {
+            putInt("USER_ID", userId)
+            putString("USER_NAME_${userId}", inputName)
+            putString("USER_MBTI_${userId}", selectedMbti)
+            apply()
+        }
+
+        toast(getString(R.string.enrollUserInfo, userId.toString()))
+        navigateToUserActivity(userId)
+    }
+
+    private fun navigateToUserActivity(userId: Int) {
         val intent = Intent(this, UserActivity::class.java).apply {
-            putExtra("user_name", inputName)
+            putExtra("USER_ID", userId)
         }
         startActivity(intent)
     }
