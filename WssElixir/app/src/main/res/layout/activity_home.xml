@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeActivity">
+
+    <TextView
+        android:id="@+id/tvHomeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="44dp"
+        android:paddingVertical="4dp"
+        android:text="@string/home_name"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etHomeName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="34dp"
+        android:background="@color/gray"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingVertical="12dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/tvHomeName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvHomeName"
+        app:layout_constraintTop_toTopOf="@id/tvHomeName" />
+
+    <TextView
+        android:id="@+id/tvHomeMBTI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/home_mbti"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tvHomeName"
+        app:layout_constraintTop_toBottomOf="@id/tvHomeName" />
+
+    <Spinner
+        android:id="@+id/spinnerHomeMBTI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/tvHomeMBTI"
+        app:layout_constraintStart_toStartOf="@id/etHomeName"
+        app:layout_constraintTop_toTopOf="@id/tvHomeMBTI" />
+
+    <TextView
+        android:id="@+id/btnHomeRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/bg_border_10"
+        android:backgroundTint="@color/gray"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:paddingVertical="16dp"
+        android:text="@string/home_btn"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHomeMBTI" />
+
+    <TextView
+        android:id="@+id/tvHomeFollower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:text="@string/home_follower"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnHomeRegister" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHomeFollower"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvHomeFollower"
+        app:layout_constraintTop_toBottomOf="@id/tvHomeFollower"
+        tools:listitem="@layout/item_follower" />
+</androidx.constraintlayout.widget.ConstraintLayout>
