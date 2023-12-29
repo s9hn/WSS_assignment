@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
 import com.example.wsselixir.data.mock.followerMockList
 import com.example.wsselixir.databinding.DialogFollowerBinding
 
@@ -30,7 +31,8 @@ class FollowerDialog : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.setCancelable(false)
         val position = arguments?.getInt("position") ?: 0
-        binding.ivHomeDialogPerson.setImageResource(followerMockList[position].img)
+        Glide.with(this).load(followerMockList[position].img).circleCrop()
+            .into(binding.ivHomeDialogPerson)
         binding.tvHomeDialogName.text = followerMockList[position].name
     }
 
