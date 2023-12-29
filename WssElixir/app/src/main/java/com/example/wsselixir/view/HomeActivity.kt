@@ -1,5 +1,6 @@
 package com.example.wsselixir.view
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -10,6 +11,7 @@ import com.example.wsselixir.R
 import com.example.wsselixir.adapter.FollowersAdapter
 import com.example.wsselixir.data.FollowerInformation
 import com.example.wsselixir.databinding.ActivityHomeBinding
+import com.example.wsselixir.databinding.DialogFollowerInfoBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var mbtiSpinner: Spinner
@@ -71,6 +73,31 @@ class HomeActivity : AppCompatActivity() {
         val FollowerViewTypeAdapter = FollowersAdapter(mockFriendList)
         binding.layoutFollower.adapter = FollowerViewTypeAdapter
         FollowerViewTypeAdapter.setFollowerList(mockFriendList)
+
+        FollowerViewTypeAdapter.setOnItemClickListener(object :
+            FollowersAdapter.OnItemClickListener {
+            override fun onItemClick(follower: FollowerInformation.Followers) {
+                // 다이얼로그를 생성하고 보여줌
+                showFriendInfoDialog(follower)
+            }
+
+        })
     }
+
+    private fun showFriendInfoDialog(follower: FollowerInformation.Followers) {
+        val dialog = Dialog(this)
+        val dialogBinding = DialogFollowerInfoBinding.inflate(layoutInflater)
+        dialog.setContentView(dialogBinding.root)
+
+        dialogBinding.imgDialogFollower.setImageResource(follower.followerImage)
+        dialogBinding.tvDialogName.text = follower.name
+
+        dialogBinding.btnDialogClose.setOnClickListener {
+            dialog.dismiss() // 다이얼로그를 닫음
+        }
+
+        dialog.show()
+    }
+
 
 }

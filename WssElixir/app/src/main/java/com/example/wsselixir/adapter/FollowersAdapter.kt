@@ -3,8 +3,8 @@ package com.example.wsselixir.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wsselixir.R
 import com.example.wsselixir.data.FollowerInformation
@@ -12,13 +12,24 @@ import com.example.wsselixir.data.FollowerInformation
 class FollowersAdapter(private var followers: List<FollowerInformation>) :
     RecyclerView.Adapter<FollowersAdapter.FollowerViewHolder>() {
 
+    private lateinit var onItemClickListener: OnItemClickListener
+
+    interface OnItemClickListener {
+        fun onItemClick(follower: FollowerInformation.Followers)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.onItemClickListener = listener
+    }
+
     fun setFollowerList(followerList: List<FollowerInformation>) {
         followers = followerList
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_follower, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_follower, parent, false)
         return FollowerViewHolder(view)
     }
 
@@ -27,7 +38,7 @@ class FollowersAdapter(private var followers: List<FollowerInformation>) :
         holder.bind(follower as FollowerInformation.Followers)
     }
 
-    override fun getItemCount():Int {
+    override fun getItemCount(): Int {
         return followers.size
     }
 
@@ -38,7 +49,12 @@ class FollowersAdapter(private var followers: List<FollowerInformation>) :
             Glide.with(itemView)
                 .load(follower.followerImage)
                 .into(followerImage)
+
+            itemView.setOnClickListener {
+                onItemClickListener.onItemClick(follower)
+            }
         }
+
     }
 }
 
