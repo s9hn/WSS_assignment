@@ -62,17 +62,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        binding.btnMainName.setOnClickListener { inputProcess() }
+        binding.btnMainName.setOnClickListener { isInputValid() }
         binding.etMainInputName.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                inputProcess()
+                isInputValid()
                 return@setOnEditorActionListener true
             }
             false
         }
     }
 
-    private fun inputProcess() {
+    private fun isInputValid() {
         val inputName = binding.etMainInputName.text.toString()
         val selectedMbti = getSelectedMbti()
         if (isNameValid(inputName) && isMbtiValid(selectedMbti)) {
