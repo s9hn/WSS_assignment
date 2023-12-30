@@ -14,13 +14,13 @@ class FollowerProfileDialog(private val context: AppCompatActivity) {
     private lateinit var binding: DialogFollowerBinding
 
     fun showDialog(follower: Follower) {
-        val dlg = Dialog(context)
+        val followerDialog = Dialog(context)
         binding = DialogFollowerBinding.inflate(context.layoutInflater)
 
-        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dlg.setContentView(binding.root)
-        dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dlg.setCancelable(false)
+        followerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        followerDialog.setContentView(binding.root)
+        followerDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        followerDialog.setCancelable(false)
 
         binding.tvDialogFollowerName.text = follower.name
         Glide.with(context)
@@ -34,9 +34,9 @@ class FollowerProfileDialog(private val context: AppCompatActivity) {
             .into(binding.ivDialogFollowerProfile)
 
         binding.tvDialogFollowerExit.setOnClickListener {
-            dlg.dismiss()
+            followerDialog.dismiss()
         }
 
-        dlg.show()
+        followerDialog.show()
     }
 }
