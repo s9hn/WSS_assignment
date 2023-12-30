@@ -32,12 +32,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initFollowers()
+        initFollowerAdapter()
         setupMbtiSpinner()
         setupClickListeners()
     }
 
-    private fun initFollowers() {
+    private fun initFollowerAdapter() {
         val dialog = FollowerProfileDialog(this)
 
         followerAdapter = FollowerAdapter { follower ->
