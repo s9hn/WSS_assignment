@@ -81,26 +81,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getSelectedMbti(): String {
-        val spinner: Spinner = findViewById(R.id.spMainMbti)
+        val spinner: Spinner = binding.spMainMbti
         return spinner.selectedItem.toString()
     }
 
     private fun isNameValid(inputName: String): Boolean {
-        return if (inputName.isEmpty()) {
+        if (inputName.isEmpty()) {
             toast(getString(R.string.emptyNameMessage))
-            false
-        } else {
-            true
+            return false
         }
+        return true
     }
 
     private fun isMbtiValid(selectedMbti: String): Boolean {
-        return if (selectedMbti.isEmpty()) {
+        if (selectedMbti.isEmpty()) {
             toast(getString(R.string.emptyMbtiMessage))
-            false
-        } else {
-            true
+            return false
         }
+        return true
     }
 
     private fun enrollUserInfo(inputName: String, selectedMbti: String) {
