@@ -32,8 +32,14 @@ class FollowerAdapter(private val itemClick: (Follower) -> Unit) :
 class FollowerViewHolder(
     private val binding: ItemFollowerBinding,
     private val itemClick: (Follower) -> Unit
-) :
-    RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.ViewHolder(binding.root) {
+
+    init {
+        itemView.setOnClickListener {
+            val follower = it.tag as? Follower
+            follower?.let { itemClick.invoke(it) }
+        }
+    }
 
     fun onBind(follower: Follower) {
         binding.tvMainName.text = follower.name
@@ -48,8 +54,6 @@ class FollowerViewHolder(
             .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
             .into(binding.ivFollowerProfile)
 
-        itemView.setOnClickListener {
-            itemClick.invoke(follower)
-        }
+        itemView.tag = follower
     }
 }
