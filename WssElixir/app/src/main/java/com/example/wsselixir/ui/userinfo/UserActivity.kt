@@ -15,10 +15,10 @@ class UserActivity : AppCompatActivity() {
         setContentView(binding.root)
         val user: User? = intent.getParcelableExtra("USER")
 
-        printUserInfo(user ?: User(0, "", ""))
+        initUserInfo(user ?: User(0, "", ""))
     }
 
-    private fun printUserInfo(user: User) {
+    private fun initUserInfo(user: User) {
         binding.tvUserName.text = getString(R.string.tvUserName, user.name)
         binding.tvUserMbti.text = getString(R.string.tvUserMbti, user.mbti)
     }
