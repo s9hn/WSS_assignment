@@ -7,7 +7,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.data.Follower
 import com.example.wsselixir.data.User
@@ -45,8 +44,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.rvFollower.adapter = followerAdapter
-        binding.rvFollower.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         followerAdapter.submitList(followers)
     }
 
