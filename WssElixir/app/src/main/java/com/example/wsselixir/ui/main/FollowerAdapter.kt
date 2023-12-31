@@ -42,7 +42,7 @@ class FollowerViewHolder(
     }
 
     fun onBind(follower: Follower) {
-        binding.tvMainName.text = follower.name
+        binding.tvFollowerName.text = follower.name
 
         Glide.with(binding.root)
             .load(follower.profileImage)
