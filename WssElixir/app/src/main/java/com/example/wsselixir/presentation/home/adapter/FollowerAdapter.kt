@@ -10,7 +10,15 @@ import com.example.wsselixir.databinding.ItemFollowerBinding
 import com.example.wsselixir.presentation.model.Follower
 
 class FollowerAdapter(private val onItemClick: (Follower) -> Unit) :
-    ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>(FollowerDiffUtil()) {
+    ListAdapter<Follower, FollowerAdapter.FollowerViewHolder>(object : DiffUtil.ItemCallback<Follower>() {
+        override fun areItemsTheSame(oldItem: Follower, newItem: Follower): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Follower, newItem: Follower): Boolean {
+            return oldItem == newItem
+        }
+    }) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
         val followerBinding =
@@ -35,16 +43,5 @@ class FollowerAdapter(private val onItemClick: (Follower) -> Unit) :
                 onItemClick(follower)
             }
         }
-    }
-}
-
-class FollowerDiffUtil : DiffUtil.ItemCallback<Follower>() {
-
-    override fun areItemsTheSame(oldItem: Follower, newItem: Follower): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: Follower, newItem: Follower): Boolean {
-        return oldItem == newItem
     }
 }
