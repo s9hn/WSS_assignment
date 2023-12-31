@@ -7,6 +7,7 @@ import com.example.wsselixir.presentation.model.User
 
 class MyInfoActivity : AppCompatActivity() {
     private lateinit var myInfoBinding: ActivityMyInfoBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         myInfoBinding = ActivityMyInfoBinding.inflate(layoutInflater)
