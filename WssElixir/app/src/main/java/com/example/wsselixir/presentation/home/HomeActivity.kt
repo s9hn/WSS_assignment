@@ -1,6 +1,5 @@
 package com.example.wsselixir.presentation.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -20,6 +19,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding
     private lateinit var followerAdapter: FollowerAdapter
     private var followerDialog: AlertDialog? = null
+    private var dialogBinding: DialogHomeBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,34 +95,32 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showFollowerDialog(follower: Follower) {
-        val dialogBinding = DialogHomeBinding.inflate(layoutInflater)
-        if (followerDialog == null) {
-            setupFollowerDialog(dialogBinding, follower)
-        } else {
-            updateFollowerDialogContents(dialogBinding, follower)
+        if (dialogBinding == null) {
+            initializeDialog()
         }
+        updateDialogContents(follower)
         followerDialog?.show()
     }
 
-    private fun setupFollowerDialog(binding: DialogHomeBinding, follower: Follower) {
-        Glide.with(applicationContext)
-            .load(follower.profileImage)
-            .into(binding.itemFollower.ivFollowerProfile)
-        binding.itemFollower.tvFollowerName.text = follower.name
-        binding.btnHomeDialogCancel.setOnClickListener {
-            followerDialog?.dismiss()
-        }
+    private fun initializeDialog() {
+        dialogBinding = DialogHomeBinding.inflate(layoutInflater)
         followerDialog = AlertDialog.Builder(this)
-            .setView(binding.root)
+            .setView(dialogBinding?.root)
             .setCancelable(false)
             .create()
+
+        dialogBinding?.btnHomeDialogCancel?.setOnClickListener {
+            followerDialog?.dismiss()
+        }
     }
 
-    private fun updateFollowerDialogContents(binding: DialogHomeBinding, follower: Follower) {
-        Glide.with(applicationContext)
-            .load(follower.profileImage)
-            .into(binding.itemFollower.ivFollowerProfile)
-        binding.itemFollower.tvFollowerName.text = follower.name
+    private fun updateDialogContents(follower: Follower) {
+        dialogBinding?.let { binding ->
+            Glide.with(this)
+                .load(follower.profileImage)
+                .into(binding.itemFollower.ivFollowerProfile)
+            binding.itemFollower.tvFollowerName.text = follower.name
+        }
     }
 
     private fun makeToast(text: String) {
