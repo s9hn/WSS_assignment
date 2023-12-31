@@ -18,6 +18,8 @@ import com.example.wsselixir.presentation.myInfo.MyInfoActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding
+    private lateinit var followerAdapter: FollowerAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +28,7 @@ class HomeActivity : AppCompatActivity() {
 
         initMBTISpinner()
         initPostButton()
+        initAdapter()
         initRecyclerView()
     }
 
@@ -77,15 +80,22 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun initAdapter() {
+        followerAdapter = FollowerAdapter(::showFollowerDialog)
+        loadDummyFollowerData()
+    }
+
+    private fun loadDummyFollowerData() {
+        followerAdapter.submitList(dummyFollowers)
+    }
+
     private fun initRecyclerView() {
-        val followerAdapter = FollowerAdapter(::showFollowerDialog).apply {
-            submitList(dummyFollowers)
-        }
         with(homeBinding.rvHomeFollower) {
             adapter = followerAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
+
 
     private fun showFollowerDialog(follower: Follower) {
         DialogHomeBinding.inflate(layoutInflater).apply {
