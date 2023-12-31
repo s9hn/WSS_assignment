@@ -24,6 +24,7 @@ class FollowerAdapter(private val onItemClick: (Follower) -> Unit) :
 
     inner class FollowerViewHolder(private val binding: ItemFollowerBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun onBind(follower: Follower) {
             binding.tvFollowerName.text = follower.name
             Glide.with(itemView.context)
@@ -38,6 +39,7 @@ class FollowerAdapter(private val onItemClick: (Follower) -> Unit) :
 }
 
 class FollowerDiffUtil : DiffUtil.ItemCallback<Follower>() {
+
     override fun areItemsTheSame(oldItem: Follower, newItem: Follower): Boolean {
         return oldItem.id == newItem.id
     }
