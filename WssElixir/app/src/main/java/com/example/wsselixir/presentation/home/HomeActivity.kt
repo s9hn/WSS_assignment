@@ -19,6 +19,7 @@ import com.example.wsselixir.presentation.myInfo.MyInfoActivity
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding
     private lateinit var followerAdapter: FollowerAdapter
+    private var followerDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,22 +94,31 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-
     private fun showFollowerDialog(follower: Follower) {
-        DialogHomeBinding.inflate(layoutInflater).apply {
-            setupFollowerDialog(this, follower)
+        val dialogBinding = DialogHomeBinding.inflate(layoutInflater)
+        if (followerDialog == null) {
+            setupFollowerDialog(dialogBinding, follower)
+        } else {
+            updateFollowerDialogContents(dialogBinding, follower)
         }
+        followerDialog?.show()
     }
 
     private fun setupFollowerDialog(binding: DialogHomeBinding, follower: Follower) {
-        AlertDialog.Builder(this).apply {
-            setView(binding.root)
-            setCancelable(false)
-            create().apply {
-                binding.btnHomeDialogCancel.setOnClickListener { dismiss() }
-                show()
-            }
+        Glide.with(applicationContext)
+            .load(follower.profileImage)
+            .into(binding.itemFollower.ivFollowerProfile)
+        binding.itemFollower.tvFollowerName.text = follower.name
+        binding.btnHomeDialogCancel.setOnClickListener {
+            followerDialog?.dismiss()
         }
+        followerDialog = AlertDialog.Builder(this)
+            .setView(binding.root)
+            .setCancelable(false)
+            .create()
+    }
+
+    private fun updateFollowerDialogContents(binding: DialogHomeBinding, follower: Follower) {
         Glide.with(applicationContext)
             .load(follower.profileImage)
             .into(binding.itemFollower.ivFollowerProfile)
