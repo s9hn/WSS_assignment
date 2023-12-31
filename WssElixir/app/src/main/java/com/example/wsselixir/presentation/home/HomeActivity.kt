@@ -73,9 +73,7 @@ class HomeActivity : AppCompatActivity() {
     private fun navigateToMyInfoActivity() {
         val userName = homeBinding.etHomeName.text.toString()
         val userMBTI = homeBinding.spinnerHomeMBTI.selectedItem.toString()
-        val intent = Intent(this, MyInfoActivity::class.java).apply {
-            putExtra("userInfo", User(userName, userMBTI))
-        }
+        val intent = MyInfoActivity.createIntent(this, User(userName, userMBTI))
         startActivity(intent)
     }
 
