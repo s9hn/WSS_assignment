@@ -1,18 +1,18 @@
-package com.example.wsselixir.ui.myInfo
+package com.example.wsselixir.ui.DetailView
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.wsselixir.databinding.ActivityMyInfoBinding
+import com.example.wsselixir.databinding.ActivityDetailViewBinding
 import com.example.wsselixir.ui.model.User
 
-class MyInfoActivity : AppCompatActivity() {
-    private lateinit var myInfoBinding: ActivityMyInfoBinding
+class DetailViewActivity : AppCompatActivity() {
+    private lateinit var myInfoBinding: ActivityDetailViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        myInfoBinding = ActivityMyInfoBinding.inflate(layoutInflater)
+        myInfoBinding = ActivityDetailViewBinding.inflate(layoutInflater)
         setContentView(myInfoBinding.root)
 
         initMyInfoUI()
@@ -25,8 +25,8 @@ class MyInfoActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun createIntent(context: Context, userInfo : User): Intent {
-            return Intent(context, MyInfoActivity::class.java).apply {
+        fun createIntent(context: Context, userInfo: User): Intent {
+            return Intent(context, DetailViewActivity::class.java).apply {
                 putExtra("userInfo", userInfo)
             }
         }

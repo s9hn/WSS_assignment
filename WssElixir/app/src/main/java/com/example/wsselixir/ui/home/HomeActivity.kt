@@ -13,7 +13,7 @@ import com.example.wsselixir.databinding.DialogHomeBinding
 import com.example.wsselixir.ui.home.adapter.FollowerAdapter
 import com.example.wsselixir.ui.model.Follower
 import com.example.wsselixir.ui.model.User
-import com.example.wsselixir.ui.myInfo.MyInfoActivity
+import com.example.wsselixir.ui.DetailView.DetailViewActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding
@@ -74,7 +74,7 @@ class HomeActivity : AppCompatActivity() {
     private fun navigateToMyInfoActivity() {
         val userName = homeBinding.etHomeName.text.toString()
         val userMBTI = homeBinding.spinnerHomeMBTI.selectedItem.toString()
-        val intent = MyInfoActivity.createIntent(this, User(userName, userMBTI))
+        val intent = DetailViewActivity.createIntent(this, User(userName, userMBTI))
         startActivity(intent)
     }
 

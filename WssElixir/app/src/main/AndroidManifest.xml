@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.myInfo.MyInfoActivity"
+            android:name=".ui.DetailView.DetailViewActivity"
             android:exported="false" />
         <activity
             android:name=".ui.home.HomeActivity"
