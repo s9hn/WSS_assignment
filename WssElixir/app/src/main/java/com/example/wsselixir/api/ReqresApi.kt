@@ -1,5 +1,7 @@
-package com.example.wsselixir.remote
+package com.example.wsselixir.api
 
+import com.example.wsselixir.data.dto.UserResponseDto
+import com.example.wsselixir.data.dto.UsersResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 

@@ -1,4 +1,4 @@
-package com.example.wsselixir.remote
+package com.example.wsselixir.data.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
