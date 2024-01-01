@@ -13,13 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WssElixir"
-        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.myInfo.MyInfoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.home.HomeActivity"
+            android:name=".ui.main.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.userinfo.UserActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
     </application>
 
 </manifest>
