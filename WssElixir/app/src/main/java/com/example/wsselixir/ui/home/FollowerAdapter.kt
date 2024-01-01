@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wsselixir.data.mock.followerMockList
+import com.example.wsselixir.data.dataclass.Follower
 import com.example.wsselixir.databinding.ItemFollowerBinding
 
 class FollowerAdapter :
@@ -17,10 +17,10 @@ class FollowerAdapter :
         return FollowerViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = followerMockList.size
+    override fun getItemCount(): Int = Follower.followerMockList.size
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
-        holder.onBind(followerMockList[position])
+        holder.onBind(Follower.followerMockList[position])
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }

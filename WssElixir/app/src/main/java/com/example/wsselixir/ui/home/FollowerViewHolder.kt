@@ -7,6 +7,7 @@ import com.example.wsselixir.databinding.ItemFollowerBinding
 
 class FollowerViewHolder(private val binding: ItemFollowerBinding) :
     RecyclerView.ViewHolder(binding.root) {
+
     fun onBind(follower: Follower) {
         Glide.with(itemView.context)
             .load(follower.img)
