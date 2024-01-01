@@ -7,7 +7,7 @@
     android:paddingHorizontal="24dp">
 
     <TextView
-        android:id="@+id/tvMyInformationNameTitle"
+        android:id="@+id/tvMyInfoNameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="54dp"
@@ -20,41 +20,41 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvMyInformationName"
+        android:id="@+id/tvMyInfoName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:background="@color/gray"
         android:paddingVertical="12dp"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/tvMyInformationNameTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvMyInfoNameTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvMyInformationNameTitle"
-        app:layout_constraintTop_toTopOf="@id/tvMyInformationNameTitle"
+        app:layout_constraintStart_toEndOf="@id/tvMyInfoNameTitle"
+        app:layout_constraintTop_toTopOf="@id/tvMyInfoNameTitle"
         tools:text="손명지" />
 
     <TextView
-        android:id="@+id/tvMyInformationMBTITitle"
+        android:id="@+id/tvMyInfoMBTITitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="@string/home_mbti"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/tvMyInformationNameTitle"
-        app:layout_constraintTop_toBottomOf="@id/tvMyInformationNameTitle" />
+        app:layout_constraintStart_toStartOf="@id/tvMyInfoNameTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvMyInfoNameTitle" />
 
     <TextView
-        android:id="@+id/tvMyInformationMBTI"
+        android:id="@+id/tvMyInfoMBTI"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/gray"
         android:paddingVertical="12dp"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@id/tvMyInformationMBTITitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvMyInfoMBTITitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tvMyInformationName"
-        app:layout_constraintTop_toTopOf="@id/tvMyInformationMBTITitle"
+        app:layout_constraintStart_toStartOf="@id/tvMyInfoName"
+        app:layout_constraintTop_toTopOf="@id/tvMyInfoMBTITitle"
         tools:text="ISFP" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
