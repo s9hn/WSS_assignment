@@ -16,10 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.myInfo.MyInfoActivity"
+            android:name=".ui.myInfo.MyInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.home.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

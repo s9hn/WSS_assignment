@@ -1,11 +1,11 @@
-package com.example.wsselixir.presentation.myInfo
+package com.example.wsselixir.ui.myInfo
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wsselixir.databinding.ActivityMyInfoBinding
-import com.example.wsselixir.presentation.model.User
+import com.example.wsselixir.ui.model.User
 
 class MyInfoActivity : AppCompatActivity() {
     private lateinit var myInfoBinding: ActivityMyInfoBinding

@@ -1,4 +1,4 @@
-package com.example.wsselixir.presentation.model
+package com.example.wsselixir.ui.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

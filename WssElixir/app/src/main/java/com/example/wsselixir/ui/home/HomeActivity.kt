@@ -1,4 +1,4 @@
-package com.example.wsselixir.presentation.home
+package com.example.wsselixir.ui.home
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -10,10 +10,10 @@ import com.bumptech.glide.Glide
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.databinding.DialogHomeBinding
-import com.example.wsselixir.presentation.home.adapter.FollowerAdapter
-import com.example.wsselixir.presentation.model.Follower
-import com.example.wsselixir.presentation.model.User
-import com.example.wsselixir.presentation.myInfo.MyInfoActivity
+import com.example.wsselixir.ui.home.adapter.FollowerAdapter
+import com.example.wsselixir.ui.model.Follower
+import com.example.wsselixir.ui.model.User
+import com.example.wsselixir.ui.myInfo.MyInfoActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding

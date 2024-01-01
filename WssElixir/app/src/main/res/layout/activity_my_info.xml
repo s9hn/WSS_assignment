@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="40dp"
-    tools:context=".presentation.myInfo.MyInfoActivity">
+    tools:context=".ui.myInfo.MyInfoActivity">
 
     <TextView
         android:id="@+id/tvMyInfoNameTag"

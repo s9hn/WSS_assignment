@@ -1,9 +1,9 @@
-package com.example.wsselixir.presentation.home.adapter
+package com.example.wsselixir.ui.home.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wsselixir.databinding.ItemFollowerBinding
-import com.example.wsselixir.presentation.model.Follower
+import com.example.wsselixir.ui.model.Follower
 
 class FollowerViewHolder(
     private val binding: ItemFollowerBinding,
