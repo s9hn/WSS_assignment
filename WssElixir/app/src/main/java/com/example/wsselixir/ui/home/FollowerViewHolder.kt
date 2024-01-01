@@ -13,7 +13,7 @@ class FollowerViewHolder(
 
     fun onBind(follower: Follower) {
         Glide.with(itemView.context)
-            .load(follower.img)
+            .load(follower.img).circleCrop()
             .into(binding.ivFollowerImg)
 
         itemView.setOnClickListener {
