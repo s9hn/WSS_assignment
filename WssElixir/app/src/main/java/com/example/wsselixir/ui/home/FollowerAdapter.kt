@@ -14,16 +14,13 @@ class FollowerAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
         val binding =
             ItemFollowerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FollowerViewHolder(binding)
+        return FollowerViewHolder(binding, itemClickListener)
     }
 
     override fun getItemCount(): Int = Follower.followerMockList.size
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
         holder.onBind(Follower.followerMockList[position])
-        holder.itemView.setOnClickListener {
-            itemClickListener.onClick(it, position)
-        }
     }
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
