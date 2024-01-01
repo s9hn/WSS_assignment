@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
-import com.example.wsselixir.ui.myinformation.MyInformationActivity
+import com.example.wsselixir.ui.detail.DetailActivity
 import com.example.wsselixir.utils.showToastShort
 
 class HomeActivity : AppCompatActivity() {
@@ -78,7 +78,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun navigateMyInformation(userName: String, userMBTI: String) {
-        val intent = Intent(this, MyInformationActivity::class.java)
+        val intent = Intent(this, DetailActivity::class.java)
         intent.apply {
             putExtra("name", userName)
             putExtra("mbti", userMBTI)
