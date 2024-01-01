@@ -9,4 +9,6 @@
     <string name="toast_mbti">MBTI를 선택하세요</string>
     <string name="toast_name">이름을 입력하세요</string>
     <string name="toast_all">이름 입력 및 MBTI를 선택하세요.</string>
+    <string name="detail_my_info">내 정보</string>
+    <string name="detail_follower_info">팔로워 정보</string>
 </resources>

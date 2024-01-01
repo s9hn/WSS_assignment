@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="24dp">
@@ -20,7 +21,6 @@
 
     <TextView
         android:id="@+id/tvMyInformationName"
-        tools:text="손명지"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -30,7 +30,8 @@
         app:layout_constraintBottom_toBottomOf="@id/tvMyInformationNameTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvMyInformationNameTitle"
-        app:layout_constraintTop_toTopOf="@id/tvMyInformationNameTitle" />
+        app:layout_constraintTop_toTopOf="@id/tvMyInformationNameTitle"
+        tools:text="손명지" />
 
     <TextView
         android:id="@+id/tvMyInformationMBTITitle"
@@ -45,7 +46,6 @@
 
     <TextView
         android:id="@+id/tvMyInformationMBTI"
-        tools:text="ISFP"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/gray"
@@ -54,6 +54,7 @@
         app:layout_constraintBottom_toBottomOf="@id/tvMyInformationMBTITitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvMyInformationName"
-        app:layout_constraintTop_toTopOf="@id/tvMyInformationMBTITitle" />
+        app:layout_constraintTop_toTopOf="@id/tvMyInformationMBTITitle"
+        tools:text="ISFP" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
