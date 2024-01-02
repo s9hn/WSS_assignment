@@ -1,4 +1,4 @@
-package com.example.wsselixir.ui.DetailView
+package com.example.wsselixir.ui.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

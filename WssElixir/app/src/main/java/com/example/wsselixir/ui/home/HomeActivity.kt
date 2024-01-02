@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
-import com.example.wsselixir.ui.DetailView.DetailViewActivity
+import com.example.wsselixir.ui.detail.DetailActivity
 import com.example.wsselixir.ui.home.adapter.FollowerAdapter
 import com.example.wsselixir.ui.model.LocalUser
 
@@ -110,7 +110,7 @@ class HomeActivity : AppCompatActivity() {
     private fun navigateToMyInfoActivity() {
         val userName = homeBinding.etHomeName.text.toString()
         val userMBTI = homeBinding.spinnerHomeMBTI.selectedItem.toString()
-        val intent = DetailViewActivity.createIntent(
+        val intent = DetailActivity.createIntent(
             this,
             LocalUser(userName, userMBTI),
             homeViewModel.selectedFollowerId.value ?: 0
