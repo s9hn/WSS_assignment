@@ -1,7 +1,5 @@
 package com.example.wsselixir.remote
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -18,4 +16,3 @@ data class UserResponseDto(
         val avatar: String,
     )
 }
-용
