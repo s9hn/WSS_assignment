@@ -10,16 +10,17 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
     private var _homeUiState: MutableLiveData<HomeUiState> = MutableLiveData(HomeUiState.Init)
-    val homeUiState: LiveData<HomeUiState> = _homeUiState
+    val homeUiState: LiveData<HomeUiState> get() = _homeUiState
 
     private var _validationState: MutableLiveData<ValidationState> = MutableLiveData()
-    val validationState: LiveData<ValidationState> = _validationState
+    val validationState: LiveData<ValidationState> get() = _validationState
 
-    private var _followers: MutableLiveData<List<UserResponseDto.User>> = MutableLiveData(emptyList())
-    val followers: LiveData<List<UserResponseDto.User>> = _followers
+    private var _followers: MutableLiveData<List<UserResponseDto.User>> =
+        MutableLiveData(emptyList())
+    val followers: LiveData<List<UserResponseDto.User>> get() = _followers
 
     private val _selectedFollowerId = MutableLiveData<Int>()
-    val selectedFollowerId: LiveData<Int> = _selectedFollowerId
+    val selectedFollowerId: LiveData<Int> get() = _selectedFollowerId
 
     fun setFollowerId(followerId: Int) {
         _selectedFollowerId.value = followerId
