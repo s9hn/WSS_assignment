@@ -10,12 +10,11 @@ data class UserResponseDto(
     @SerialName("data")
     val data: User
 ) {
-    @Parcelize
     @Serializable
     data class User(
         @SerialName("first_name")
         val first_name: String,
         @SerialName("avatar")
         val avatar: String
-    ): Parcelable
+    )
 }
