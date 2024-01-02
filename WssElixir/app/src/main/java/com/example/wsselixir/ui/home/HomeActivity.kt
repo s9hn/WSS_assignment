@@ -1,6 +1,5 @@
 package com.example.wsselixir.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -8,9 +7,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
+import com.example.wsselixir.data.dto.UsersResponseDto
 import com.example.wsselixir.databinding.ActivityHomeBinding
-import com.example.wsselixir.ui.detail.DetailActivity
-import com.example.wsselixir.utils.showToastShort
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -23,9 +21,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initSpinner()
-        initRecyclerView()
         observeFollowerData()
-        clickRegisterBtn()
     }
 
     private fun initSpinner() {
@@ -33,20 +29,28 @@ class HomeActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, mbtiItems)
         binding.spinnerHomeMBTI.adapter = adapter
     }
+    
+    private fun observeFollowerData() {
+        with(homeViewModel) {
+            usersResponse.observe(this@HomeActivity) { usersResponse ->
+                initRecyclerView(usersResponse)
+            }
+        }
+    }
 
-    private fun initRecyclerView() {
+    private fun initRecyclerView(data: UsersResponseDto) {
         val rvFollower = binding.rvHomeFollower
-        val rvFollowerAdapter = FollowerAdapter()
+        val rvFollowerAdapter = FollowerAdapter(data)
         rvFollower.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvFollower.adapter = rvFollowerAdapter
 
         rvFollowerAdapter.setItemClickListener(object : FollowerAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
-                showFollowerDialog(position)
             }
         })
     }
 
+    /* 1차 엘릭서
     private fun showFollowerDialog(position: Int) {
         val bundle = Bundle().apply {
             putInt("position", position)
@@ -56,9 +60,6 @@ class HomeActivity : AppCompatActivity() {
         dialog.show(supportFragmentManager, "팔로워 dialog")
     }
 
-    private fun observeFollowerData() {
-        homeViewModel.getFollowerData()
-    }
 
     private fun clickRegisterBtn() {
         binding.btnHomeRegister.setOnClickListener {
@@ -92,5 +93,5 @@ class HomeActivity : AppCompatActivity() {
             putExtra("mbti", userMBTI)
         }
         startActivity(intent)
-    }
+    } */
 }
