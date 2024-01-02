@@ -19,9 +19,7 @@ class UserInfoFragment : Fragment() {
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserInfoBinding.inflate(inflater, container, false)
         return binding.root
@@ -31,11 +29,11 @@ class UserInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
-
+        val userId = requireActivity().intent.getIntExtra("USER_ID", 0)
         val userName = requireActivity().intent.getStringExtra("USER_NAME")
         val userMbti = requireActivity().intent.getStringExtra("USER_MBTI")
 
-        val user = User(0, userName!!, userMbti!!)
+        val user = User(userId, userName ?: "", userMbti ?: "")
         initUserInfo(user)
     }
 

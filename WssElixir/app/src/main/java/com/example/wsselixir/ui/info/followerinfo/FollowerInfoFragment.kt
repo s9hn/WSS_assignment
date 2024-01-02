@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.example.wsselixir.R
 import com.example.wsselixir.data.Follower
 import com.example.wsselixir.databinding.FragmentFollowerInfoBinding
+import com.example.wsselixir.util.view.bindProfileImage
 
 class FollowerInfoFragment : Fragment() {
     private var _binding: FragmentFollowerInfoBinding? = null
@@ -32,26 +31,16 @@ class FollowerInfoFragment : Fragment() {
 
         followerInfoViewModel = ViewModelProvider(this)[FollowerInfoViewModel::class.java]
 
-        followerInfoViewModel.followerId.observe(viewLifecycleOwner) { it ->
-            followerInfoViewModel.updateFollowerInfo(it)
-            followerInfoViewModel.follower.observe(viewLifecycleOwner) {
-                initFollowerInfo(it)
-            }
-        }
+        val followerId = requireActivity().intent.getIntExtra("FOLLOWER_ID", 1)
 
+        followerInfoViewModel.updateFollowerInfo(followerId)
+        followerInfoViewModel.follower.observe(viewLifecycleOwner) {
+            initFollowerInfo(it)
+        }
     }
 
     private fun initFollowerInfo(follower: Follower) {
         binding.tvFollowerName.text = follower.firstName
-        Glide.with(this)
-            .load(follower.avatar)
-            .error(
-                Glide.with(this)
-                    .load(R.drawable.ic_default_profile)
-                    .circleCrop()
-            )
-            .circleCrop()
-            .into(binding.ivFollowerProfile)
-
+        binding.ivFollowerProfile.bindProfileImage(follower.avatar)
     }
 }

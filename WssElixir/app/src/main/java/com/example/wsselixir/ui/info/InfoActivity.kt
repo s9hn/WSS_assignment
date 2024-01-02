@@ -29,6 +29,9 @@ class InfoActivity : AppCompatActivity() {
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         viewPager.adapter = pagerAdapter
 
+        val initialPage = intent.getIntExtra("PAGE_NUMBER", 0)
+        viewPager.currentItem = initialPage
+
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.tiUserInfoTap)

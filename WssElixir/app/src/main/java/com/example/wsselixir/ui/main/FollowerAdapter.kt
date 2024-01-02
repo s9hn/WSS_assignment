@@ -4,11 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.wsselixir.R
 import com.example.wsselixir.data.Follower
 import com.example.wsselixir.databinding.ItemFollowerBinding
 import com.example.wsselixir.util.view.ItemDiffCallback
+import com.example.wsselixir.util.view.bindProfileImage
 
 
 class FollowerAdapter(private val itemClick: (Follower) -> Unit) :
@@ -41,16 +40,7 @@ class FollowerViewHolder(
 
     fun onBind(follower: Follower) {
         binding.tvFollowerName.text = follower.firstName
-
-        Glide.with(binding.root)
-            .load(follower.avatar)
-            .error(
-                Glide.with(binding.root)
-                    .load(R.drawable.ic_default_profile)
-                    .circleCrop()
-            )
-            .circleCrop()
-            .into(binding.ivFollowerProfile)
+        binding.ivFollowerProfile.bindProfileImage(follower.avatar)
 
         itemView.tag = follower
     }

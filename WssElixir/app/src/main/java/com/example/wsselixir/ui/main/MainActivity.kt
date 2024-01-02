@@ -45,7 +45,13 @@ class MainActivity : AppCompatActivity() {
         followerAdapter = FollowerAdapter { follower ->
             val followerId = follower.id
             followerInfoViewModel.setFollowerId(followerId)
-            navigateInfoActivity()
+            followerInfoViewModel.followerId.observe(this) {
+                val intent = Intent(this, InfoActivity::class.java).apply {
+                    putExtra("FOLLOWER_ID", followerId)
+                    putExtra("PAGE_NUMBER", 1)
+                }
+                startActivity(intent)
+            }
         }
 
         binding.rvFollower.adapter = followerAdapter
@@ -84,20 +90,13 @@ class MainActivity : AppCompatActivity() {
             mainViewModel.enrollUserInfo(inputName, selectedMbti, userId)
 
             mainViewModel.user.observe(this) {
-                navigateInfoActivity()
+                val intent = Intent(this, InfoActivity::class.java).apply {
+                    putExtra("USER_ID", userId)
+                    putExtra("USER_NAME", inputName)
+                    putExtra("USER_MBTI", selectedMbti)
+                }
+                startActivity(intent)
             }
         }
-    }
-
-    private fun navigateInfoActivity() {
-        val userId = mainViewModel.user.value?.id ?: 0
-        val userName = mainViewModel.user.value?.name ?: ""
-        val userMbti = mainViewModel.user.value?.mbti ?: ""
-        val intent = Intent(this, InfoActivity::class.java).apply {
-            putExtra("USER_ID", userId)
-            putExtra("USER_NAME", userName)
-            putExtra("USER_MBTI", userMbti)
-        }
-        startActivity(intent)
     }
 }
