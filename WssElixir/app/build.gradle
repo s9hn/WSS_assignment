@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization' version "1.9.21"
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -69,4 +70,7 @@ dependencies {
 
     // fragment-ktx
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
+
+    // dataBinding
+    implementation 'androidx.databinding:databinding-runtime:4.1.0'
 }
