@@ -24,8 +24,6 @@ import kotlinx.coroutines.flow.onEach
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding
     private lateinit var followerAdapter: FollowerAdapter
-    private var followerDialog: AlertDialog? = null
-    private var dialogBinding: DialogHomeBinding? = null
     private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +40,6 @@ class HomeActivity : AppCompatActivity() {
                 when (state) {
                     is HomeUiState.Init -> {
                         initMBTISpinner()
-                        initPostButton()
                         initAdapter()
                         initRecyclerView()
                         homeViewModel.getUsers()
@@ -68,14 +65,6 @@ class HomeActivity : AppCompatActivity() {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             homeBinding.spinnerHomeMBTI.adapter = adapter
-        }
-    }
-
-    private fun initPostButton() {
-        homeBinding.btnHomePost.setOnClickListener {
-            if (validateInputs()) {
-                navigateToMyInfoActivity()
-            }
         }
     }
 
@@ -123,32 +112,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showFollowerDialog(follower: UserResponseDto.User) {
-        if (dialogBinding == null) {
-            initializeDialog()
-        }
-        updateDialogContents(follower)
-        followerDialog?.show()
-    }
 
-    private fun initializeDialog() {
-        dialogBinding = DialogHomeBinding.inflate(layoutInflater)
-        followerDialog = AlertDialog.Builder(this)
-            .setView(dialogBinding?.root)
-            .setCancelable(false)
-            .create()
-
-        dialogBinding?.btnHomeDialogCancel?.setOnClickListener {
-            followerDialog?.dismiss()
-        }
-    }
-
-    private fun updateDialogContents(follower: UserResponseDto.User) {
-        dialogBinding?.let { binding ->
-            Glide.with(this)
-                .load(follower.avatar)
-                .into(binding.itemFollower.ivFollowerProfile)
-            binding.itemFollower.tvFollowerName.text = follower.first_name
-        }
     }
 
     private fun makeToast(text: String) {

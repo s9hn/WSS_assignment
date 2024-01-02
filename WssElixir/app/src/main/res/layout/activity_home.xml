@@ -45,16 +45,6 @@
         app:layout_constraintStart_toEndOf="@id/tvHomeMBTITag"
         app:layout_constraintTop_toTopOf="@id/tvHomeMBTITag" />
 
-    <Button
-        android:id="@+id/btnHomePost"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="60dp"
-        android:text="등록하기"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvHomeMBTITag" />
-
     <TextView
         android:id="@+id/tvHomeFollower"
         android:layout_width="wrap_content"
@@ -63,7 +53,7 @@
         android:text="팔로워"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnHomePost" />
+        app:layout_constraintTop_toBottomOf="@id/spinnerHomeMBTI" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHomeFollower"
