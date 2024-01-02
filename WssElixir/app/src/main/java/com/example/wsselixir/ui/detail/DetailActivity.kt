@@ -8,6 +8,8 @@ import com.google.android.material.tabs.TabLayout
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
+    private var followerId: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -18,7 +20,16 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupFragment() {
-        supportFragmentManager.beginTransaction().replace(R.id.fcvDetail, MyInfoFragment()).commit()
+        followerId = intent.getIntExtra("id", 0)
+        val fragment = FollowerInfoFragment().apply {
+            arguments = Bundle().apply {
+                putInt("id", followerId)
+            }
+        }
+        supportFragmentManager.beginTransaction().replace(R.id.fcvDetail, fragment)
+            .commit()
+
+        binding.tabDetail.getTabAt(1)?.select()
     }
 
     private fun selectTabListener() {
@@ -26,11 +37,15 @@ class DetailActivity : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val fragment = when (tab.position) {
                     0 -> MyInfoFragment()
-                    1 -> FollowerInfoFragment()
+                    1 -> FollowerInfoFragment().apply {
+                        arguments = Bundle().apply {
+                            putInt("id", followerId)
+                        }
+                    }
+
                     else -> throw IllegalStateException("포지션이 없음")
                 }
-                supportFragmentManager.beginTransaction().replace(R.id.fcvDetail, fragment)
-                    .commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fcvDetail, fragment).commit()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {

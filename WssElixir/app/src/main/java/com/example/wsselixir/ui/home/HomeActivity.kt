@@ -1,5 +1,6 @@
 package com.example.wsselixir.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.data.dto.UsersResponseDto
 import com.example.wsselixir.databinding.ActivityHomeBinding
+import com.example.wsselixir.ui.detail.DetailActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -29,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, mbtiItems)
         binding.spinnerHomeMBTI.adapter = adapter
     }
-    
+
     private fun observeFollowerData() {
         with(homeViewModel) {
             usersResponse.observe(this@HomeActivity) { usersResponse ->
@@ -46,8 +48,17 @@ class HomeActivity : AppCompatActivity() {
 
         rvFollowerAdapter.setItemClickListener(object : FollowerAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
+                navigateFollowerInfo(position + 1)
             }
         })
+    }
+
+    private fun navigateFollowerInfo(id: Int) {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra("id", id)
+        }
+        startActivity(intent)
+        finish()
     }
 
     /* 1차 엘릭서
