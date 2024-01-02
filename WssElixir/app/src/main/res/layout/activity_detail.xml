@@ -14,13 +14,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/btnDetailMyInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/detail_my_info" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/btnDetailFollowerInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/detail_follower_info" />
@@ -28,6 +26,7 @@
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcvDetail"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
