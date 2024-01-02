@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.wsselixir.databinding.ItemFollowerBinding
-import com.example.wsselixir.ui.model.Follower
+import com.example.wsselixir.remote.UserResponseDto
 
-class FollowerAdapter(private val onItemClick: (Follower) -> Unit) :
-    ListAdapter<Follower, FollowerViewHolder>(object :
-        DiffUtil.ItemCallback<Follower>() {
-        override fun areItemsTheSame(oldItem: Follower, newItem: Follower): Boolean {
-            return oldItem.id == newItem.id
+class FollowerAdapter(private val onItemClick: (UserResponseDto.User) -> Unit) :
+    ListAdapter<UserResponseDto.User, FollowerViewHolder>(object :
+        DiffUtil.ItemCallback<UserResponseDto.User>() {
+        override fun areItemsTheSame(oldItem: UserResponseDto.User, newItem: UserResponseDto.User): Boolean {
+            return oldItem.avatar == newItem.avatar
         }
 
-        override fun areContentsTheSame(oldItem: Follower, newItem: Follower): Boolean {
+        override fun areContentsTheSame(oldItem: UserResponseDto.User, newItem: UserResponseDto.User): Boolean {
             return oldItem == newItem
         }
     }) {

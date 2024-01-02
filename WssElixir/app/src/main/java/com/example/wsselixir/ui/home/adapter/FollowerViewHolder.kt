@@ -3,7 +3,7 @@ package com.example.wsselixir.ui.home.adapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wsselixir.databinding.ItemFollowerBinding
-import com.example.wsselixir.ui.model.Follower
+import com.example.wsselixir.remote.UserResponseDto
 
 class FollowerViewHolder(
     private val binding: ItemFollowerBinding,
@@ -19,10 +19,10 @@ class FollowerViewHolder(
         }
     }
 
-    fun onBind(follower: Follower) {
+    fun onBind(follower: UserResponseDto.User) {
         Glide.with(binding.root.context)
-            .load(follower.profileImage)
+            .load(follower.avatar)
             .into(binding.ivFollowerProfile)
-        binding.tvFollowerName.text = follower.name
+        binding.tvFollowerName.text = follower.first_name
     }
 }

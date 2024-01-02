@@ -1,35 +1,63 @@
 package com.example.wsselixir.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.databinding.DialogHomeBinding
-import com.example.wsselixir.ui.home.adapter.FollowerAdapter
-import com.example.wsselixir.ui.model.Follower
-import com.example.wsselixir.ui.model.User
+import com.example.wsselixir.remote.UserResponseDto
 import com.example.wsselixir.ui.DetailView.DetailViewActivity
+import com.example.wsselixir.ui.home.adapter.FollowerAdapter
+import com.example.wsselixir.ui.model.LocalUser
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding
     private lateinit var followerAdapter: FollowerAdapter
     private var followerDialog: AlertDialog? = null
     private var dialogBinding: DialogHomeBinding? = null
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(homeBinding.root)
 
-        initMBTISpinner()
-        initPostButton()
-        initAdapter()
-        initRecyclerView()
+        observeHomeState()
+    }
+
+    private fun observeHomeState() {
+        homeViewModel.homeUiState.flowWithLifecycle(lifecycle)
+            .onEach { state ->
+                when (state) {
+                    is HomeUiState.Init -> {
+                        initMBTISpinner()
+                        initPostButton()
+                        initAdapter()
+                        initRecyclerView()
+                        homeViewModel.getUsers()
+                    }
+
+                    is HomeUiState.Success -> {
+                        followerAdapter.submitList(homeViewModel.followers.value)
+                        makeToast("Followers를 불러왔습니다.")
+                    }
+
+                    is HomeUiState.Error -> {
+                        Log.e("getUsers Error : ", state.message)
+                    }
+                }
+            }.launchIn(lifecycleScope)
     }
 
     private fun initMBTISpinner() {
@@ -74,17 +102,17 @@ class HomeActivity : AppCompatActivity() {
     private fun navigateToMyInfoActivity() {
         val userName = homeBinding.etHomeName.text.toString()
         val userMBTI = homeBinding.spinnerHomeMBTI.selectedItem.toString()
-        val intent = DetailViewActivity.createIntent(this, User(userName, userMBTI))
+        val intent = DetailViewActivity.createIntent(this, LocalUser(userName, userMBTI))
         startActivity(intent)
     }
 
     private fun initAdapter() {
         followerAdapter = FollowerAdapter(::showFollowerDialog)
-        loadDummyFollowerData()
+        loadFollowerData()
     }
 
-    private fun loadDummyFollowerData() {
-        followerAdapter.submitList(dummyFollowers)
+    private fun loadFollowerData() {
+        followerAdapter.submitList(homeViewModel.followers.value)
     }
 
     private fun initRecyclerView() {
@@ -94,7 +122,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun showFollowerDialog(follower: Follower) {
+    private fun showFollowerDialog(follower: UserResponseDto.User) {
         if (dialogBinding == null) {
             initializeDialog()
         }
@@ -114,58 +142,16 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateDialogContents(follower: Follower) {
+    private fun updateDialogContents(follower: UserResponseDto.User) {
         dialogBinding?.let { binding ->
             Glide.with(this)
-                .load(follower.profileImage)
+                .load(follower.avatar)
                 .into(binding.itemFollower.ivFollowerProfile)
-            binding.itemFollower.tvFollowerName.text = follower.name
+            binding.itemFollower.tvFollowerName.text = follower.first_name
         }
     }
 
     private fun makeToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        private const val imageUrl =
-            "https://github.com/DO-SOPT-ANDROID/jaewon-seo/assets/52442547/b8458fe5-8cda-462d-aa8e-c20b92e2579c"
-        val dummyFollowers = listOf(
-            Follower(
-                0,
-                imageUrl,
-                "서재원"
-            ),
-            Follower(
-                1,
-                imageUrl,
-                "김세훈"
-            ),
-            Follower(
-                2,
-                imageUrl,
-                "손명지"
-            ),
-            Follower(
-                3,
-                imageUrl,
-                "최준서"
-            ),
-            Follower(
-                4,
-                imageUrl,
-                "이연진"
-            ),
-            Follower(
-                5,
-                imageUrl,
-                "김명진"
-            ),
-            Follower(
-                6,
-                imageUrl,
-                "백송현"
-            ),
-        )
     }
 }
