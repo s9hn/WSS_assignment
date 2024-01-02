@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.data.dto.UsersResponseDto
@@ -19,11 +20,18 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
+        initDataBinding()
         initSpinner()
         observeFollowerData()
+    }
+
+    private fun initDataBinding() {
+        with(binding) {
+            homeViewModel = homeViewModel
+            lifecycleOwner = this@HomeActivity
+        }
     }
 
     private fun initSpinner() {
@@ -48,14 +56,16 @@ class HomeActivity : AppCompatActivity() {
 
         rvFollowerAdapter.setItemClickListener(object : FollowerAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
-                navigateFollowerInfo(position + 1)
+                navigateDetailActivity(position + 1)
             }
         })
     }
 
-    private fun navigateFollowerInfo(id: Int) {
+    private fun navigateDetailActivity(id: Int) {
         val intent = Intent(this, DetailActivity::class.java).apply {
             putExtra("id", id)
+            putExtra("name", homeViewModel.myName.value)
+            putExtra("mbti", homeViewModel.myMBTI.value)
         }
         startActivity(intent)
         finish()

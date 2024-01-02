@@ -13,6 +13,12 @@ class HomeViewModel : ViewModel() {
     private val _usersResponse: MutableLiveData<UsersResponseDto> = MutableLiveData()
     val usersResponse: LiveData<UsersResponseDto> = _usersResponse
 
+    private val _myName: MutableLiveData<String> = MutableLiveData()
+    val myName: LiveData<String> = _myName
+
+    private val _myMBTI: MutableLiveData<String> = MutableLiveData()
+    val myMBTI: LiveData<String> = _myMBTI
+
     init {
         getFollowerData()
     }
@@ -28,5 +34,23 @@ class HomeViewModel : ViewModel() {
                 Log.d("tongsin", "fail")
             }
         }
+    }
+
+    fun updateMyName(name: String) {
+        _myName.value = name
+    }
+
+    fun updateMyMBTI(mbti: String) {
+        _myMBTI.value = mbti
+    }
+
+    fun validateMyInfo() = validateMyName() && validateMyMBTI()
+
+    fun validateMyName(): Boolean {
+        return _myName.value?.toString()?.isNotBlank() ?: false
+    }
+
+    fun validateMyMBTI(): Boolean {
+        return _myMBTI.value != "선택안함"
     }
 }
