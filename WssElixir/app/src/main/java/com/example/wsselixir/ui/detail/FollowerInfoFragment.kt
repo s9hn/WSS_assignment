@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import com.example.wsselixir.R
+import com.example.wsselixir.data.dto.UserResponseDto
 import com.example.wsselixir.databinding.FragmentFollowerInfoBinding
 
 class FollowerInfoFragment : Fragment() {
@@ -21,7 +24,11 @@ class FollowerInfoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFollowerInfoBinding.inflate(inflater, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_follower_info, container, false)
+
+        binding.lifecycleOwner = viewLifecycleOwner
+
         return binding.root
     }
 
@@ -33,10 +40,11 @@ class FollowerInfoFragment : Fragment() {
 
     private fun observeUserData() {
         detailViewModel.userResponse.observe(viewLifecycleOwner) { userResponse ->
+            binding.follower = userResponse?.data
             userResponse?.data?.let { userData ->
-                binding.tvFollowerInfoName.text = userData.first_name
                 Glide.with(this)
-                    .load(userData.avatar).circleCrop()
+                    .load(userData.avatar)
+                    .circleCrop()
                     .into(binding.ivFollowerInfoImg)
             }
         }
@@ -46,5 +54,10 @@ class FollowerInfoFragment : Fragment() {
                 detailViewModel.updateFollowerInfo(id)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

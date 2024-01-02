@@ -57,8 +57,3 @@ class DetailActivity : AppCompatActivity() {
         })
     }
 }
-//    추후에 수정 예정
-//    private fun initMyInformation() {
-//        binding.tvMyInformationName.text = name
-//        binding.tvMyInformationMBTI.text = mbti
-//    }
