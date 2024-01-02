@@ -12,11 +12,13 @@ import com.example.wsselixir.ui.info.followerinfo.FollowerInfoFragment
 import com.example.wsselixir.ui.info.userinfo.UserInfoFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
-private const val NUM_PAGES = 2
-
 class InfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInfoBinding
     private lateinit var viewPager: ViewPager2
+
+    companion object {
+        const val NUM_PAGES = 2
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
