@@ -5,10 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.wsselixir.R
-import com.example.wsselixir.data.Follower
 import com.example.wsselixir.data.User
 import com.example.wsselixir.databinding.ActivityMainBinding
 import com.example.wsselixir.ui.userinfo.UserActivity
@@ -18,6 +17,7 @@ import com.example.wsselixir.util.context.toast
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var followerAdapter: FollowerAdapter
+    private lateinit var viewModel: MainViewModel
 
     private val sharedPreferences by lazy {
         getSharedPreferences(
@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         initFollowerAdapter()
         setupMbtiSpinner()
@@ -44,7 +46,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.rvFollower.adapter = followerAdapter
-        followerAdapter.submitList(followers)
+        viewModel.followers.observe(this) { followers ->
+            followerAdapter.submitList(followers)
+        }
     }
 
     private fun setupMbtiSpinner() {
@@ -71,45 +75,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun isInputValid() {
         val inputName = binding.etMainInputName.text.toString()
-        val selectedMbti = getSelectedMbti()
-        if (isNameValid(inputName) && isMbtiValid(selectedMbti)) {
-            enrollUserInfo(inputName, selectedMbti)
+        val selectedMbti = viewModel.getSelectedMbti(binding.spMainMbti)
+        if (viewModel.isInputValid(inputName, selectedMbti)) {
+            val userId = sharedPreferences.getInt("USER_ID", 0) + 1
+            viewModel.enrollUserInfo(inputName, selectedMbti, userId)
+            viewModel.user.observe(this) { user ->
+                toast(getString(R.string.enrollUserInfo, user.id.toString()))
+                navigateToUserActivity(user)
+            }
         }
-    }
-
-    private fun getSelectedMbti(): String {
-        val spinner: Spinner = binding.spMainMbti
-        return spinner.selectedItem.toString()
-    }
-
-    private fun isNameValid(inputName: String): Boolean {
-        if (inputName.isEmpty()) {
-            toast(getString(R.string.emptyNameMessage))
-            return false
-        }
-        return true
-    }
-
-    private fun isMbtiValid(selectedMbti: String): Boolean {
-        if (selectedMbti.isEmpty()) {
-            toast(getString(R.string.emptyMbtiMessage))
-            return false
-        }
-        return true
-    }
-
-    private fun enrollUserInfo(inputName: String, selectedMbti: String) {
-        val userId = sharedPreferences.getInt("USER_ID", 0) + 1
-
-        with(sharedPreferences.edit()) {
-            putInt("USER_ID", userId)
-            apply()
-        }
-
-        val user = User(userId, inputName, selectedMbti)
-
-        toast(getString(R.string.enrollUserInfo, user.id.toString()))
-        navigateToUserActivity(user)
     }
 
     private fun navigateToUserActivity(user: User) {
@@ -118,13 +92,4 @@ class MainActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
-
-    private val followers = listOf(
-        Follower(1, "김명진", "https://avatars.githubusercontent.com/u/152427286?v=4"),
-        Follower(2, "김세훈", "https://avatars.githubusercontent.com/u/81347125?v=4"),
-        Follower(3, "백송현", "https://avatars.githubusercontent.com/u/153255948?v=4"),
-        Follower(4, "서재원", "https://avatars.githubusercontent.com/u/52442547?v=4"),
-        Follower(5, "손명지", "https://avatars.githubusercontent.com/u/114990782?v=4"),
-        Follower(6, "이연진", "https://avatars.githubusercontent.com/u/144861180?v=4"),
-    )
 }
