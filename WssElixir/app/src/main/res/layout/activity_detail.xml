@@ -7,6 +7,7 @@
     tools:context=".ui.detail.DetailActivity">
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tbDetail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -19,56 +20,21 @@
             android:layout_height="wrap_content"
             android:text="내 정보" />
 
-
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="내 팔로워 정보" />
 
-
-
     </com.google.android.material.tabs.TabLayout>
 
-    <TextView
-        android:id="@+id/tvMyInfoNameTag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="100dp"
-        android:text="이름 : "
-        android:textSize="20sp"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcvDetail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tbDetail"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvMyInfoName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/tvMyInfoNameTag"
-        app:layout_constraintStart_toEndOf="@id/tvMyInfoNameTag"
-        app:layout_constraintTop_toTopOf="@id/tvMyInfoNameTag"
-        tools:text="서재원" />
-
-    <TextView
-        android:id="@+id/tvMyInfoMBTITag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="MBTI : "
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/tvMyInfoNameTag"
-        app:layout_constraintTop_toBottomOf="@id/tvMyInfoNameTag" />
-
-    <TextView
-        android:id="@+id/tvMyInfoMBTI"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/tvMyInfoMBTITag"
-        app:layout_constraintStart_toEndOf="@id/tvMyInfoMBTITag"
-        app:layout_constraintTop_toTopOf="@id/tvMyInfoMBTITag"
-        tools:text="ENFJ" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
