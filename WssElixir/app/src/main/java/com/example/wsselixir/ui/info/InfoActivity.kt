@@ -20,6 +20,7 @@ class InfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setupBinding()
         setupViewPager()
         setupTabLayout()
@@ -51,10 +52,8 @@ class InfoActivity : AppCompatActivity() {
 
     private inner class ScreenSlidePagerAdapter(fragmentActivity: FragmentActivity) :
         FragmentStateAdapter(fragmentActivity) {
-        private val pageFragmentCreators: Map<Int, () -> Fragment> = mapOf(
-            0 to { UserInfoFragment() },
-            1 to { FollowerInfoFragment() }
-        )
+        private val pageFragmentCreators: Map<Int, () -> Fragment> =
+            mapOf(0 to { UserInfoFragment() }, 1 to { FollowerInfoFragment() })
 
         private val pageFragmentInstances: MutableMap<Int, Fragment> = mutableMapOf()
 
