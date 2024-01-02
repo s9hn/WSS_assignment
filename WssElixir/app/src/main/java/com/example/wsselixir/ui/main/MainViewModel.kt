@@ -1,19 +1,21 @@
 package com.example.wsselixir.ui.main
 
+import android.app.Application
 import android.util.Log
 import android.widget.Spinner
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wsselixir.data.Follower
 import com.example.wsselixir.data.User
 import com.example.wsselixir.remote.NetworkModule
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _user = MutableLiveData<User>()
-    val user: LiveData<User> get() = _user
+
+    var user: LiveData<User> = _user
 
     private val _followers = MutableLiveData<List<Follower>>()
     val followers: LiveData<List<Follower>> get() = _followers
@@ -49,7 +51,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun enrollUserInfo(inputName: String, selectedMbti: String, userId: Int) {
-        val user = User(userId, inputName, selectedMbti)
-        _user.value = user
+        _user.value = User(userId, inputName, selectedMbti)
     }
 }

@@ -11,8 +11,6 @@ import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityMainBinding
 import com.example.wsselixir.ui.info.InfoActivity
 import com.example.wsselixir.ui.info.followerinfo.FollowerInfoViewModel
-import com.example.wsselixir.ui.info.userinfo.UserInfoViewModel
-import com.example.wsselixir.util.context.toast
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var followerAdapter: FollowerAdapter
 
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var userInfoViewModel: UserInfoViewModel
     private lateinit var followerInfoViewModel: FollowerInfoViewModel
 
     private val sharedPreferences by lazy {
@@ -37,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        userInfoViewModel = ViewModelProvider(this)[UserInfoViewModel::class.java]
         followerInfoViewModel = ViewModelProvider(this)[FollowerInfoViewModel::class.java]
 
         initFollowerAdapter()
@@ -87,22 +83,21 @@ class MainActivity : AppCompatActivity() {
             val userId = sharedPreferences.getInt("USER_ID", 0) + 1
             mainViewModel.enrollUserInfo(inputName, selectedMbti, userId)
 
-            val userInfoBundle = Bundle().apply {
-                putString("USER_NAME", inputName)
-                putString("USER_MBTI", selectedMbti)
-                putInt("USER_ID", userId)
-            }
-            userInfoViewModel.setUserInfo(userInfoBundle)
-
-            mainViewModel.user.observe(this) { user ->
-                toast(getString(R.string.enrollUserInfo, user.id.toString()))
+            mainViewModel.user.observe(this) {
                 navigateInfoActivity()
             }
         }
     }
 
     private fun navigateInfoActivity() {
-        val intent = Intent(this, InfoActivity::class.java)
+        val userId = mainViewModel.user.value?.id ?: 0
+        val userName = mainViewModel.user.value?.name ?: ""
+        val userMbti = mainViewModel.user.value?.mbti ?: ""
+        val intent = Intent(this, InfoActivity::class.java).apply {
+            putExtra("USER_ID", userId)
+            putExtra("USER_NAME", userName)
+            putExtra("USER_MBTI", userMbti)
+        }
         startActivity(intent)
     }
 }

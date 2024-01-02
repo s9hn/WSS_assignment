@@ -38,15 +38,8 @@ class InfoActivity : AppCompatActivity() {
         }.attach()
     }
 
-    override fun onBackPressed() {
-        if (viewPager.currentItem == 0) {
-            super.onBackPressed()
-        } else {
-            viewPager.currentItem = viewPager.currentItem - 1
-        }
-    }
-
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+    private inner class ScreenSlidePagerAdapter(fragmentActivity: FragmentActivity) :
+        FragmentStateAdapter(fragmentActivity) {
         override fun getItemCount(): Int = NUM_PAGES
 
         override fun createFragment(position: Int): Fragment {
