@@ -24,10 +24,10 @@ class MainViewModel : ViewModel() {
                 NetworkModule.reqresApi.getUsers()
             }.onSuccess {
                 _followers.value = it.toFollowers()
-                Log.d("MainActivity", "Followers: $_followers")
+                Log.d("MainViewModel", "Followers: $_followers")
             }.onFailure { exception ->
                 _followers.value = emptyList()
-                Log.e("MainActivity", "Error getting followers: ", exception)
+                Log.e("MainViewModel", "Error getting followers: ", exception)
             }
         }
     }

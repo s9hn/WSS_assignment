@@ -17,6 +17,8 @@
     // activity_user.xml
     <string name="tvUserName">이름: %s</string>
     <string name="tvUserMbti">Mbti: %s</string>
+    <string name="tiUserInfoTap">내 정보</string>
+    <string name="tiFollowerInfoTap">팔로워 정보</string>
 
     // FollowerProfileDialog.kt
     <string name="tvDialogFollowerExit">닫기</string>

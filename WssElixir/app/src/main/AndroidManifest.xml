@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.userinfo.UserActivity"
+            android:name=".ui.info.InfoActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
     </application>
