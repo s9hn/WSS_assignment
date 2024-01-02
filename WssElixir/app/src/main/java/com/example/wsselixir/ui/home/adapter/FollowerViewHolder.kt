@@ -23,7 +23,7 @@ class FollowerViewHolder(
         Glide.with(binding.root.context)
             .load(follower.avatar)
             .circleCrop()
-            .into(binding.ivFollowerProfile)
-        binding.tvFollowerName.text = follower.first_name
+            .into(binding.ivFollowerItemProfile)
+        binding.tvFollowerItemName.text = follower.first_name
     }
 }
