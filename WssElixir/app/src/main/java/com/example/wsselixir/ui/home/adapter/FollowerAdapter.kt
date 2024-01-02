@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.wsselixir.databinding.ItemFollowerBinding
 import com.example.wsselixir.remote.UserResponseDto
 
-class FollowerAdapter(private val onItemClick: (UserResponseDto.User) -> Unit) :
+class FollowerAdapter(private val onItemClick: (Int) -> Unit) :
     ListAdapter<UserResponseDto.User, FollowerViewHolder>(object :
         DiffUtil.ItemCallback<UserResponseDto.User>() {
         override fun areItemsTheSame(oldItem: UserResponseDto.User, newItem: UserResponseDto.User): Boolean {
@@ -22,8 +22,7 @@ class FollowerAdapter(private val onItemClick: (UserResponseDto.User) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
         val binding = ItemFollowerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FollowerViewHolder(binding) { position ->
-            val item = getItem(position)
-            onItemClick(item)
+            onItemClick(position+1)
         }
     }
 

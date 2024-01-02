@@ -9,19 +9,20 @@ import com.example.wsselixir.remote.UserResponseDto
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
-    private var _homeUiState: MutableLiveData<HomeUiState> =
-        MutableLiveData(HomeUiState.Init)
+    private var _homeUiState: MutableLiveData<HomeUiState> = MutableLiveData(HomeUiState.Init)
     val homeUiState: LiveData<HomeUiState> = _homeUiState
-    private var _followers: MutableLiveData<List<UserResponseDto.User>> =
-        MutableLiveData(emptyList())
-    val followers: LiveData<List<UserResponseDto.User>> = _followers
-    private val _selectedFollower = MutableLiveData<UserResponseDto.User>()
-    val selectedFollower: LiveData<UserResponseDto.User> = _selectedFollower
+
     private var _validationState: MutableLiveData<ValidationState> = MutableLiveData()
     val validationState: LiveData<ValidationState> = _validationState
 
-    fun selectFollower(follower: UserResponseDto.User) {
-        _selectedFollower.value = follower
+    private var _followers: MutableLiveData<List<UserResponseDto.User>> = MutableLiveData(emptyList())
+    val followers: LiveData<List<UserResponseDto.User>> = _followers
+
+    private val _selectedFollowerId = MutableLiveData<Int>()
+    val selectedFollowerId: LiveData<Int> = _selectedFollowerId
+
+    fun setFollowerId(followerId: Int) {
+        _selectedFollowerId.value = followerId
     }
 
     fun getUsers() {

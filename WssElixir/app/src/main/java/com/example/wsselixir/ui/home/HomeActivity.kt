@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
-import com.example.wsselixir.remote.UserResponseDto
 import com.example.wsselixir.ui.DetailView.DetailViewActivity
 import com.example.wsselixir.ui.home.adapter.FollowerAdapter
 import com.example.wsselixir.ui.model.LocalUser
@@ -25,7 +24,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(homeBinding.root)
 
         observeHomeUiState()
-        observeValidationState()
     }
 
     private fun observeHomeUiState() {
@@ -36,6 +34,7 @@ class HomeActivity : AppCompatActivity() {
                     initAdapter()
                     initRecyclerView()
                     homeViewModel.getUsers()
+                    observeValidationState()
                 }
 
                 is HomeUiState.Success -> {
@@ -61,20 +60,17 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToMyInfoActivity(followerName: String, followerAvatar: String) {
-        val userName = homeBinding.etHomeName.text.toString()
-        val userMBTI = homeBinding.spinnerHomeMBTI.selectedItem.toString()
-        val intent = DetailViewActivity.createIntent(
-            this,
-            LocalUser(userName, userMBTI),
-            UserResponseDto.User(followerName, followerAvatar)
-        )
-        startActivity(intent)
-    }
-
     private fun initAdapter() {
         followerAdapter = FollowerAdapter(::clickFollowerItem)
         loadFollowerData()
+    }
+
+    private fun clickFollowerItem(followerId: Int) {
+        homeViewModel.setFollowerId(followerId)
+        homeViewModel.validateInput(
+            homeBinding.etHomeName.text.toString(),
+            homeBinding.spinnerHomeMBTI.selectedItem.toString()
+        )
     }
 
     private fun loadFollowerData() {
@@ -86,14 +82,6 @@ class HomeActivity : AppCompatActivity() {
             adapter = followerAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
-    }
-
-    private fun clickFollowerItem(follower: UserResponseDto.User) {
-        homeViewModel.selectFollower(follower)
-        homeViewModel.validateInput(
-            homeBinding.etHomeName.text.toString(),
-            homeBinding.spinnerHomeMBTI.selectedItem.toString()
-        )
     }
 
     private fun observeValidationState() {
@@ -112,13 +100,22 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 ValidationState.Success -> {
-                    homeViewModel.selectedFollower.value?.let { follower ->
-                        navigateToMyInfoActivity(follower.first_name, follower.avatar)
-                    }
+                    navigateToMyInfoActivity()
                 }
             }
         }
 
+    }
+
+    private fun navigateToMyInfoActivity() {
+        val userName = homeBinding.etHomeName.text.toString()
+        val userMBTI = homeBinding.spinnerHomeMBTI.selectedItem.toString()
+        val intent = DetailViewActivity.createIntent(
+            this,
+            LocalUser(userName, userMBTI),
+            homeViewModel.selectedFollowerId.value ?: 0
+        )
+        startActivity(intent)
     }
 
     private fun makeToast(text: String) {
