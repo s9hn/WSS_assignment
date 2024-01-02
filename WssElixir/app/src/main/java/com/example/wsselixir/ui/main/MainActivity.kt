@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var followerInfoViewModel: FollowerInfoViewModel
+    private var isFollowerInfoFragment = false
 
     private val sharedPreferences by lazy {
         getSharedPreferences(
@@ -46,17 +47,15 @@ class MainActivity : AppCompatActivity() {
             val followerId = follower.id
             followerInfoViewModel.setFollowerId(followerId)
             followerInfoViewModel.followerId.observe(this) {
-                val intent = Intent(this, InfoActivity::class.java).apply {
-                    putExtra("FOLLOWER_ID", followerId)
-                    putExtra("PAGE_NUMBER", 1)
-                }
-                startActivity(intent)
+                isFollowerInfoFragment = true
+                navigateToInfoActivity()
             }
         }
 
         binding.rvFollower.adapter = followerAdapter
         mainViewModel.followers.observe(this) { followers ->
             followerAdapter.submitList(followers)
+
         }
     }
 
@@ -90,13 +89,23 @@ class MainActivity : AppCompatActivity() {
             mainViewModel.enrollUserInfo(inputName, selectedMbti, userId)
 
             mainViewModel.user.observe(this) {
-                val intent = Intent(this, InfoActivity::class.java).apply {
-                    putExtra("USER_ID", userId)
-                    putExtra("USER_NAME", inputName)
-                    putExtra("USER_MBTI", selectedMbti)
-                }
-                startActivity(intent)
+                isFollowerInfoFragment = false
+                navigateToInfoActivity()
             }
         }
+    }
+
+    private fun navigateToInfoActivity() {
+        val intent = Intent(this, InfoActivity::class.java).apply {
+            putExtra("USER_ID", mainViewModel.user.value?.id ?: 0)
+            putExtra("USER_NAME", mainViewModel.user.value?.name ?: "")
+            putExtra("USER_MBTI", mainViewModel.user.value?.mbti ?: "")
+            putExtra("FOLLOWER_ID", followerInfoViewModel.followerId.value ?: 0)
+            when (isFollowerInfoFragment) {
+                true -> putExtra("PAGE_NUMBER", 1)
+                false -> putExtra("PAGE_NUMBER", 0)
+            }
+        }
+        startActivity(intent)
     }
 }

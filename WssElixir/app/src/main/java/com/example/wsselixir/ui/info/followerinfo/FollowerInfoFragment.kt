@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.example.wsselixir.data.Follower
 import com.example.wsselixir.databinding.FragmentFollowerInfoBinding
 import com.example.wsselixir.util.view.bindProfileImage
@@ -15,7 +15,7 @@ class FollowerInfoFragment : Fragment() {
     private val binding: FragmentFollowerInfoBinding
         get() = requireNotNull(_binding) { "바인딩 객체가 생성되지 않았다. 생성하고 불러라 임마!" }
 
-    private lateinit var followerInfoViewModel: FollowerInfoViewModel
+    private val followerInfoViewModel: FollowerInfoViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,8 +28,6 @@ class FollowerInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        followerInfoViewModel = ViewModelProvider(this)[FollowerInfoViewModel::class.java]
 
         val followerId = requireActivity().intent.getIntExtra("FOLLOWER_ID", 1)
 
