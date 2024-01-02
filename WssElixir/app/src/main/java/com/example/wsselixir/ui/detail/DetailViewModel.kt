@@ -16,6 +16,12 @@ class DetailViewModel : ViewModel() {
     private val _userId: MutableLiveData<Int> = MutableLiveData()
     val userId: LiveData<Int> = _userId
 
+    private val _myName: MutableLiveData<String> = MutableLiveData()
+    val myName: LiveData<String> = _myName
+
+    private val _myMBTI: MutableLiveData<String> = MutableLiveData()
+    val myMBTI: LiveData<String> = _myMBTI
+
     fun updateFollowerId(updateId: Int) {
         _userId.value = updateId
     }
@@ -34,5 +40,10 @@ class DetailViewModel : ViewModel() {
                     Log.e("tongsinDetail", throwable.toString())
                 }
         }
+    }
+
+    fun updateMyInfo(name: String, mbti: String) {
+        _myName.value = name
+        _myMBTI.value = mbti
     }
 }

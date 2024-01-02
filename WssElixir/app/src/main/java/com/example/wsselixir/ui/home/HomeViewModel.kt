@@ -14,7 +14,7 @@ class HomeViewModel : ViewModel() {
     val usersResponse: LiveData<UsersResponseDto> = _usersResponse
 
     private val _myName: MutableLiveData<String> = MutableLiveData()
-    val myName: LiveData<String> = _myName
+    val myName: MutableLiveData<String> = _myName
 
     private val _myMBTI: MutableLiveData<String> = MutableLiveData()
     val myMBTI: LiveData<String> = _myMBTI

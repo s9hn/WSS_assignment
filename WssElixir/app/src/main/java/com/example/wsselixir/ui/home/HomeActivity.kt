@@ -2,6 +2,7 @@ package com.example.wsselixir.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
@@ -28,10 +29,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initDataBinding() {
-        with(binding) {
-            homeViewModel = homeViewModel
-            lifecycleOwner = this@HomeActivity
-        }
+        binding.homeViewModel = this.homeViewModel
+        binding.lifecycleOwner = this@HomeActivity
     }
 
     private fun initSpinner() {
@@ -62,57 +61,15 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun navigateDetailActivity(id: Int) {
+        val name = homeViewModel.myName.value ?: "SMJ"
+        val mbti = homeViewModel.myMBTI.value ?: "ISFP"
+
         val intent = Intent(this, DetailActivity::class.java).apply {
             putExtra("id", id)
-            putExtra("name", homeViewModel.myName.value)
-            putExtra("mbti", homeViewModel.myMBTI.value)
+            putExtra("name", name)
+            putExtra("mbti", mbti)
         }
         startActivity(intent)
-        finish()
+        Log.d("myData", "Name: $name, MBTI: $mbti")
     }
-
-    /* 1차 엘릭서
-    private fun showFollowerDialog(position: Int) {
-        val bundle = Bundle().apply {
-            putInt("position", position)
-        }
-        val dialog = FollowerDialog()
-        dialog.arguments = bundle
-        dialog.show(supportFragmentManager, "팔로워 dialog")
-    }
-
-
-    private fun clickRegisterBtn() {
-        binding.btnHomeRegister.setOnClickListener {
-            val userName = binding.etHomeName.text.toString()
-            val userMBTI = binding.spinnerHomeMBTI.selectedItem.toString()
-
-            when {
-                validateUserName(userName) && validateUserMBTI(userMBTI) -> navigateMyInformation(
-                    userName, userMBTI
-                )
-
-                validateUserName(userName) -> showToastShort(getString(R.string.toast_mbti))
-                validateUserMBTI(userMBTI) -> showToastShort(getString(R.string.toast_name))
-                else -> showToastShort(getString(R.string.toast_all))
-            }
-        }
-    }
-
-    private fun validateUserName(userName: String): Boolean {
-        return userName.isNotBlank()
-    }
-
-    private fun validateUserMBTI(userMBTI: String): Boolean {
-        return userMBTI != "선택안함"
-    }
-
-    private fun navigateMyInformation(userName: String, userMBTI: String) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.apply {
-            putExtra("name", userName)
-            putExtra("mbti", userMBTI)
-        }
-        startActivity(intent)
-    } */
 }

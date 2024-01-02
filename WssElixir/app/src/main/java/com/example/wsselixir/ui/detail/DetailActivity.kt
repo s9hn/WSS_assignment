@@ -16,17 +16,24 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        updateMyInfo()
         updateFollowerId()
         setupFragment()
         selectTabListener()
     }
 
+    private fun updateMyInfo() {
+        val myName = intent.getStringExtra("name")
+        val myMBTI = intent.getStringExtra("mbti")
+        if (myName != null && myMBTI != "선택안함" && myMBTI != null) {
+            detailViewModel.updateMyInfo(myName, myMBTI)
+        }
+    }
+
     private fun updateFollowerId() {
-        with(detailViewModel) {
-            val followerId = intent.getIntExtra("id", -1)
-            if (followerId != -1) {
-                updateFollowerId(followerId)
-            }
+        val followerId = intent.getIntExtra("id", -1)
+        if (followerId != -1) {
+            detailViewModel.updateFollowerId(followerId)
         }
     }
 
