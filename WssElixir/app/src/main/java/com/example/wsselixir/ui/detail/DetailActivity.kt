@@ -1,6 +1,7 @@
 package com.example.wsselixir.ui.detail
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityDetailBinding
@@ -8,25 +9,29 @@ import com.google.android.material.tabs.TabLayout
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private var followerId: Int = 0
+    private val detailViewModel: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        updateFollowerId()
         setupFragment()
         selectTabListener()
     }
 
-    private fun setupFragment() {
-        followerId = intent.getIntExtra("id", 0)
-        val fragment = FollowerInfoFragment().apply {
-            arguments = Bundle().apply {
-                putInt("id", followerId)
+    private fun updateFollowerId() {
+        with(detailViewModel) {
+            val followerId = intent.getIntExtra("id", -1)
+            if (followerId != -1) {
+                updateFollowerId(followerId)
             }
         }
-        supportFragmentManager.beginTransaction().replace(R.id.fcvDetail, fragment)
+    }
+
+    private fun setupFragment() {
+        supportFragmentManager.beginTransaction().replace(R.id.fcvDetail, FollowerInfoFragment())
             .commit()
 
         binding.tabDetail.getTabAt(1)?.select()
@@ -37,11 +42,7 @@ class DetailActivity : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val fragment = when (tab.position) {
                     0 -> MyInfoFragment()
-                    1 -> FollowerInfoFragment().apply {
-                        arguments = Bundle().apply {
-                            putInt("id", followerId)
-                        }
-                    }
+                    1 -> FollowerInfoFragment()
 
                     else -> throw IllegalStateException("포지션이 없음")
                 }

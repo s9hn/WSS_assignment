@@ -1,17 +1,20 @@
 package com.example.wsselixir.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.Glide
 import com.example.wsselixir.databinding.FragmentFollowerInfoBinding
 
 class FollowerInfoFragment : Fragment() {
     private var _binding: FragmentFollowerInfoBinding? = null
     private val binding: FragmentFollowerInfoBinding
         get() = requireNotNull(_binding)
+
+    private val detailViewModel: DetailViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,7 +28,23 @@ class FollowerInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val followerId = arguments?.getInt("id") ?: 0
-        Log.d("followerId", followerId.toString())
+        observeUserData()
+    }
+
+    private fun observeUserData() {
+        detailViewModel.userResponse.observe(viewLifecycleOwner) { userResponse ->
+            userResponse?.data?.let { userData ->
+                binding.tvFollowerInfoName.text = userData.first_name
+                Glide.with(this)
+                    .load(userData.avatar).circleCrop()
+                    .into(binding.ivFollowerInfoImg)
+            }
+        }
+
+        detailViewModel.userId.value?.let { id ->
+            if (id != -1) {
+                detailViewModel.updateFollowerInfo(id)
+            }
+        }
     }
 }
