@@ -11,6 +11,7 @@ import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityMainBinding
 import com.example.wsselixir.ui.info.InfoActivity
 import com.example.wsselixir.ui.info.followerinfo.FollowerInfoViewModel
+import com.example.wsselixir.util.context.toast
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,8 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private val sharedPreferences by lazy {
         getSharedPreferences(
-            "USER_ID",
-            Context.MODE_PRIVATE
+            "USER_ID", Context.MODE_PRIVATE
         )
     }
 
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         followerInfoViewModel = ViewModelProvider(this)[FollowerInfoViewModel::class.java]
 
         initFollowerAdapter()
+        setupToast()
         setupMbtiSpinner()
         setupClickListeners()
     }
@@ -46,24 +47,24 @@ class MainActivity : AppCompatActivity() {
         followerAdapter = FollowerAdapter { follower ->
             val followerId = follower.id
             followerInfoViewModel.setFollowerId(followerId)
-            followerInfoViewModel.followerId.observe(this) {
-                isFollowerInfoFragment = true
-                navigateToInfoActivity()
+            when (mainViewModel.user.value) {
+                null -> toast(getString(R.string.userEmptyMessage))
+                else -> followerInfoViewModel.followerId.observe(this) {
+                    isFollowerInfoFragment = true
+                    navigateToInfoActivity()
+                }
             }
         }
 
         binding.rvFollower.adapter = followerAdapter
         mainViewModel.followers.observe(this) { followers ->
             followerAdapter.submitList(followers)
-
         }
     }
 
     private fun setupMbtiSpinner() {
         ArrayAdapter.createFromResource(
-            this,
-            R.array.mbti_array,
-            android.R.layout.simple_spinner_item
+            this, R.array.mbti_array, android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spMainMbti.adapter = adapter
@@ -71,27 +72,55 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        binding.btnMainName.setOnClickListener { enrollUserInfo() }
+        binding.btnMainName.setOnClickListener {
+            isInputValid()
+        }
         binding.etMainInputName.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                enrollUserInfo()
+                isInputValid()
                 return@setOnEditorActionListener true
             }
             false
         }
     }
 
+    private fun isInputValid() {
+        val inputName = binding.etMainInputName.text.toString()
+        val selectedMbti = mainViewModel.getSelectedMbti(binding.spMainMbti)
+        mainViewModel.isInputValid(inputName, selectedMbti)
+    }
+
+    private fun setupToast() {
+        mainViewModel.enrollStatus.observe(this) {
+            when (it) {
+                0 -> {
+                    toast(getString(R.string.emptyAllMessage))
+                }
+
+                1 -> {
+                    toast(getString(R.string.emptyNameMessage))
+                }
+
+                2 -> {
+                    toast(getString(R.string.emptyMbtiMessage))
+                }
+
+                3 -> {
+                    enrollUserInfo()
+                }
+            }
+        }
+    }
+
     private fun enrollUserInfo() {
         val inputName = binding.etMainInputName.text.toString()
         val selectedMbti = mainViewModel.getSelectedMbti(binding.spMainMbti)
-        if (mainViewModel.isInputValid(inputName, selectedMbti)) {
-            val userId = sharedPreferences.getInt("USER_ID", 0) + 1
-            mainViewModel.enrollUserInfo(inputName, selectedMbti, userId)
-
-            mainViewModel.user.observe(this) {
-                isFollowerInfoFragment = false
-                navigateToInfoActivity()
-            }
+        val userId = sharedPreferences.getInt("USER_ID", 0) + 1
+        mainViewModel.enrollUserInfo(inputName, selectedMbti, userId)
+        mainViewModel.user.observe(this) {
+            toast(getString(R.string.enrollUserInfo, userId.toString()))
+            isFollowerInfoFragment = false
+            navigateToInfoActivity()
         }
     }
 

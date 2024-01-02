@@ -14,11 +14,13 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _user = MutableLiveData<User>()
-
     var user: LiveData<User> = _user
 
     private val _followers = MutableLiveData<List<Follower>>()
     val followers: LiveData<List<Follower>> get() = _followers
+
+    private var _enrollStatus: MutableLiveData<Int> = MutableLiveData(-1)
+    val enrollStatus: LiveData<Int> get() = _enrollStatus
 
     init {
         viewModelScope.launch {
@@ -34,8 +36,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun isInputValid(inputName: String, selectedMbti: String): Boolean {
-        return isNameValid(inputName) && isMbtiValid(selectedMbti)
+    fun isInputValid(inputName: String, selectedMbti: String) {
+        _enrollStatus.value = when {
+            !isNameValid(inputName) && !isMbtiValid(selectedMbti) -> 0
+            !isNameValid(inputName) -> 1
+            !isMbtiValid(selectedMbti) -> 2
+            else -> 3
+        }
+        _enrollStatus.value = -1
     }
 
     fun getSelectedMbti(spinner: Spinner): String {

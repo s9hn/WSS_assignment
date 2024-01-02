@@ -10,9 +10,11 @@
     <string name="tvFollower">팔로워</string>
 
     // MainActivity.kt
+    <string name="emptyAllMessage">유저 정보를 입력해주세요</string>
     <string name="emptyNameMessage">이름을 입력해주세요</string>
     <string name="emptyMbtiMessage">MBTI를 선택해주세요</string>
     <string name="enrollUserInfo">"유저 정보가 저장되었습니다: %s"</string>
+    <string name="userEmptyMessage">유저가 등록되지 않았습니다</string>
 
     // activity_user.xml
     <string name="tvUserName">이름: %s</string>
