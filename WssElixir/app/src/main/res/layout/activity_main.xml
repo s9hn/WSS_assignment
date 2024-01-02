@@ -30,11 +30,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etMainInputName"
-            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
             android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
             android:textSize="20sp"
             android:windowSoftInputMode="adjustResize" />
 
@@ -54,16 +54,16 @@
         android:id="@+id/spMainMbti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/tvMainMbti"
         app:layout_constraintStart_toStartOf="@id/tlMainInputName"
-        app:layout_constraintTop_toTopOf="@id/tvMainMbti"
-        app:layout_constraintBottom_toBottomOf="@id/tvMainMbti" />
+        app:layout_constraintTop_toTopOf="@id/tvMainMbti" />
 
     <Button
         android:id="@+id/btnMainName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="52dp"
         android:text="@string/btnMainName"
         app:layout_constraintTop_toBottomOf="@id/tvMainMbti" />
 
@@ -85,7 +85,7 @@
         android:layout_marginTop="32dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_follower"
-        app:layout_constraintTop_toBottomOf="@id/tvFollower" />
+        app:layout_constraintTop_toBottomOf="@id/tvFollower"
+        tools:listitem="@layout/item_follower" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

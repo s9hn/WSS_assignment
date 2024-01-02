@@ -31,9 +31,9 @@ class FollowerProfileDialog(private val context: AppCompatActivity) {
     }
 
     private fun initDialogInfo(follower: Follower) {
-        binding.tvDialogFollowerName.text = follower.name
+        binding.tvDialogFollowerName.text = follower.firstName
         Glide.with(context)
-            .load(follower.profileImage)
+            .load(follower.avatar)
             .error(
                 Glide.with(context)
                     .load(R.drawable.ic_default_profile)

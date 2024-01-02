@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.example.wsselixir.R
 import com.example.wsselixir.data.Follower
 import com.example.wsselixir.databinding.ItemFollowerBinding
@@ -15,7 +13,7 @@ import com.example.wsselixir.util.view.ItemDiffCallback
 
 class FollowerAdapter(private val itemClick: (Follower) -> Unit) :
     ListAdapter<Follower, FollowerViewHolder>(ItemDiffCallback<Follower>(
-        onItemsTheSame = { old, new -> old.id == new.id },
+        onItemsTheSame = { old, new -> old.firstName == new.firstName },
         onContentsTheSame = { old, new -> old == new }
     )) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
@@ -35,23 +33,23 @@ class FollowerViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        itemView.setOnClickListener {
+        itemView.setOnClickListener { it ->
             val follower = it.tag as? Follower
             follower?.let { itemClick.invoke(it) }
         }
     }
 
     fun onBind(follower: Follower) {
-        binding.tvFollowerName.text = follower.name
+        binding.tvFollowerName.text = follower.firstName
 
         Glide.with(binding.root)
-            .load(follower.profileImage)
+            .load(follower.avatar)
             .error(
                 Glide.with(binding.root)
                     .load(R.drawable.ic_default_profile)
-                    .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
+                    .circleCrop()
             )
-            .apply(RequestOptions.bitmapTransform(RoundedCorners(20)))
+            .circleCrop()
             .into(binding.ivFollowerProfile)
 
         itemView.tag = follower
