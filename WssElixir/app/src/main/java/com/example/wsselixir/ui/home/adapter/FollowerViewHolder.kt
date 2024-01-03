@@ -22,11 +22,7 @@ class FollowerViewHolder(
     }
 
     fun onBind(follower: UserResponseDto.User) {
-        Glide.with(binding.root.context)
-            .load(follower.avatar)
-            .circleCrop()
-            .into(binding.ivFollowerItemProfile)
-        binding.tvFollowerItemName.text = follower.first_name
+        binding.follower = follower
     }
 
     companion object {
