@@ -35,8 +35,12 @@ class DetailViewModel : ViewModel() {
             runCatching {
                 followerId.value?.let { NetworkModule.reqresApi.getUser(it) }
             }.onSuccess {
-                _follower.value = it?.data
-                _detailUiState.value = DetailUiState.Success
+                if (it?.data != null) {
+                    _follower.value = it.data
+                    _detailUiState.value = DetailUiState.Success
+                } else {
+                    _detailUiState.value = DetailUiState.Error("Fetched data is null")
+                }
             }.onFailure {
                 _detailUiState.value = DetailUiState.Error(it.message ?: "error")
             }
