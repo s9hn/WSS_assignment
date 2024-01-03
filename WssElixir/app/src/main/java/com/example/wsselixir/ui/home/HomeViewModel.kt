@@ -40,23 +40,14 @@ class HomeViewModel : ViewModel() {
     }
 
     fun validateInput(name: String, MBTI: String) {
-        if (checkUserName(name) && checkUserMBTI(MBTI)) {
-            _validationState.value = ValidationState.NameANDMBTIIsBlank
-            return
+        _validationState.value = when {
+            checkUserName(name) && checkUserMBTI(MBTI) -> ValidationState.NameANDMBTIIsBlank
+            checkUserName(name) -> ValidationState.NameIsBlank
+            checkUserMBTI(MBTI) -> ValidationState.MBTIIsBlank
+            else -> ValidationState.Success
         }
-
-        if (checkUserName(name)) {
-            _validationState.value = ValidationState.NameIsBlank
-            return
-        }
-
-        if (checkUserMBTI(MBTI)) {
-            _validationState.value = ValidationState.MBTIIsBlank
-            return
-        }
-
-        _validationState.value = ValidationState.Success
     }
+
 
     private fun checkUserName(name: String) = name.isNullOrBlank()
     private fun checkUserMBTI(MBTI: String) = MBTI.isNullOrBlank()
