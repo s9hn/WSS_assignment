@@ -2,7 +2,6 @@ package com.example.wsselixir.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
@@ -70,6 +69,5 @@ class HomeActivity : AppCompatActivity() {
             putExtra("mbti", mbti)
         }
         startActivity(intent)
-        Log.d("myData", "Name: $name, MBTI: $mbti")
     }
 }

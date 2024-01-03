@@ -1,7 +1,6 @@
 package com.example.wsselixir.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wsselixir.R
@@ -32,7 +31,6 @@ class DetailActivity : AppCompatActivity() {
 
     private fun updateFollowerId() {
         val followerId = intent.getIntExtra("id", -1)
-        Log.d("userDataFra", followerId.toString())
         if (followerId != -1) {
             detailViewModel.updateFollowerId(followerId)
             updateFollowerData()
@@ -40,7 +38,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun updateFollowerData() {
-        Log.d("userDataFra", "메소드 실행")
         with(detailViewModel) {
             userId.value?.let {
                 updateFollowerInfo(it)
