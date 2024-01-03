@@ -15,30 +15,31 @@ import com.example.wsselixir.ui.model.LocalUser
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding
-    private lateinit var followerAdapter: FollowerAdapter
     private val homeViewModel: HomeViewModel by viewModels()
+    private val followerAdapter: FollowerAdapter by lazy {
+        FollowerAdapter(::clickFollowerItem)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(homeBinding.root)
 
+        initMBTISpinner()
+        initRecyclerView()
         observeHomeUiState()
+        observeValidationState()
     }
 
     private fun observeHomeUiState() {
         homeViewModel.homeUiState.observe(this) { state ->
             when (state) {
                 is HomeUiState.Init -> {
-                    initMBTISpinner()
-                    initAdapter()
-                    initRecyclerView()
                     homeViewModel.getUsers()
-                    observeValidationState()
                 }
 
                 is HomeUiState.Success -> {
-                    followerAdapter.submitList(homeViewModel.followers.value)
+                    loadFollowerData()
                     makeToast("Followers를 불러왔습니다.")
                 }
 
@@ -58,11 +59,6 @@ class HomeActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             homeBinding.spinnerHomeMBTI.adapter = adapter
         }
-    }
-
-    private fun initAdapter() {
-        followerAdapter = FollowerAdapter(::clickFollowerItem)
-        loadFollowerData()
     }
 
     private fun clickFollowerItem(followerId: Int) {
