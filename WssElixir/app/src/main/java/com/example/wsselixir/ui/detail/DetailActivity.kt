@@ -3,6 +3,7 @@ package com.example.wsselixir.ui.detail
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityDetailBinding
 import com.google.android.material.tabs.TabLayout
@@ -16,32 +17,21 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        updateMyInfo()
-        updateFollowerId()
+        initViewModel()
         observeFollowerData()
         selectTabListener()
     }
 
-    private fun updateMyInfo() {
+    private fun initViewModel() {
         val myName = intent.getStringExtra("name") ?: "0"
         val myMBTI = intent.getStringExtra("mbti") ?: "0"
+        val followerId = intent.getIntExtra("id", -1)
 
         detailViewModel.updateMyInfo(myName, myMBTI)
-    }
 
-    private fun updateFollowerId() {
-        val followerId = intent.getIntExtra("id", -1)
         if (followerId != -1) {
             detailViewModel.updateFollowerId(followerId)
-            updateFollowerData()
-        }
-    }
-
-    private fun updateFollowerData() {
-        with(detailViewModel) {
-            followerId.value?.let {
-                updateFollowerInfo(it)
-            }
+            detailViewModel.updateFollowerInfo(followerId)
         }
     }
 
@@ -53,12 +43,13 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setupFragment() {
-        supportFragmentManager.beginTransaction().replace(R.id.fcvDetail, FollowerInfoFragment())
-            .commit()
-
+        replaceFragment(FollowerInfoFragment())
         binding.tabDetail.getTabAt(1)?.select()
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fcvDetail, fragment).commit()
     }
 
     private fun selectTabListener() {
@@ -70,7 +61,7 @@ class DetailActivity : AppCompatActivity() {
 
                     else -> throw IllegalStateException("포지션이 없음")
                 }
-                supportFragmentManager.beginTransaction().replace(R.id.fcvDetail, fragment).commit()
+                replaceFragment(fragment)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
