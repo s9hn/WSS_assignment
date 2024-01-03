@@ -32,15 +32,19 @@ class FollowerInfoFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.followerInfoViewModel = followerInfoViewModel
 
+        observeFollowerId()
+    }
+
+    private fun observeFollowerId() {
         followerInfoViewModel.followerId.observe(viewLifecycleOwner) { it ->
             followerInfoViewModel.updateFollowerInfo(it)
             followerInfoViewModel.follower.observe(viewLifecycleOwner) {
-                initFollowerInfo(it)
+                updateUI(it)
             }
         }
     }
 
-    private fun initFollowerInfo(follower: Follower) {
+    private fun updateUI(follower: Follower) {
         binding.ivFollowerProfile.bindProfileImage(follower.avatar)
     }
 }
