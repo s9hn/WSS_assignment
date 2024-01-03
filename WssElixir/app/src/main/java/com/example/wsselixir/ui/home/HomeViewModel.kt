@@ -35,22 +35,4 @@ class HomeViewModel : ViewModel() {
             }
         }
     }
-
-    fun updateMyName(name: String) {
-        _myName.value = name
-    }
-
-    fun updateMyMBTI(mbti: String) {
-        _myMBTI.value = mbti
-    }
-
-    fun validateMyInfo() = validateMyName() && validateMyMBTI()
-
-    fun validateMyName(): Boolean {
-        return _myName.value?.toString()?.isNotBlank() ?: false
-    }
-
-    fun validateMyMBTI(): Boolean {
-        return _myMBTI.value != "선택안함"
-    }
 }

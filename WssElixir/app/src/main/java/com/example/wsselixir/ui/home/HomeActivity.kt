@@ -62,7 +62,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun navigateDetailActivity(id: Int) {
         val name = homeViewModel.myName.value ?: "SMJ"
-        val mbti = homeViewModel.myMBTI.value ?: "ISFP"
+        val mbti = homeViewModel.myMBTI.value ?: "기입 안 함"
 
         val intent = Intent(this, DetailActivity::class.java).apply {
             putExtra("id", id)
