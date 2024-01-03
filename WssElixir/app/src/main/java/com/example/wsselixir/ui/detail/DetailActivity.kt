@@ -29,23 +29,8 @@ class DetailActivity : AppCompatActivity() {
         getIntentData()
         setupInitFragment()
         setupTabLayout()
+        setupInitTabPosition()
         observeDetailUiState()
-    }
-
-    private fun observeDetailUiState() {
-        detailViewModel.detailUiState.observe(this) {
-            when (it) {
-                is DetailUiState.Init -> {
-                    detailViewModel.updateFollowerInfo()
-                }
-                is DetailUiState.Success -> {
-                    makeToast("Follower Update에 성공하였습니다.")
-                }
-                is DetailUiState.Error -> {
-                    Log.e("updateFollower Error : ", it.message)
-                }
-            }
-        }
     }
 
     private fun getIntentData() {
@@ -61,7 +46,6 @@ class DetailActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             add<FollowerFragment>(R.id.fcvDetail)
         }
-        detailBinding.tbDetail.getTabAt(1)?.select()
     }
 
     private fun setupTabLayout() {
@@ -88,6 +72,26 @@ class DetailActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             replace(R.id.fcvDetail, fragmentClass, null)
             setReorderingAllowed(true)
+        }
+    }
+
+    private fun setupInitTabPosition() {
+        detailBinding.tbDetail.getTabAt(1)?.select()
+    }
+
+    private fun observeDetailUiState() {
+        detailViewModel.detailUiState.observe(this) {
+            when (it) {
+                is DetailUiState.Init -> {
+                    detailViewModel.updateFollowerInfo()
+                }
+                is DetailUiState.Success -> {
+                    makeToast("Follower Update에 성공하였습니다.")
+                }
+                is DetailUiState.Error -> {
+                    Log.e("updateFollower Error : ", it.message)
+                }
+            }
         }
     }
 
