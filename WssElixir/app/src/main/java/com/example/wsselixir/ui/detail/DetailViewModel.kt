@@ -31,12 +31,10 @@ class DetailViewModel : ViewModel() {
             runCatching {
                 NetworkModule.reqresApi.getUser(id)
             }.onSuccess { result ->
-                Log.d("tongsinDetail", "userDataSuccess")
                 _followerResponse.value = result.data
                 Log.d("tongsinDetail", result.data.toString())
             }
                 .onFailure { throwable ->
-                    Log.d("tongsinDetail", "userDataFail")
                     Log.e("tongsinDetail", throwable.toString())
                 }
         }

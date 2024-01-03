@@ -30,8 +30,8 @@ class HomeViewModel : ViewModel() {
             }.onSuccess { response ->
                 Log.d("tongsin", "success")
                 _usersResponse.value = response
-            }.onFailure {
-                Log.d("tongsin", "fail")
+            }.onFailure { throwable ->
+                Log.e("tongsin", throwable.toString())
             }
         }
     }
