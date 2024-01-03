@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         setupToast()
         setupMbtiSpinner()
         setupClickListeners()
+        observeUserInfo()
     }
 
     private fun initFollowerAdapter() {
@@ -73,18 +74,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
         binding.btnMainName.setOnClickListener {
-            isInputValid()
+            performValidCheck()
         }
         binding.etMainInputName.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                isInputValid()
+                performValidCheck()
                 return@setOnEditorActionListener true
             }
             false
         }
     }
 
-    private fun isInputValid() {
+    private fun performValidCheck() {
         val inputName = binding.etMainInputName.text.toString()
         val selectedMbti = mainViewModel.getSelectedMbti(binding.spMainMbti)
         mainViewModel.isInputValid(inputName, selectedMbti)
@@ -115,10 +116,23 @@ class MainActivity : AppCompatActivity() {
     private fun enrollUserInfo() {
         val inputName = binding.etMainInputName.text.toString()
         val selectedMbti = mainViewModel.getSelectedMbti(binding.spMainMbti)
-        val userId = sharedPreferences.getInt("USER_ID", 0) + 1
+        val userId = addUserId()
+
         mainViewModel.enrollUserInfo(inputName, selectedMbti, userId)
+    }
+
+    private fun addUserId(): Int {
+        val userId = sharedPreferences.getInt("USER_ID", 0) + 1
+        with(sharedPreferences.edit()) {
+            putInt("USER_ID", userId)
+            apply()
+        }
+        return userId
+    }
+
+    private fun observeUserInfo() {
         mainViewModel.user.observe(this) {
-            toast(getString(R.string.enrollUserInfo, userId.toString()))
+            toast(getString(R.string.enrollUserInfo, it.id.toString()))
             isFollowerInfoFragment = false
             navigateToInfoActivity()
         }

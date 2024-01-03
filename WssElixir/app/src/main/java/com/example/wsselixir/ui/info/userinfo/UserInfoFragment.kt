@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.wsselixir.R
 import com.example.wsselixir.data.User
 import com.example.wsselixir.databinding.FragmentUserInfoBinding
@@ -13,6 +14,7 @@ class UserInfoFragment : Fragment() {
     private var _binding: FragmentUserInfoBinding? = null
     private val binding: FragmentUserInfoBinding
         get() = requireNotNull(_binding) { "바인딩 객체가 생성되지 않았다. 생성하고 불러라 임마!" }
+    private val userInfoViewModel: UserInfoViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -32,12 +34,9 @@ class UserInfoFragment : Fragment() {
     }
 
     private fun setupUserInfo() {
-        val userId = requireActivity().intent.getIntExtra("USER_ID", 0)
-        val userName = requireActivity().intent.getStringExtra("USER_NAME") ?: ""
-        val userMbti = requireActivity().intent.getStringExtra("USER_MBTI") ?: ""
-
-        val user = User(userId, userName, userMbti)
-        updateUI(user)
+        userInfoViewModel.user.observe(viewLifecycleOwner) {
+            updateUI(it)
+        }
     }
 
     private fun updateUI(user: User) {

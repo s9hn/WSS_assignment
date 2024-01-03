@@ -8,16 +8,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.wsselixir.R
+import com.example.wsselixir.data.User
 import com.example.wsselixir.databinding.ActivityInfoBinding
 import com.example.wsselixir.ui.info.followerinfo.FollowerInfoFragment
 import com.example.wsselixir.ui.info.followerinfo.FollowerInfoViewModel
 import com.example.wsselixir.ui.info.userinfo.UserInfoFragment
+import com.example.wsselixir.ui.info.userinfo.UserInfoViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 class InfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInfoBinding
     private lateinit var viewPager: ViewPager2
     private lateinit var followerInfoViewModel: FollowerInfoViewModel
+    private lateinit var userInfoViewModel: UserInfoViewModel
 
     companion object {
         const val NUM_PAGES = 2
@@ -28,12 +31,14 @@ class InfoActivity : AppCompatActivity() {
 
         setupBinding()
         setupFollowerInfo()
+        setupUserInfo()
         setupViewPager()
         setupTabLayout()
     }
 
     private fun setupBinding() {
         followerInfoViewModel = ViewModelProvider(this)[FollowerInfoViewModel::class.java]
+        userInfoViewModel = ViewModelProvider(this)[UserInfoViewModel::class.java]
         binding = ActivityInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
@@ -41,6 +46,13 @@ class InfoActivity : AppCompatActivity() {
     private fun setupFollowerInfo() {
         val followerId = intent.getIntExtra("FOLLOWER_ID", 1)
         followerInfoViewModel.setFollowerId(followerId)
+    }
+
+    private fun setupUserInfo() {
+        val userId = intent.getIntExtra("USER_ID", 1)
+        val userName = intent.getStringExtra("USER_NAME")
+        val userMbti = intent.getStringExtra("USER_MBTI")
+        userInfoViewModel.setUserInfo(User(userId, userName ?: "", userMbti ?: ""))
     }
 
     private fun setupViewPager() {
@@ -66,7 +78,6 @@ class InfoActivity : AppCompatActivity() {
         FragmentStateAdapter(fragmentActivity) {
         private val pageFragmentCreators: Map<Int, () -> Fragment> =
             mapOf(0 to { UserInfoFragment() }, 1 to { FollowerInfoFragment() })
-
         private val pageFragmentInstances: MutableMap<Int, Fragment> = mutableMapOf()
 
         override fun getItemCount(): Int = NUM_PAGES
