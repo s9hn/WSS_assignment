@@ -25,7 +25,6 @@ class HomeActivity : AppCompatActivity() {
 
         initDataBinding()
         initSpinner()
-        selectSpinnerItem()
         observeFollowerData()
     }
 
@@ -38,9 +37,7 @@ class HomeActivity : AppCompatActivity() {
         val mbtiItems = resources.getStringArray(R.array.MBTI)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, mbtiItems)
         binding.spinnerHomeMBTI.adapter = adapter
-    }
 
-    private fun selectSpinnerItem() {
         binding.spinnerHomeMBTI.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -68,16 +65,18 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView(data: UsersResponseDto) {
-        val rvFollower = binding.rvHomeFollower
-        val rvFollowerAdapter = FollowerAdapter(data)
-        rvFollower.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvFollower.adapter = rvFollowerAdapter
+        val rvFollowerAdapter = FollowerAdapter(data).apply {
+            setItemClickListener(object : FollowerAdapter.OnItemClickListener {
+                override fun onClick(v: View, position: Int) {
+                    navigateDetailActivity(position + 1)
+                }
+            })
+        }
 
-        rvFollowerAdapter.setItemClickListener(object : FollowerAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                navigateDetailActivity(position + 1)
-            }
-        })
+        with(binding.rvHomeFollower) {
+            layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = rvFollowerAdapter
+        }
     }
 
     private fun navigateDetailActivity(id: Int) {
