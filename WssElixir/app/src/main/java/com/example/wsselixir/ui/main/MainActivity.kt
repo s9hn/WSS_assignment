@@ -144,10 +144,7 @@ class MainActivity : AppCompatActivity() {
             putExtra("USER_NAME", mainViewModel.user.value?.name ?: "")
             putExtra("USER_MBTI", mainViewModel.user.value?.mbti ?: "")
             putExtra("FOLLOWER_ID", followerInfoViewModel.followerId.value ?: 0)
-            when (isFollowerInfoFragment) {
-                true -> putExtra("PAGE_NUMBER", 1)
-                false -> putExtra("PAGE_NUMBER", 0)
-            }
+            putExtra("PAGE_NUMBER", if (isFollowerInfoFragment) 1 else 0)
         }
         startActivity(intent)
     }
