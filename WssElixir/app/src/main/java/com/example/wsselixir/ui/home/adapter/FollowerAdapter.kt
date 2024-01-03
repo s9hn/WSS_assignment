@@ -33,7 +33,7 @@ class FollowerAdapter(private val onItemClick: (Int) -> Unit) :
         val binding =
             ItemFollowerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FollowerViewHolder(binding) { position ->
-            onItemClick(position + 1)
+            onItemClick(position)
         }
     }
 

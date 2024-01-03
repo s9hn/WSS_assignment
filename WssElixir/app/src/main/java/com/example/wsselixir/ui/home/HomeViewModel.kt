@@ -23,7 +23,7 @@ class HomeViewModel : ViewModel() {
     val selectedFollowerId: LiveData<Int> get() = _selectedFollowerId
 
     fun setFollowerId(followerId: Int) {
-        _selectedFollowerId.value = followerId
+        _selectedFollowerId.value = followerId + 1
     }
 
     fun getUsers() {
