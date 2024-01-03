@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.example.wsselixir.data.Follower
 import com.example.wsselixir.databinding.FragmentFollowerInfoBinding
 import com.example.wsselixir.util.view.bindProfileImage
@@ -14,7 +14,7 @@ class FollowerInfoFragment : Fragment() {
     private var _binding: FragmentFollowerInfoBinding? = null
     private val binding get() = _binding!!
 
-    private val followerInfoViewModel: FollowerInfoViewModel by viewModels()
+    private val followerInfoViewModel: FollowerInfoViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -29,14 +29,14 @@ class FollowerInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val followerId = requireActivity().intent.getIntExtra("FOLLOWER_ID", 1)
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.followerInfoViewModel = followerInfoViewModel
 
-        followerInfoViewModel.updateFollowerInfo(followerId)
-        followerInfoViewModel.follower.observe(viewLifecycleOwner) {
-            initFollowerInfo(it)
+        followerInfoViewModel.followerId.observe(viewLifecycleOwner) { it ->
+            followerInfoViewModel.updateFollowerInfo(it)
+            followerInfoViewModel.follower.observe(viewLifecycleOwner) {
+                initFollowerInfo(it)
+            }
         }
     }
 

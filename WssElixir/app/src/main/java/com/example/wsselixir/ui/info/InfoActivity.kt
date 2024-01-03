@@ -4,17 +4,20 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityInfoBinding
 import com.example.wsselixir.ui.info.followerinfo.FollowerInfoFragment
+import com.example.wsselixir.ui.info.followerinfo.FollowerInfoViewModel
 import com.example.wsselixir.ui.info.userinfo.UserInfoFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class InfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInfoBinding
     private lateinit var viewPager: ViewPager2
+    private lateinit var followerInfoViewModel: FollowerInfoViewModel
 
     companion object {
         const val NUM_PAGES = 2
@@ -24,13 +27,20 @@ class InfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setupBinding()
+        setupFollowerInfo()
         setupViewPager()
         setupTabLayout()
     }
 
     private fun setupBinding() {
+        followerInfoViewModel = ViewModelProvider(this)[FollowerInfoViewModel::class.java]
         binding = ActivityInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    private fun setupFollowerInfo() {
+        val followerId = intent.getIntExtra("FOLLOWER_ID", 1)
+        followerInfoViewModel.setFollowerId(followerId)
     }
 
     private fun setupViewPager() {
