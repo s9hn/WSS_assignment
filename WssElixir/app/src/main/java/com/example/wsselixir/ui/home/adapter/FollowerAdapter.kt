@@ -8,21 +8,32 @@ import com.example.wsselixir.databinding.ItemFollowerBinding
 import com.example.wsselixir.remote.UserResponseDto
 
 class FollowerAdapter(private val onItemClick: (Int) -> Unit) :
-    ListAdapter<UserResponseDto.User, FollowerViewHolder>(object :
-        DiffUtil.ItemCallback<UserResponseDto.User>() {
-        override fun areItemsTheSame(oldItem: UserResponseDto.User, newItem: UserResponseDto.User): Boolean {
-            return oldItem.avatar == newItem.avatar
-        }
+    ListAdapter<UserResponseDto.User, FollowerViewHolder>(FollowerDiffCallback) {
 
-        override fun areContentsTheSame(oldItem: UserResponseDto.User, newItem: UserResponseDto.User): Boolean {
-            return oldItem == newItem
+    companion object {
+        private val FollowerDiffCallback = object :
+            DiffUtil.ItemCallback<UserResponseDto.User>() {
+            override fun areItemsTheSame(
+                oldItem: UserResponseDto.User,
+                newItem: UserResponseDto.User
+            ): Boolean {
+                return oldItem.avatar == newItem.avatar
+            }
+
+            override fun areContentsTheSame(
+                oldItem: UserResponseDto.User,
+                newItem: UserResponseDto.User
+            ): Boolean {
+                return oldItem == newItem
+            }
         }
-    }) {
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
-        val binding = ItemFollowerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemFollowerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FollowerViewHolder(binding) { position ->
-            onItemClick(position+1)
+            onItemClick(position + 1)
         }
     }
 
@@ -30,4 +41,5 @@ class FollowerAdapter(private val onItemClick: (Int) -> Unit) :
         val item = getItem(position)
         holder.onBind(item)
     }
+
 }
