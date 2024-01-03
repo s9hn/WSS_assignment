@@ -10,11 +10,11 @@ import com.example.wsselixir.data.dto.UserResponseDto
 import kotlinx.coroutines.launch
 
 class DetailViewModel : ViewModel() {
-    private val _userResponse: MutableLiveData<UserResponseDto.User> = MutableLiveData()
-    val userResponse: LiveData<UserResponseDto.User> = _userResponse
+    private val _followerResponse: MutableLiveData<UserResponseDto.User> = MutableLiveData()
+    val userResponse: LiveData<UserResponseDto.User> = _followerResponse
 
-    private val _userId: MutableLiveData<Int> = MutableLiveData()
-    val userId: LiveData<Int> = _userId
+    private val _followerId: MutableLiveData<Int> = MutableLiveData()
+    val followerId: LiveData<Int> = _followerId
 
     private val _myName: MutableLiveData<String> = MutableLiveData()
     val myName: LiveData<String> = _myName
@@ -23,7 +23,7 @@ class DetailViewModel : ViewModel() {
     val myMBTI: LiveData<String> = _myMBTI
 
     fun updateFollowerId(updateId: Int) {
-        _userId.value = updateId
+        _followerId.value = updateId
     }
 
     fun updateFollowerInfo(id: Int) {
@@ -32,7 +32,7 @@ class DetailViewModel : ViewModel() {
                 NetworkModule.reqresApi.getUser(id)
             }.onSuccess { result ->
                 Log.d("tongsinDetail", "userDataSuccess")
-                _userResponse.value = result.data
+                _followerResponse.value = result.data
                 Log.d("tongsinDetail", result.data.toString())
             }
                 .onFailure { throwable ->

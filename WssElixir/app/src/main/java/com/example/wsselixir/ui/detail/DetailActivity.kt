@@ -39,7 +39,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun updateFollowerData() {
         with(detailViewModel) {
-            userId.value?.let {
+            followerId.value?.let {
                 updateFollowerInfo(it)
             }
         }
