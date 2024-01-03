@@ -25,10 +25,15 @@ class FollowerInfoFragment : Fragment() {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_follower_info, container, false)
 
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.detailViewModel = detailViewModel
+        setupData()
 
         return binding.root
+    }
+
+    private fun setupData() {
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.detailViewModel = detailViewModel
+        binding.tvFollowerInfoName.text = detailViewModel.userResponse.value?.first_name ?: "no name"
     }
 
     override fun onDestroyView() {
