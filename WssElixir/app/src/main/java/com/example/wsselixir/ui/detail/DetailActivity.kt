@@ -34,8 +34,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getIntentData() {
-        val localUserInfo: LocalUser = intent.getParcelableExtra("userInfo") ?: return
-        val followerId: Int = intent.getIntExtra("followerId",0)
+        val localUserInfo: LocalUser = intent.getParcelableExtra(EXTRA_USER_INFO) ?: return
+        val followerId: Int = intent.getIntExtra(EXTRA_FOLLOWER_ID,0)
 
         detailViewModel.setLocalUserInfo(localUserInfo)
         detailViewModel.setFollowerId(followerId)
@@ -100,6 +100,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val EXTRA_USER_INFO = "userInfo"
+        private const val EXTRA_FOLLOWER_ID = "followerId"
+
         fun createIntent(
             context: Context,
             localUserInfo: LocalUser,
