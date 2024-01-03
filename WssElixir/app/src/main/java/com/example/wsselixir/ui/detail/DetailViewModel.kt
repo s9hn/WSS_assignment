@@ -10,8 +10,8 @@ import com.example.wsselixir.data.dto.UserResponseDto
 import kotlinx.coroutines.launch
 
 class DetailViewModel : ViewModel() {
-    private val _userResponse: MutableLiveData<UserResponseDto> = MutableLiveData()
-    val userResponse: LiveData<UserResponseDto> = _userResponse
+    private val _userResponse: MutableLiveData<UserResponseDto.User> = MutableLiveData()
+    val userResponse: LiveData<UserResponseDto.User> = _userResponse
 
     private val _userId: MutableLiveData<Int> = MutableLiveData()
     val userId: LiveData<Int> = _userId
@@ -32,7 +32,7 @@ class DetailViewModel : ViewModel() {
                 NetworkModule.reqresApi.getUser(id)
             }.onSuccess { result ->
                 Log.d("tongsinDetail", "userDataSuccess")
-                _userResponse.value = result
+                _userResponse.value = result.data
                 Log.d("tongsinDetail", result.data.toString())
             }
                 .onFailure { throwable ->

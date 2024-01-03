@@ -1,6 +1,7 @@
 package com.example.wsselixir.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wsselixir.R
@@ -18,24 +19,43 @@ class DetailActivity : AppCompatActivity() {
 
         updateMyInfo()
         updateFollowerId()
-        setupFragment()
+        observeFollowerData()
         selectTabListener()
     }
 
     private fun updateMyInfo() {
-        val myName = intent.getStringExtra("name")
-        val myMBTI = intent.getStringExtra("mbti")
-        if (myName != null && myMBTI != "선택안함" && myMBTI != null) {
-            detailViewModel.updateMyInfo(myName, myMBTI)
-        }
+        val myName = intent.getStringExtra("name") ?: "0"
+        val myMBTI = intent.getStringExtra("mbti") ?: "0"
+
+        detailViewModel.updateMyInfo(myName, myMBTI)
     }
 
     private fun updateFollowerId() {
         val followerId = intent.getIntExtra("id", -1)
+        Log.d("userDataFra", followerId.toString())
         if (followerId != -1) {
             detailViewModel.updateFollowerId(followerId)
+            updateFollowerData()
         }
     }
+
+    private fun updateFollowerData() {
+        Log.d("userDataFra", "메소드 실행")
+        with(detailViewModel) {
+            userId.value?.let {
+                updateFollowerInfo(it)
+            }
+        }
+    }
+
+    private fun observeFollowerData() {
+        detailViewModel.userResponse.observe(this@DetailActivity) { response ->
+            if (response != null) {
+                setupFragment()
+            }
+        }
+    }
+
 
     private fun setupFragment() {
         supportFragmentManager.beginTransaction().replace(R.id.fcvDetail, FollowerInfoFragment())
