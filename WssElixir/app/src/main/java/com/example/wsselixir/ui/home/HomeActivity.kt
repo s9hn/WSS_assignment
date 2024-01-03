@@ -3,6 +3,7 @@ package com.example.wsselixir.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ class HomeActivity : AppCompatActivity() {
 
         initDataBinding()
         initSpinner()
+        selectSpinnerItem()
         observeFollowerData()
     }
 
@@ -36,6 +38,25 @@ class HomeActivity : AppCompatActivity() {
         val mbtiItems = resources.getStringArray(R.array.MBTI)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, mbtiItems)
         binding.spinnerHomeMBTI.adapter = adapter
+    }
+
+    private fun selectSpinnerItem() {
+        binding.spinnerHomeMBTI.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // 선택되지 않은 경우
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedMBTI = parent.getItemAtPosition(position).toString()
+                    homeViewModel.updateMBTI(selectedMBTI)
+                }
+            }
     }
 
     private fun observeFollowerData() {

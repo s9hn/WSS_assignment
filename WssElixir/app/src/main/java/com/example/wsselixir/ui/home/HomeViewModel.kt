@@ -35,4 +35,8 @@ class HomeViewModel : ViewModel() {
             }
         }
     }
+
+    fun updateMBTI(mbti: String) {
+        _myMBTI.value = mbti
+    }
 }
