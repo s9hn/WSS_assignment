@@ -26,6 +26,9 @@ class DetailActivity : AppCompatActivity() {
         detailBinding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(detailBinding.root)
 
+        getIntentData()
+        setupInitFragment()
+        setupTabLayout()
         observeDetailUiState()
     }
 
@@ -33,10 +36,7 @@ class DetailActivity : AppCompatActivity() {
         detailViewModel.detailUiState.observe(this) {
             when (it) {
                 is DetailUiState.Init -> {
-                    getIntentData()
                     detailViewModel.updateFollowerInfo()
-                    setupInitFragment()
-                    setupTabLayout()
                 }
                 is DetailUiState.Success -> {
                     makeToast("Follower Update에 성공하였습니다.")
