@@ -1,10 +1,8 @@
 package com.example.wsselixir.ui.home.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.wsselixir.databinding.ItemFollowerBinding
 import com.example.wsselixir.remote.UserResponseDto
 
 class FollowerAdapter(private val onItemClick: (Int) -> Unit) :
@@ -30,11 +28,7 @@ class FollowerAdapter(private val onItemClick: (Int) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
-        val binding =
-            ItemFollowerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FollowerViewHolder(binding) { position ->
-            onItemClick(position)
-        }
+        return FollowerViewHolder.create(parent, onItemClick)
     }
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
