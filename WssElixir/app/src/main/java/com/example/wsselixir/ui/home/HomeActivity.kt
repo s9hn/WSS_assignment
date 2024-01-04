@@ -57,10 +57,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun observeFollowerData() {
-        with(homeViewModel) {
-            usersResponse.observe(this@HomeActivity) { usersResponse ->
-                initRecyclerView(usersResponse)
-            }
+        homeViewModel.usersResponse.observe(this@HomeActivity) { usersResponse ->
+            initRecyclerView(usersResponse)
         }
     }
 
