@@ -18,22 +18,24 @@ class FollowerInfoFragment : Fragment() {
     private val detailViewModel: DetailViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_follower_info, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setupData()
-
-        return binding.root
     }
 
     private fun setupData() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.detailViewModel = detailViewModel
-        binding.tvFollowerInfoName.text = detailViewModel.userResponse.value?.first_name ?: "no name"
+        binding.tvFollowerInfoName.text =
+            detailViewModel.userResponse.value?.first_name ?: "no name"
     }
 
     override fun onDestroyView() {
