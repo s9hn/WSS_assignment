@@ -14,15 +14,8 @@ import com.example.wsselixir.ui.detail.DetailActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var rvFollowerAdapter: FollowerAdapter
     private val homeViewModel: HomeViewModel by viewModels()
-
-    private val rvFollowerAdapter = FollowerAdapter().apply {
-        setItemClickListener(object : FollowerAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                navigateDetailActivity(position + FOLLOWER_ID_OFFSET)
-            }
-        })
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +24,7 @@ class HomeActivity : AppCompatActivity() {
 
         initDataBinding()
         initSpinner()
+        initAdapter()
         initRecyclerView()
         observeFollowerData()
     }
@@ -61,6 +55,16 @@ class HomeActivity : AppCompatActivity() {
                     homeViewModel.updateMBTI(selectedMBTI)
                 }
             }
+    }
+
+    private fun initAdapter() {
+        rvFollowerAdapter = FollowerAdapter().apply {
+            setItemClickListener(object : FollowerAdapter.OnItemClickListener {
+                override fun onClick(v: View, position: Int) {
+                    navigateDetailActivity(position + FOLLOWER_ID_OFFSET)
+                }
+            })
+        }
     }
 
     private fun initRecyclerView() {
