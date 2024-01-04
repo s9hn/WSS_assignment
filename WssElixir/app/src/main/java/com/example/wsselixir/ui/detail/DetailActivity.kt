@@ -25,11 +25,11 @@ class DetailActivity : AppCompatActivity() {
     private fun setupViewModel() {
         val myName = intent.getStringExtra("name") ?: "0"
         val myMBTI = intent.getStringExtra("mbti") ?: "0"
-        val followerId = intent.getIntExtra("id", -1)
+        val followerId = intent.getIntExtra("id", FOLLOWER_DEFAULT_VALUE)
 
         detailViewModel.updateMyInfo(myName, myMBTI)
 
-        if (followerId != -1) {
+        if (followerId != FOLLOWER_DEFAULT_VALUE) {
             detailViewModel.updateFollowerId(followerId)
             detailViewModel.updateFollowerInfo(followerId)
         }
@@ -70,5 +70,9 @@ class DetailActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab) {
             }
         })
+    }
+
+    companion object {
+        private const val FOLLOWER_DEFAULT_VALUE = -1
     }
 }

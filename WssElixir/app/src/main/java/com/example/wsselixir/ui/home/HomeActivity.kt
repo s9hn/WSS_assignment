@@ -68,13 +68,14 @@ class HomeActivity : AppCompatActivity() {
         val rvFollowerAdapter = FollowerAdapter(data).apply {
             setItemClickListener(object : FollowerAdapter.OnItemClickListener {
                 override fun onClick(v: View, position: Int) {
-                    navigateDetailActivity(position + 1)
+                    navigateDetailActivity(position + FOLLOWER_ID_OFFSET)
                 }
             })
         }
 
         with(binding.rvHomeFollower) {
-            layoutManager = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = rvFollowerAdapter
         }
     }
@@ -89,5 +90,9 @@ class HomeActivity : AppCompatActivity() {
             putExtra("mbti", mbti)
         }
         startActivity(intent)
+    }
+
+    companion object {
+        private const val FOLLOWER_ID_OFFSET = 1
     }
 }
