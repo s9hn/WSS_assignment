@@ -17,12 +17,12 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initViewModel()
+        setupViewModel()
         observeFollowerData()
         selectTabListener()
     }
 
-    private fun initViewModel() {
+    private fun setupViewModel() {
         val myName = intent.getStringExtra("name") ?: "0"
         val myMBTI = intent.getStringExtra("mbti") ?: "0"
         val followerId = intent.getIntExtra("id", -1)

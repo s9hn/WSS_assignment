@@ -16,7 +16,7 @@
 
         <ImageView
             android:id="@+id/ivFollowerImg"
-            imageUrl="@{users.avatar}"
+            loadImageCircle="@{users.avatar}"
             android:layout_width="114dp"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"

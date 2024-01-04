@@ -7,7 +7,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 
 object BindingAdapter {
     @JvmStatic
-    @BindingAdapter("imageUrl")
+    @BindingAdapter("loadImageCircle")
     fun loadImageCircle(view: ImageView, url: String?) {
         Glide.with(view.context)
             .load(url)
