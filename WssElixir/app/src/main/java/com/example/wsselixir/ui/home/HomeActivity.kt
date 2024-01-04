@@ -9,14 +9,20 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
-import com.example.wsselixir.data.dto.UsersResponseDto
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.ui.detail.DetailActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
-
     private val homeViewModel: HomeViewModel by viewModels()
+
+    private val rvFollowerAdapter = FollowerAdapter().apply {
+        setItemClickListener(object : FollowerAdapter.OnItemClickListener {
+            override fun onClick(v: View, position: Int) {
+                navigateDetailActivity(position + FOLLOWER_ID_OFFSET)
+            }
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +31,7 @@ class HomeActivity : AppCompatActivity() {
 
         initDataBinding()
         initSpinner()
+        initRecyclerView()
         observeFollowerData()
     }
 
@@ -56,25 +63,17 @@ class HomeActivity : AppCompatActivity() {
             }
     }
 
-    private fun observeFollowerData() {
-        homeViewModel.usersResponse.observe(this@HomeActivity) { usersResponse ->
-            initRecyclerView(usersResponse)
-        }
-    }
-
-    private fun initRecyclerView(data: UsersResponseDto) {
-        val rvFollowerAdapter = FollowerAdapter(data).apply {
-            setItemClickListener(object : FollowerAdapter.OnItemClickListener {
-                override fun onClick(v: View, position: Int) {
-                    navigateDetailActivity(position + FOLLOWER_ID_OFFSET)
-                }
-            })
-        }
-
+    private fun initRecyclerView() {
         with(binding.rvHomeFollower) {
             layoutManager =
                 LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = rvFollowerAdapter
+        }
+    }
+
+    private fun observeFollowerData() {
+        homeViewModel.usersResponse.observe(this@HomeActivity) { usersResponse ->
+            rvFollowerAdapter.updateData(usersResponse)
         }
     }
 
