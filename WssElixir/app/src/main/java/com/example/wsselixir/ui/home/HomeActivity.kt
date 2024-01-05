@@ -58,12 +58,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        rvFollowerAdapter = FollowerAdapter().apply {
-            setItemClickListener(object : FollowerAdapter.OnItemClickListener {
-                override fun onClick(v: View, position: Int) {
-                    navigateDetailActivity(position + FOLLOWER_ID_OFFSET)
-                }
-            })
+        rvFollowerAdapter = FollowerAdapter { position ->
+            navigateDetailActivity(position + FOLLOWER_ID_OFFSET)
         }
     }
 
@@ -77,7 +73,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun observeFollowerData() {
         homeViewModel.usersResponse.observe(this@HomeActivity) { usersResponse ->
-            rvFollowerAdapter.updateData(usersResponse)
+            rvFollowerAdapter.updateData(usersResponse.users)
         }
     }
 

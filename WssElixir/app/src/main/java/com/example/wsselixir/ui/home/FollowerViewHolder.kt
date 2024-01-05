@@ -6,15 +6,17 @@ import com.example.wsselixir.databinding.ItemFollowerBinding
 
 class FollowerViewHolder(
     private val binding: ItemFollowerBinding,
-    private val itemClickListener: FollowerAdapter.OnItemClickListener
+    clickListener: (position: Int) -> Unit
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
+    init {
+        binding.root.setOnClickListener {
+            clickListener(adapterPosition)
+        }
+    }
+
     fun onBind(users: UserResponseDto.User) {
         binding.users = users
-
-        itemView.setOnClickListener {
-            itemClickListener.onClick(it, adapterPosition)
-        }
     }
 }
