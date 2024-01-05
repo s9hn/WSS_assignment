@@ -28,12 +28,20 @@ class FollowerInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupData()
+        setupLifecycleOwner()
+        setupDataBinding()
+        setupNameData()
     }
 
-    private fun setupData() {
+    private fun setupLifecycleOwner() {
         binding.lifecycleOwner = viewLifecycleOwner
+    }
+
+    private fun setupDataBinding() {
         binding.detailViewModel = detailViewModel
+    }
+
+    private fun setupNameData() {
         binding.tvFollowerInfoName.text =
             detailViewModel.userResponse.value?.first_name ?: "no name"
     }
