@@ -38,4 +38,9 @@ class MyInfoFragment : Fragment() {
     private fun setupDataBinding() {
         binding.detailViewModel = detailViewModel
     }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }
