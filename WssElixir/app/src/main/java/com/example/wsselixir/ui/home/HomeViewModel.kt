@@ -14,7 +14,7 @@ class HomeViewModel : ViewModel() {
     val usersResponse: LiveData<UsersResponseDto> = _usersResponse
 
     private val _myName: MutableLiveData<String> = MutableLiveData()
-    val myName: MutableLiveData<String> = _myName
+    val myName: LiveData<String> = _myName
 
     private val _myMBTI: MutableLiveData<String> = MutableLiveData()
     val myMBTI: LiveData<String> = _myMBTI
@@ -38,5 +38,9 @@ class HomeViewModel : ViewModel() {
 
     fun updateMBTI(mbti: String) {
         _myMBTI.value = mbti
+    }
+
+    fun updateName(value: String) {
+        _myName.value = value
     }
 }
