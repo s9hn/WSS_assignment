@@ -11,7 +11,7 @@ import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.ui.detail.DetailActivity
 import com.example.wsselixir.ui.home.adapter.FollowerAdapter
-import com.example.wsselixir.ui.model.LocalUser
+import com.example.wsselixir.data.model.LocalUser
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding

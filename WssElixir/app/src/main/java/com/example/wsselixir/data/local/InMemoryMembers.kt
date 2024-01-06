@@ -1,5 +1,7 @@
 package com.example.wsselixir.data.local
 
+import com.example.wsselixir.data.model.MemberEntity
+
 class InMemoryMembers {
     val memberEntities: List<MemberEntity>
         get() = listOf(

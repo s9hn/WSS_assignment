@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wsselixir.remote.NetworkModule
 import com.example.wsselixir.data.remote.response.UserResponseDto
-import com.example.wsselixir.ui.model.LocalUser
+import com.example.wsselixir.data.model.LocalUser
 import kotlinx.coroutines.launch
 
 class DetailViewModel : ViewModel() {

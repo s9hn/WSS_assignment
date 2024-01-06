@@ -1,4 +1,4 @@
-package com.example.wsselixir.data.local
+package com.example.wsselixir.data.model
 
 data class MemberEntity(
     val first_name: String,
