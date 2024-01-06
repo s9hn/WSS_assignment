@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
-import com.example.wsselixir.data.mock.followerMockList
+import com.example.wsselixir.data.dataclass.Follower.Companion.followerMockList
 import com.example.wsselixir.databinding.DialogFollowerBinding
 
 class FollowerDialog : DialogFragment() {

@@ -1,15 +1,22 @@
 package com.example.wsselixir.ui.home
 
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.wsselixir.data.dataclass.Follower
+import com.example.wsselixir.data.dto.UserResponseDto
 import com.example.wsselixir.databinding.ItemFollowerBinding
 
-class FollowerViewHolder(private val binding: ItemFollowerBinding) :
+class FollowerViewHolder(
+    private val binding: ItemFollowerBinding,
+    clickListener: (position: Int) -> Unit
+) :
     RecyclerView.ViewHolder(binding.root) {
-    fun onBind(follower: Follower) {
-        Glide.with(itemView.context)
-            .load(follower.img)
-            .into(binding.ivFollowerImg)
+
+    init {
+        binding.root.setOnClickListener {
+            clickListener(adapterPosition)
+        }
+    }
+
+    fun onBind(users: UserResponseDto.User) {
+        binding.users = users
     }
 }

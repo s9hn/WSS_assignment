@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.myinformation.MyInformationActivity"
+            android:name=".ui.detail.DetailActivity"
             android:exported="false" />
     </application>
 </manifest>

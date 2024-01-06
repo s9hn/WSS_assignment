@@ -3,86 +3,94 @@ package com.example.wsselixir.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
-import com.example.wsselixir.ui.myinformation.MyInformationActivity
-import com.example.wsselixir.utils.showToastShort
+import com.example.wsselixir.ui.detail.DetailActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var rvFollowerAdapter: FollowerAdapter
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initDataBinding()
         initSpinner()
+        initAdapter()
         initRecyclerView()
-        clickRegisterBtn()
+        observeFollowerData()
+    }
+
+    private fun initDataBinding() {
+        binding.homeViewModel = this.homeViewModel
+        binding.lifecycleOwner = this@HomeActivity
     }
 
     private fun initSpinner() {
         val mbtiItems = resources.getStringArray(R.array.MBTI)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, mbtiItems)
         binding.spinnerHomeMBTI.adapter = adapter
+
+        binding.spinnerHomeMBTI.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // 선택되지 않은 경우
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedMBTI = parent.getItemAtPosition(position).toString()
+                    homeViewModel.updateMBTI(selectedMBTI)
+                }
+            }
+    }
+
+    private fun initAdapter() {
+        rvFollowerAdapter = FollowerAdapter { position ->
+            navigateDetailActivity(position + FOLLOWER_ID_OFFSET)
+        }
     }
 
     private fun initRecyclerView() {
-        val rvFollower = binding.rvHomeFollower
-        val rvFollowerAdapter = FollowerAdapter()
-        rvFollower.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvFollower.adapter = rvFollowerAdapter
-
-        rvFollowerAdapter.setItemClickListener(object : FollowerAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                showFollowerDialog(position)
-            }
-        })
-    }
-
-    private fun showFollowerDialog(position: Int) {
-        val bundle = Bundle().apply {
-            putInt("position", position)
-        }
-        val dialog = FollowerDialog()
-        dialog.arguments = bundle
-        dialog.show(supportFragmentManager, "팔로워 dialog")
-    }
-
-    private fun clickRegisterBtn() {
-        binding.btnHomeRegister.setOnClickListener {
-            val userName = binding.etHomeName.text.toString()
-            val userMBTI = binding.spinnerHomeMBTI.selectedItem.toString()
-
-            when {
-                validateUserName(userName) && validateUserMBTI(userMBTI) -> navigateMyInformation(
-                    userName, userMBTI
-                )
-
-                validateUserName(userName) -> showToastShort(getString(R.string.toast_mbti))
-                validateUserMBTI(userMBTI) -> showToastShort(getString(R.string.toast_name))
-                else -> showToastShort(getString(R.string.toast_all))
-            }
+        with(binding.rvHomeFollower) {
+            layoutManager =
+                LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = rvFollowerAdapter
         }
     }
 
-    private fun validateUserName(userName: String): Boolean {
-        return userName.isNotBlank()
+    private fun observeFollowerData() {
+        homeViewModel.usersResponse.observe(this@HomeActivity) { usersResponse ->
+            rvFollowerAdapter.updateData(usersResponse.users)
+        }
     }
 
-    private fun validateUserMBTI(userMBTI: String): Boolean {
-        return userMBTI != "선택안함"
-    }
+    private fun navigateDetailActivity(id: Int) {
+        val name = homeViewModel.myName.value ?: "SMJ"
+        val mbti = homeViewModel.myMBTI.value ?: "기입 안 함"
 
-    private fun navigateMyInformation(userName: String, userMBTI: String) {
-        val intent = Intent(this, MyInformationActivity::class.java)
-        intent.apply {
-            putExtra("name", userName)
-            putExtra("mbti", userMBTI)
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra("id", id)
+            putExtra("name", name)
+            putExtra("mbti", mbti)
         }
         startActivity(intent)
+    }
+
+    companion object {
+        private const val FOLLOWER_ID_OFFSET = 1
     }
 }
