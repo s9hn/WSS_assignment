@@ -8,14 +8,19 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wsselixir.R
+import com.example.wsselixir.data.local.member.InMemoryMembers
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.ui.detail.DetailActivity
 import com.example.wsselixir.ui.home.adapter.FollowerAdapter
 import com.example.wsselixir.data.model.LocalUser
+import com.example.wsselixir.data.repository.member.MemberRepository
+import com.example.wsselixir.remote.NetworkModule
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels {
+        HomeViewModelFactory(MemberRepository(NetworkModule.reqresApi,InMemoryMembers()))
+    }
     private val followerAdapter: FollowerAdapter by lazy {
         FollowerAdapter(::clickFollowerItem)
     }

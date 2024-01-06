@@ -4,20 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wsselixir.remote.NetworkModule
-import com.example.wsselixir.data.remote.response.UserResponseDto
+import com.example.wsselixir.data.model.MemberEntity
+import com.example.wsselixir.data.repository.member.MemberRepository
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val memberRepository: MemberRepository) : ViewModel() {
     private var _homeUiState: MutableLiveData<HomeUiState> = MutableLiveData(HomeUiState.Init)
     val homeUiState: LiveData<HomeUiState> get() = _homeUiState
 
     private var _validationState: MutableLiveData<ValidationState> = MutableLiveData()
     val validationState: LiveData<ValidationState> get() = _validationState
 
-    private var _followers: MutableLiveData<List<UserResponseDto.User>> =
+    private var _followers: MutableLiveData<List<MemberEntity>> =
         MutableLiveData(emptyList())
-    val followers: LiveData<List<UserResponseDto.User>> get() = _followers
+    val followers: LiveData<List<MemberEntity>> get() = _followers
 
     private val _selectedFollowerId = MutableLiveData<Int>()
     val selectedFollowerId: LiveData<Int> get() = _selectedFollowerId
@@ -29,9 +29,9 @@ class HomeViewModel : ViewModel() {
     fun getUsers() {
         viewModelScope.launch {
             runCatching {
-                NetworkModule.reqresApi.getUsers()
+                memberRepository.getUsers()
             }.onSuccess {
-                _followers.value = it.users
+                _followers.value = it
                 _homeUiState.value = HomeUiState.Success
             }.onFailure {
                 _homeUiState.value = HomeUiState.Error(it.message ?: "Error")
