@@ -3,8 +3,8 @@ package com.example.wsselixir.ui.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wsselixir.data.model.MemberEntity
 import com.example.wsselixir.databinding.ItemFollowerBinding
-import com.example.wsselixir.data.remote.response.UserResponseDto
 
 class FollowerViewHolder(
     private val binding: ItemFollowerBinding,
@@ -20,7 +20,7 @@ class FollowerViewHolder(
         }
     }
 
-    fun onBind(follower: UserResponseDto.User) {
+    fun onBind(follower: MemberEntity) {
         binding.follower = follower
     }
 

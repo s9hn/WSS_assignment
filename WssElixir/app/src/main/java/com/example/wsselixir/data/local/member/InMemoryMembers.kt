@@ -1,4 +1,4 @@
-package com.example.wsselixir.data.local
+package com.example.wsselixir.data.local.member
 
 import com.example.wsselixir.data.model.MemberEntity
 
