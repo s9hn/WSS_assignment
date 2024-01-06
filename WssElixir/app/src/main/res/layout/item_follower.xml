@@ -6,7 +6,7 @@
     <data>
         <variable
             name="follower"
-            type="com.example.wsselixir.remote.UserResponseDto.User" />
+            type="com.example.wsselixir.data.remote.response.UserResponseDto" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

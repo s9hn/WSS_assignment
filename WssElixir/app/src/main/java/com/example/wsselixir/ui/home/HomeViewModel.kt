@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wsselixir.remote.NetworkModule
-import com.example.wsselixir.remote.UserResponseDto
+import com.example.wsselixir.data.remote.response.UserResponseDto
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {

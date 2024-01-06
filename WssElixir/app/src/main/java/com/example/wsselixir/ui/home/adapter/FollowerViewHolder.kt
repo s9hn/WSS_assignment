@@ -3,9 +3,8 @@ package com.example.wsselixir.ui.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.wsselixir.databinding.ItemFollowerBinding
-import com.example.wsselixir.remote.UserResponseDto
+import com.example.wsselixir.data.remote.response.UserResponseDto
 
 class FollowerViewHolder(
     private val binding: ItemFollowerBinding,

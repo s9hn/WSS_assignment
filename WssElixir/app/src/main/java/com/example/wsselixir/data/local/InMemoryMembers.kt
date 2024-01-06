@@ -1,4 +1,4 @@
-package com.example.wsselixir.local
+package com.example.wsselixir.data.local
 
 class InMemoryMembers {
     val memberEntities: List<MemberEntity>

@@ -1,5 +1,6 @@
 package com.example.wsselixir.remote
 
+import com.example.wsselixir.data.remote.api.ReqresApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
