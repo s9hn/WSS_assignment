@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.wsselixir.data.local.member.InMemoryMembers
 import com.example.wsselixir.data.model.Follower
 import com.example.wsselixir.data.repository.member.MemberRepository
 import com.example.wsselixir.remote.NetworkModule
@@ -60,7 +61,7 @@ class HomeViewModel(private val memberRepository: MemberRepository) : ViewModel(
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 HomeViewModel(
-                    memberRepository = MemberRepository(NetworkModule.reqresApi)
+                    memberRepository = MemberRepository(NetworkModule.reqresApi, InMemoryMembers())
                 )
             }
         }

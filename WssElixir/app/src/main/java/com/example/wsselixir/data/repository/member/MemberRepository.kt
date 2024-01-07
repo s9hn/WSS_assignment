@@ -7,7 +7,8 @@ import com.example.wsselixir.data.model.Follower
 import com.example.wsselixir.data.remote.api.ReqresApi
 
 class MemberRepository(
-    private val reqresApi: ReqresApi
+    private val reqresApi: ReqresApi,
+    private val inMemoryMembers: InMemoryMembers
 ) {
 
     suspend fun getUsers(): List<Follower> {
@@ -18,7 +19,7 @@ class MemberRepository(
             emptyList<Follower>()
         }
 
-        val localUsers = InMemoryMembers().memberEntities.toData()
+        val localUsers = inMemoryMembers.memberEntities.toData()
 
         return remoteUsers + localUsers
     }
