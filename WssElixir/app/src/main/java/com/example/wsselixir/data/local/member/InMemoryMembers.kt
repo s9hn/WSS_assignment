@@ -1,6 +1,6 @@
 package com.example.wsselixir.data.local.member
 
-import com.example.wsselixir.data.model.MemberEntity
+import com.example.wsselixir.data.local.member.model.MemberEntity
 
 class InMemoryMembers {
     val memberEntities: List<MemberEntity>

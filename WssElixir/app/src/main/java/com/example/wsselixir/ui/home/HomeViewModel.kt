@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wsselixir.data.model.MemberEntity
+import com.example.wsselixir.data.model.Follower
 import com.example.wsselixir.data.repository.member.MemberRepository
 import kotlinx.coroutines.launch
 
@@ -15,9 +15,9 @@ class HomeViewModel(private val memberRepository: MemberRepository) : ViewModel(
     private var _validationState: MutableLiveData<ValidationState> = MutableLiveData()
     val validationState: LiveData<ValidationState> get() = _validationState
 
-    private var _followers: MutableLiveData<List<MemberEntity>> =
+    private var _followers: MutableLiveData<List<Follower>> =
         MutableLiveData(emptyList())
-    val followers: LiveData<List<MemberEntity>> get() = _followers
+    val followers: LiveData<List<Follower>> get() = _followers
 
     private val _selectedFollowerId = MutableLiveData<Int>()
     val selectedFollowerId: LiveData<Int> get() = _selectedFollowerId
