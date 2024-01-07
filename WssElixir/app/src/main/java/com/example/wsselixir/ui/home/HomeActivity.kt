@@ -12,7 +12,7 @@ import com.example.wsselixir.data.local.member.InMemoryMembers
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.ui.detail.DetailActivity
 import com.example.wsselixir.ui.home.adapter.FollowerAdapter
-import com.example.wsselixir.data.model.LocalUser
+import com.example.wsselixir.ui.model.LocalUser
 import com.example.wsselixir.data.repository.member.MemberRepository
 import com.example.wsselixir.remote.NetworkModule
 

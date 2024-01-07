@@ -14,7 +14,7 @@ import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityDetailBinding
 import com.example.wsselixir.ui.detail.follower.FollowerFragment
 import com.example.wsselixir.ui.detail.user.UserFragment
-import com.example.wsselixir.data.model.LocalUser
+import com.example.wsselixir.ui.model.LocalUser
 import com.google.android.material.tabs.TabLayout
 
 class DetailActivity : AppCompatActivity() {
