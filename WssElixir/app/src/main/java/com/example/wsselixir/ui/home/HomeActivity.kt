@@ -12,14 +12,10 @@ import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.ui.detail.DetailActivity
 import com.example.wsselixir.ui.home.adapter.FollowerAdapter
 import com.example.wsselixir.ui.model.LocalUser
-import com.example.wsselixir.data.repository.member.MemberRepository
-import com.example.wsselixir.remote.NetworkModule
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding
-    private val homeViewModel: HomeViewModel by viewModels {
-        HomeViewModelFactory(MemberRepository(NetworkModule.reqresApi))
-    }
+    private val homeViewModel: HomeViewModel by viewModels { HomeViewModel.Factory }
     private val followerAdapter: FollowerAdapter by lazy {
         FollowerAdapter(::clickFollowerItem)
     }

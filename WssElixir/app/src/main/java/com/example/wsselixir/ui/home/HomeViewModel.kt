@@ -3,9 +3,13 @@ package com.example.wsselixir.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.wsselixir.data.model.Follower
 import com.example.wsselixir.data.repository.member.MemberRepository
+import com.example.wsselixir.remote.NetworkModule
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val memberRepository: MemberRepository) : ViewModel() {
@@ -48,7 +52,17 @@ class HomeViewModel(private val memberRepository: MemberRepository) : ViewModel(
         }
     }
 
-
     private fun checkUserName(name: String) = name.isNullOrBlank()
+
     private fun checkUserMBTI(MBTI: String) = MBTI.isNullOrBlank()
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                HomeViewModel(
+                    memberRepository = MemberRepository(NetworkModule.reqresApi)
+                )
+            }
+        }
+    }
 }
