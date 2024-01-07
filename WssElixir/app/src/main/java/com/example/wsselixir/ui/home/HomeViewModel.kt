@@ -5,12 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.wsselixir.data.local.member.InMemoryMembers
+import com.example.wsselixir.App
 import com.example.wsselixir.data.model.Follower
 import com.example.wsselixir.data.repository.member.MemberRepository
-import com.example.wsselixir.remote.NetworkModule
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val memberRepository: MemberRepository) : ViewModel() {
@@ -58,11 +55,15 @@ class HomeViewModel(private val memberRepository: MemberRepository) : ViewModel(
     private fun checkUserMBTI(MBTI: String) = MBTI.isNullOrBlank()
 
     companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                HomeViewModel(
-                    memberRepository = MemberRepository(NetworkModule.reqresApi, InMemoryMembers())
-                )
+        fun createFactory(application: App): ViewModelProvider.Factory {
+            return object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+                        @Suppress("UNCHECKED_CAST")
+                        return HomeViewModel(application.serviceLocator.memberRepository) as T
+                    }
+                    throw IllegalArgumentException("Unknown ViewModel class")
+                }
             }
         }
     }
