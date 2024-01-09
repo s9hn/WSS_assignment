@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wsselixir.data.Follower
 import com.example.wsselixir.databinding.ItemFollowerBinding
-import com.example.wsselixir.util.view.ItemDiffCallback
-import com.example.wsselixir.util.view.bindProfileImage
+import com.example.wsselixir.util.ItemDiffCallback
+import com.example.wsselixir.util.bindProfileImage
 
 
 class FollowerAdapter(private val itemClick: (Follower) -> Unit) :

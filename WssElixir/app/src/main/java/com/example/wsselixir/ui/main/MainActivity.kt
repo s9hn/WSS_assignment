@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.wsselixir.R
@@ -12,7 +13,6 @@ import com.example.wsselixir.data.User
 import com.example.wsselixir.databinding.ActivityMainBinding
 import com.example.wsselixir.ui.info.InfoActivity
 import com.example.wsselixir.ui.info.followerinfo.FollowerInfoViewModel
-import com.example.wsselixir.util.context.toast
 
 
 class MainActivity : AppCompatActivity() {
@@ -51,7 +51,12 @@ class MainActivity : AppCompatActivity() {
             val followerId = it.id
             followerInfoViewModel.setFollowerId(followerId)
             when (mainViewModel.user.value) {
-                null -> toast(getString(R.string.userEmptyMessage))
+                null -> Toast.makeText(
+                    this,
+                    getString(R.string.userEmptyMessage),
+                    Toast.LENGTH_SHORT
+                ).show()
+
                 else -> followerInfoViewModel.followerId.observe(this) {
                     isFollowerInfoFragment = true
                     navigateToInfoActivity()
@@ -97,15 +102,18 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.enrollStatus.observe(this) {
             when (it) {
                 0 -> {
-                    toast(getString(R.string.emptyAllMessage))
+                    Toast.makeText(this, getString(R.string.emptyAllMessage), Toast.LENGTH_SHORT)
+                        .show()
                 }
 
                 1 -> {
-                    toast(getString(R.string.emptyNameMessage))
+                    Toast.makeText(this, getString(R.string.emptyNameMessage), Toast.LENGTH_SHORT)
+                        .show()
                 }
 
                 2 -> {
-                    toast(getString(R.string.emptyMbtiMessage))
+                    Toast.makeText(this, getString(R.string.emptyMbtiMessage), Toast.LENGTH_SHORT)
+                        .show()
                 }
 
                 3 -> {
@@ -134,7 +142,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeUserInfo() {
         mainViewModel.user.observe(this) {
-            toast(getString(R.string.enrollUserInfo, it.id.toString()))
+            Toast.makeText(
+                this,
+                getString(R.string.enrollUserInfo, it.id.toString()),
+                Toast.LENGTH_SHORT
+            ).show()
             isFollowerInfoFragment = false
             navigateToInfoActivity()
         }

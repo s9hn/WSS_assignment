@@ -1,4 +1,4 @@
-package com.example.wsselixir.util.view
+package com.example.wsselixir.util
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
