@@ -68,17 +68,12 @@ class InfoActivity : AppCompatActivity() {
 class ScreenSlidePagerAdapter(
     fragmentActivity: FragmentActivity
 ) : FragmentStateAdapter(fragmentActivity) {
-    private val pageFragmentCreators: Map<Int, () -> Fragment> =
-        mapOf(0 to { UserInfoFragment() }, 1 to { FollowerInfoFragment() })
-    private val pageFragmentInstances: MutableMap<Int, Fragment> = mutableMapOf()
-
-    override fun getItemCount(): Int = pageFragmentCreators.size
-
+    override fun getItemCount(): Int = 2
     override fun createFragment(position: Int): Fragment {
-        return pageFragmentInstances.getOrPut(position) {
-            pageFragmentCreators[position]?.invoke()
-                ?: throw IllegalArgumentException("Invalid position: $position")
+        return when (position) {
+            0 -> UserInfoFragment()
+            1 -> FollowerInfoFragment()
+            else -> throw IllegalArgumentException("Invalid position: $position")
         }
     }
 }
-
