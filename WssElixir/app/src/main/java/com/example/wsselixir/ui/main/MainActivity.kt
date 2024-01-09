@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFollowerAdapter() {
-        followerAdapter = FollowerAdapter { follower ->
-            val followerId = follower.id
+        followerAdapter = FollowerAdapter {
+            val followerId = it.id
             followerInfoViewModel.setFollowerId(followerId)
             when (mainViewModel.user.value) {
                 null -> toast(getString(R.string.userEmptyMessage))

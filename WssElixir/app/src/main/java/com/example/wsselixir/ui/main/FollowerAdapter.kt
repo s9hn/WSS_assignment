@@ -11,10 +11,10 @@ import com.example.wsselixir.util.view.bindProfileImage
 
 
 class FollowerAdapter(private val itemClick: (Follower) -> Unit) :
-    ListAdapter<Follower, FollowerViewHolder>(ItemDiffCallback<Follower>(
-        onItemsTheSame = { old, new -> old.firstName == new.firstName },
-        onContentsTheSame = { old, new -> old == new }
-    )) {
+    ListAdapter<Follower, FollowerViewHolder>(
+        ItemDiffCallback<Follower>(onItemsTheSame = { old, new -> old.firstName == new.firstName },
+            onContentsTheSame = { old, new -> old == new })
+    ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemFollowerBinding.inflate(inflater, parent, false)
@@ -22,26 +22,22 @@ class FollowerAdapter(private val itemClick: (Follower) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
-        holder.onBind(getItem(position))
+        holder.onBind(getItem(position), position)
     }
 }
 
 class FollowerViewHolder(
-    private val binding: ItemFollowerBinding,
-    private val itemClick: (Follower) -> Unit
+    private val binding: ItemFollowerBinding, private val itemClick: (Follower) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    init {
-        itemView.setOnClickListener { it ->
-            val follower = it.tag as? Follower
-            follower?.let { itemClick.invoke(it) }
-        }
-    }
-
-    fun onBind(follower: Follower) {
+    fun onBind(follower: Follower, position: Int) {
         binding.tvFollowerName.text = follower.firstName
         binding.ivFollowerProfile.bindProfileImage(follower.avatar)
 
-        itemView.tag = follower
+        itemView.setOnClickListener {
+            if (position != RecyclerView.NO_POSITION) {
+                itemClick.invoke(Follower(follower.id, follower.firstName, follower.avatar))
+            }
+        }
     }
 }
