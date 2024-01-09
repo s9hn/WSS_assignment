@@ -34,11 +34,11 @@ class InfoActivity : AppCompatActivity() {
 
         followerInfoViewModel = ViewModelProvider(this)[FollowerInfoViewModel::class.java]
         userInfoViewModel = ViewModelProvider(this)[UserInfoViewModel::class.java]
-        
+
         setupFollowerInfo()
         setupViewPager()
         setupTabLayout()
-        setupUserInfo()
+        getUserInfoFromMain()
     }
 
     private fun setupFollowerInfo() {
@@ -66,7 +66,7 @@ class InfoActivity : AppCompatActivity() {
     }
 
     @Suppress("DEPRECATION")
-    private fun setupUserInfo() {
+    private fun getUserInfoFromMain() {
         user = intent.getParcelableExtra("USER_INFO")!!
         userInfoViewModel.setUserInfo(user)
     }
