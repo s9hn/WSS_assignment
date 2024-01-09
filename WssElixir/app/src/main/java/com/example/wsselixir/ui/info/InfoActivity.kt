@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.example.wsselixir.R
 import com.example.wsselixir.data.User
 import com.example.wsselixir.databinding.ActivityInfoBinding
@@ -18,7 +17,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class InfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInfoBinding
-    private lateinit var viewPager: ViewPager2
     private lateinit var followerInfoViewModel: FollowerInfoViewModel
     private lateinit var userInfoViewModel: UserInfoViewModel
     private lateinit var user: User
@@ -47,16 +45,15 @@ class InfoActivity : AppCompatActivity() {
     }
 
     private fun setupViewPager() {
-        viewPager = binding.vpInfo
-        val pagerAdapter = ScreenSlidePagerAdapter(this)
-        viewPager.adapter = pagerAdapter
+        val pagerAdapter = ScreenSlidePagerAdapter(this, NUM_PAGES)
+        binding.vpInfo.adapter = pagerAdapter
         val initialPage = intent.getIntExtra("PAGE_NUMBER", 0)
-        viewPager.currentItem = initialPage
+        binding.vpInfo.currentItem = initialPage
     }
 
     private fun setupTabLayout() {
         val tabLayout = binding.tlInfo
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+        TabLayoutMediator(tabLayout, binding.vpInfo) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.tiUserInfoTap)
                 1 -> getString(R.string.tiFollowerInfoTap)
@@ -70,20 +67,22 @@ class InfoActivity : AppCompatActivity() {
         user = intent.getParcelableExtra("USER_INFO")!!
         userInfoViewModel.setUserInfo(user)
     }
+}
 
-    private inner class ScreenSlidePagerAdapter(fragmentActivity: FragmentActivity) :
-        FragmentStateAdapter(fragmentActivity) {
-        private val pageFragmentCreators: Map<Int, () -> Fragment> =
-            mapOf(0 to { UserInfoFragment() }, 1 to { FollowerInfoFragment() })
-        private val pageFragmentInstances: MutableMap<Int, Fragment> = mutableMapOf()
+class ScreenSlidePagerAdapter(
+    fragmentActivity: FragmentActivity,
+    private val numPages: Int
+) : FragmentStateAdapter(fragmentActivity) {
+    private val pageFragmentCreators: Map<Int, () -> Fragment> =
+        mapOf(0 to { UserInfoFragment() }, 1 to { FollowerInfoFragment() })
+    private val pageFragmentInstances: MutableMap<Int, Fragment> = mutableMapOf()
 
-        override fun getItemCount(): Int = NUM_PAGES
+    override fun getItemCount(): Int = numPages
 
-        override fun createFragment(position: Int): Fragment {
-            return pageFragmentInstances.getOrPut(position) {
-                pageFragmentCreators[position]?.invoke()
-                    ?: throw IllegalArgumentException("Invalid position: $position")
-            }
+    override fun createFragment(position: Int): Fragment {
+        return pageFragmentInstances.getOrPut(position) {
+            pageFragmentCreators[position]?.invoke()
+                ?: throw IllegalArgumentException("Invalid position: $position")
         }
     }
 }
