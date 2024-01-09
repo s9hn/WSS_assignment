@@ -19,7 +19,7 @@ class ItemDiffCallback<T : Any>(
     ): Boolean = onContentsTheSame(oldItem, newItem)
 }
 
-@BindingAdapter("imageUrl")
+@BindingAdapter("bindProfileImage")
 fun ImageView.bindProfileImage(imgUrl: String?) {
     Glide.with(context)
         .load(imgUrl)
