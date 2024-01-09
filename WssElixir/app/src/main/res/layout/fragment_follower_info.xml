@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="followerInfoViewModel"
+            type="com.example.wsselixir.ui.info.followerinfo.FollowerInfoViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".InfoActivity">
+
+        <ImageView
+            android:id="@+id/ivFollowerProfile"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="200dp"
+            android:scaleType="centerCrop"
+            app:bindCropProfileImage="@{followerInfoViewModel.follower.avatar}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tvFollowerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:layout_marginBottom="154dp"
+            android:text="@{followerInfoViewModel.follower.firstName}"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivFollowerProfile" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
