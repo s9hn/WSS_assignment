@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.wsselixir.App
 import com.example.wsselixir.R
 import com.example.wsselixir.databinding.ActivityHomeBinding
 import com.example.wsselixir.ui.detail.DetailActivity
@@ -15,7 +16,9 @@ import com.example.wsselixir.ui.model.LocalUser
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var homeBinding: ActivityHomeBinding
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels {
+        HomeViewModel.createFactory(application as App)
+    }
     private val followerAdapter: FollowerAdapter by lazy {
         FollowerAdapter(::clickFollowerItem)
     }

@@ -3,24 +3,24 @@ package com.example.wsselixir.ui.home.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.wsselixir.remote.UserResponseDto
+import com.example.wsselixir.data.model.Follower
 
 class FollowerAdapter(private val onItemClick: (Int) -> Unit) :
-    ListAdapter<UserResponseDto.User, FollowerViewHolder>(FollowerDiffCallback) {
+    ListAdapter<Follower, FollowerViewHolder>(FollowerDiffCallback) {
 
     companion object {
         private val FollowerDiffCallback = object :
-            DiffUtil.ItemCallback<UserResponseDto.User>() {
+            DiffUtil.ItemCallback<Follower>() {
             override fun areItemsTheSame(
-                oldItem: UserResponseDto.User,
-                newItem: UserResponseDto.User
+                oldItem: Follower,
+                newItem: Follower
             ): Boolean {
                 return oldItem.avatar == newItem.avatar
             }
 
             override fun areContentsTheSame(
-                oldItem: UserResponseDto.User,
-                newItem: UserResponseDto.User
+                oldItem: Follower,
+                newItem: Follower
             ): Boolean {
                 return oldItem == newItem
             }

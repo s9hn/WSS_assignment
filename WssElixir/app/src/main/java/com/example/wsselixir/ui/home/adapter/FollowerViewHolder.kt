@@ -3,9 +3,8 @@ package com.example.wsselixir.ui.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.example.wsselixir.data.model.Follower
 import com.example.wsselixir.databinding.ItemFollowerBinding
-import com.example.wsselixir.remote.UserResponseDto
 
 class FollowerViewHolder(
     private val binding: ItemFollowerBinding,
@@ -21,13 +20,14 @@ class FollowerViewHolder(
         }
     }
 
-    fun onBind(follower: UserResponseDto.User) {
+    fun onBind(follower: Follower) {
         binding.follower = follower
     }
 
     companion object {
         fun create(parent: ViewGroup, onItemClick: (Int) -> Unit): FollowerViewHolder {
-            val binding = ItemFollowerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            val binding =
+                ItemFollowerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return FollowerViewHolder(binding, onItemClick)
         }
     }
