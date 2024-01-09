@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.wsselixir.R
+import com.example.wsselixir.data.User
 import com.example.wsselixir.databinding.ActivityMainBinding
 import com.example.wsselixir.ui.info.InfoActivity
 import com.example.wsselixir.ui.info.followerinfo.FollowerInfoViewModel
@@ -19,8 +20,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var followerAdapter: FollowerAdapter
 
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var followerInfoViewModel: FollowerInfoViewModel
+    private val mainViewModel: MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
+    private val followerInfoViewModel: FollowerInfoViewModel by lazy {
+        ViewModelProvider(this)[FollowerInfoViewModel::class.java]
+    }
     private var isFollowerInfoFragment = false
 
     private val sharedPreferences by lazy {
@@ -33,9 +38,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        followerInfoViewModel = ViewModelProvider(this)[FollowerInfoViewModel::class.java]
 
         initFollowerAdapter()
         setupToast()
@@ -140,9 +142,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToInfoActivity() {
         val intent = Intent(this, InfoActivity::class.java).apply {
-            putExtra("USER_ID", mainViewModel.user.value?.id ?: 0)
-            putExtra("USER_NAME", mainViewModel.user.value?.name ?: "")
-            putExtra("USER_MBTI", mainViewModel.user.value?.mbti ?: "")
+            putExtra(
+                "USER_INFO",
+                User(
+                    mainViewModel.user.value?.id ?: 0,
+                    mainViewModel.user.value?.mbti ?: "",
+                    mainViewModel.user.value?.name ?: ""
+                )
+            )
             putExtra("FOLLOWER_ID", followerInfoViewModel.followerId.value ?: 0)
             putExtra("PAGE_NUMBER", if (isFollowerInfoFragment) 1 else 0)
         }

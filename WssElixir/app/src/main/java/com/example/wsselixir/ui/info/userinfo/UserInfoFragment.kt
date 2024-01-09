@@ -25,18 +25,14 @@ class UserInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeUserInfo()
+        userInfoViewModel.user.observe(viewLifecycleOwner) {
+            updateUI(it)
+        }
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    private fun observeUserInfo() {
-        userInfoViewModel.user.observe(viewLifecycleOwner) {
-            updateUI(it)
-        }
     }
 
     private fun updateUI(user: User) {

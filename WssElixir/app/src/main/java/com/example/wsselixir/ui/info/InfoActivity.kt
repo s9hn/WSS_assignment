@@ -21,6 +21,7 @@ class InfoActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var followerInfoViewModel: FollowerInfoViewModel
     private lateinit var userInfoViewModel: UserInfoViewModel
+    private lateinit var user: User
 
     companion object {
         const val NUM_PAGES = 2
@@ -28,31 +29,21 @@ class InfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setupBinding()
-        setupFollowerInfo()
-        setupUserInfo()
-        setupViewPager()
-        setupTabLayout()
-    }
-
-    private fun setupBinding() {
-        followerInfoViewModel = ViewModelProvider(this)[FollowerInfoViewModel::class.java]
-        userInfoViewModel = ViewModelProvider(this)[UserInfoViewModel::class.java]
         binding = ActivityInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        followerInfoViewModel = ViewModelProvider(this)[FollowerInfoViewModel::class.java]
+        userInfoViewModel = ViewModelProvider(this)[UserInfoViewModel::class.java]
+        
+        setupFollowerInfo()
+        setupViewPager()
+        setupTabLayout()
+        setupUserInfo()
     }
 
     private fun setupFollowerInfo() {
         val followerId = intent.getIntExtra("FOLLOWER_ID", 1)
         followerInfoViewModel.setFollowerId(followerId)
-    }
-
-    private fun setupUserInfo() {
-        val userId = intent.getIntExtra("USER_ID", 1)
-        val userName = intent.getStringExtra("USER_NAME")
-        val userMbti = intent.getStringExtra("USER_MBTI")
-        userInfoViewModel.setUserInfo(User(userId, userName ?: "", userMbti ?: ""))
     }
 
     private fun setupViewPager() {
@@ -72,6 +63,12 @@ class InfoActivity : AppCompatActivity() {
                 else -> throw IllegalArgumentException("Invalid position: $position")
             }
         }.attach()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun setupUserInfo() {
+        user = intent.getParcelableExtra("USER_INFO")!!
+        userInfoViewModel.setUserInfo(user)
     }
 
     private inner class ScreenSlidePagerAdapter(fragmentActivity: FragmentActivity) :
