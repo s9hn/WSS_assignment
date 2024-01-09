@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.wsselixir.data.Follower
 import com.example.wsselixir.databinding.FragmentFollowerInfoBinding
-import com.example.wsselixir.util.view.bindProfileImage
 
 class FollowerInfoFragment : Fragment() {
     private var _binding: FragmentFollowerInfoBinding? = null
@@ -36,15 +34,8 @@ class FollowerInfoFragment : Fragment() {
     }
 
     private fun observeFollowerId() {
-        followerInfoViewModel.followerId.observe(viewLifecycleOwner) { it ->
+        followerInfoViewModel.followerId.observe(viewLifecycleOwner) {
             followerInfoViewModel.updateFollowerInfo(it)
-            followerInfoViewModel.follower.observe(viewLifecycleOwner) {
-                updateUI(it)
-            }
         }
-    }
-
-    private fun updateUI(follower: Follower) {
-        binding.ivFollowerProfile.bindProfileImage(follower.avatar)
     }
 }
