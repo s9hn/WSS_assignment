@@ -26,7 +26,7 @@ class UserInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userInfoViewModel.user.observe(viewLifecycleOwner) {
-            updateUI(it)
+            showUserInfo(it)
         }
     }
 
@@ -35,7 +35,7 @@ class UserInfoFragment : Fragment() {
         super.onDestroyView()
     }
 
-    private fun updateUI(user: User) {
+    private fun showUserInfo(user: User) {
         binding.tvUserName.text = getString(R.string.tvUserName, user.name)
         binding.tvUserMbti.text = getString(R.string.tvUserMbti, user.mbti)
     }
